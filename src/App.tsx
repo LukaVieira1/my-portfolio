@@ -116,8 +116,8 @@ function App() {
             transition={{ delay: 0.2 }}
             className="text-lg mb-8"
           >
-            Desenvolvedor Frontend focado em criar experiências digitais
-            excepcionais
+            Apaixonado por resolver problemas e criar experiências digitais
+            excepcionais.
           </motion.p>
         </section>
 
