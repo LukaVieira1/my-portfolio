@@ -260,265 +260,249 @@ function App() {
   );
 
   return (
-    <div className="min-h-screen bg-[#0a192f] text-[#8892b0] relative overflow-hidden">
+    <div className="min-h-screen bg-[#0a192f] text-[#8892b0] relative">
       <ParticlesBackground />
-
-      <div className="fixed left-8 bottom-0 hidden lg:block">
-        <motion.div
-          className="w-px h-32 bg-[#64ffda] opacity-20"
-          initial={{ height: 0 }}
-          animate={{ height: 128 }}
-          transition={{ delay: 1 }}
-        />
-      </div>
-
-      <div className="fixed right-8 bottom-0 hidden lg:block">
-        <motion.div
-          className="w-px h-32 bg-[#64ffda] opacity-20"
-          initial={{ height: 0 }}
-          animate={{ height: 128 }}
-          transition={{ delay: 1 }}
-        />
-      </div>
-
-      {/* Header */}
-      <nav className="fixed w-full px-8 py-4 bg-[#0a192f]/90 backdrop-blur-sm z-50">
-        <div className="max-w-3xl mx-auto flex justify-between items-center">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-[#64ffda] font-mono"
-          >
-            luka-vieira.dev
-          </motion.div>
-          <div className="hidden md:flex space-x-8 font-mono text-sm">
-            {navItems.map((item, i) => (
-              <motion.button
-                key={item.name}
-                onClick={() => scrollToSection(item.id)}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                className="text-[#ccd6f6] hover:text-[#64ffda] transition-colors cursor-pointer"
-              >
-                <span className="text-[#64ffda]">0{i + 1}.</span> {item.name}
-              </motion.button>
-            ))}
-          </div>
-        </div>
-      </nav>
-
-      {/* Main Content */}
-      <div className="max-w-3xl mx-auto px-8 pt-24">
-        <section className="py-20">
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-[#64ffda] font-mono mb-5"
-          >
-            <motion.span
+      <div className="relative z-1">
+        {/* Header */}
+        <nav className="fixed w-full px-8 py-4 bg-[#0a192f]/90 backdrop-blur-sm z-50">
+          <div className="max-w-3xl mx-auto flex justify-between items-center">
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
+              className="text-[#64ffda] font-mono"
             >
-              &gt; Olá, me chamo
-            </motion.span>
-          </motion.p>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl font-bold text-[#ccd6f6] mb-4"
-          >
-            Luka Vieira.
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg mb-8"
-          >
-            Apaixonado por resolver problemas e criar experiências digitais
-            excepcionais.
-          </motion.p>
-        </section>
-
-        {/* About Section */}
-        <section id="sobre" className="py-20">
-          <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="flex items-center text-2xl font-bold text-[#ccd6f6] mb-8"
-          >
-            <span className="text-[#64ffda] font-mono mr-2">01.</span>
-            Sobre Mim
-          </motion.h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="md:col-span-2 space-y-4">
-              {aboutMeParagraphs.map((paragraph, index) => (
-                <p key={index} className="text-[#8892b0] leading-relaxed">
-                  {paragraph}
-                </p>
+              luka-vieira.dev
+            </motion.div>
+            <div className="hidden md:flex space-x-8 font-mono text-sm">
+              {navItems.map((item, i) => (
+                <motion.button
+                  key={item.name}
+                  onClick={() => scrollToSection(item.id)}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="text-[#ccd6f6] hover:text-[#64ffda] transition-colors cursor-pointer"
+                >
+                  <span className="text-[#64ffda]">0{i + 1}.</span> {item.name}
+                </motion.button>
               ))}
-
-              <p className="mt-8">
-                Principais tecnologias com as quais trabalho:
-              </p>
-              <ul className="grid grid-cols-2 gap-2 font-mono text-sm">
-                {mainTechs.map((tech) => (
-                  <motion.li
-                    key={tech}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    className="flex items-center before:content-['▹'] before:text-[#64ffda] before:mr-2"
-                  >
-                    {tech}
-                  </motion.li>
-                ))}
-              </ul>
             </div>
-            <motion.div
-              className="relative group w-[250px] h-[250px]"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
+          </div>
+        </nav>
+
+        {/* Main Content */}
+        <div className="max-w-3xl mx-auto px-8 pt-24">
+          <section className="py-20">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-[#64ffda] font-mono mb-5"
             >
-              <div className="relative z-10 rounded-lg overflow-hidden w-full h-full">
-                <img
-                  src="/profile-pic.jpeg"
-                  alt="Luka Vieira"
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
-                />
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+              >
+                &gt; Olá, me chamo
+              </motion.span>
+            </motion.p>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl font-bold text-[#ccd6f6] mb-4"
+            >
+              Luka Vieira.
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-lg mb-8"
+            >
+              Apaixonado por resolver problemas e criar experiências digitais
+              excepcionais.
+            </motion.p>
+          </section>
+
+          {/* About Section */}
+          <section id="sobre" className="py-20">
+            <motion.h2
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="flex items-center text-2xl font-bold text-[#ccd6f6] mb-8"
+            >
+              <span className="text-[#64ffda] font-mono mr-2">01.</span>
+              Sobre Mim
+            </motion.h2>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="md:col-span-2 space-y-4">
+                {aboutMeParagraphs.map((paragraph, index) => (
+                  <p key={index} className="text-[#8892b0] leading-relaxed">
+                    {paragraph}
+                  </p>
+                ))}
+
+                <p className="mt-8">
+                  Principais tecnologias com as quais trabalho:
+                </p>
+                <ul className="grid grid-cols-2 gap-2 font-mono text-sm">
+                  {mainTechs.map((tech) => (
+                    <motion.li
+                      key={tech}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      className="flex items-center before:content-['▹'] before:text-[#64ffda] before:mr-2"
+                    >
+                      {tech}
+                    </motion.li>
+                  ))}
+                </ul>
               </div>
-              <div
-                className="absolute inset-0 border-2 border-[#64ffda] rounded-lg 
-                           translate-x-4 translate-y-4 group-hover:translate-x-2 
-                           group-hover:translate-y-2 transition-transform duration-300"
-              />
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Experience Section */}
-        <section id="experiencia" className="py-20">
-          <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="flex items-center text-2xl font-bold text-[#ccd6f6] mb-8"
-          >
-            <span className="text-[#64ffda] font-mono mr-2">02.</span>
-            Onde Trabalhei
-          </motion.h2>
-          <div>
-            {experiences.map((experience, index) => (
-              <ExperienceCard
-                key={index}
-                company={experience.company}
-                role={experience.role}
-                period={experience.period}
-                description={experience.description}
-                technologies={experience.technologies}
-                link={experience.link}
-              />
-            ))}
-          </div>
-        </section>
-
-        {/* Projetos Section */}
-        <section id="projetos" className="py-20">
-          <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="flex items-center text-2xl font-bold text-[#ccd6f6] mb-8"
-          >
-            <span className="text-[#64ffda] font-mono mr-2">03.</span>
-            Alguns Projetos
-          </motion.h2>
-
-          {/* Toggle de Projetos */}
-          <div className="flex justify-center mb-12">
-            <div className="flex p-1 gap-1 bg-[#112240] rounded-lg">
-              <motion.button
+              <motion.div
+                className="relative group w-[250px] h-[250px]"
                 whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setProjectType("professional")}
-                className={`px-4 py-2 rounded-md transition-colors ${
-                  projectType === "professional"
-                    ? "bg-[#64ffda] text-[#0a192f]"
-                    : "text-[#8892b0] hover:text-[#ccd6f6]"
-                }`}
+                transition={{ duration: 0.3 }}
               >
-                Profissionais
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setProjectType("personal")}
-                className={`px-4 py-2 rounded-md transition-colors ${
-                  projectType === "personal"
-                    ? "bg-[#64ffda] text-[#0a192f]"
-                    : "text-[#8892b0] hover:text-[#ccd6f6]"
-                }`}
-              >
-                Pessoais
-              </motion.button>
+                <div className="relative z-10 rounded-lg overflow-hidden w-full h-full">
+                  <img
+                    src="/profile-pic.jpeg"
+                    alt="Luka Vieira"
+                    className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                  />
+                </div>
+                <div
+                  className="absolute inset-0 border-2 border-[#64ffda] rounded-lg 
+                             translate-x-4 translate-y-4 group-hover:translate-x-2 
+                             group-hover:translate-y-2 transition-transform duration-300"
+                />
+              </motion.div>
             </div>
-          </div>
+          </section>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {filteredProjects.map((project, index) => (
-              <ProjectCard key={index} {...project} />
-            ))}
-          </div>
-        </section>
+          {/* Experience Section */}
+          <section id="experiencia" className="py-20">
+            <motion.h2
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="flex items-center text-2xl font-bold text-[#ccd6f6] mb-8"
+            >
+              <span className="text-[#64ffda] font-mono mr-2">02.</span>
+              Onde Trabalhei
+            </motion.h2>
+            <div>
+              {experiences.map((experience, index) => (
+                <ExperienceCard
+                  key={index}
+                  company={experience.company}
+                  role={experience.role}
+                  period={experience.period}
+                  description={experience.description}
+                  technologies={experience.technologies}
+                  link={experience.link}
+                />
+              ))}
+            </div>
+          </section>
 
-        {/* Contact Section */}
-        <section id="contato" className="py-20">
-          <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="flex items-center text-2xl font-bold text-[#ccd6f6] mb-8"
-          >
-            <span className="text-[#64ffda] font-mono mr-2">04.</span>
-            Vamos Conversar?
-          </motion.h2>
-          <div className="space-y-4">
-            <p>
-              Estou sempre aberto a novas oportunidades. Se você tem um projeto
-              interessante ou só quer bater um papo, me manda uma mensagem!
-            </p>
-            <motion.div className="flex flex-col space-y-4">
-              <motion.a
-                href="mailto:lukavieira14@gmail.com"
-                className="flex items-center before:content-['▹'] before:text-[#64ffda] before:mr-2 hover:text-[#64ffda] transition-colors"
-              >
-                lukavieira14@gmail.com
-              </motion.a>
-              <motion.a
-                href="https://github.com/LukaVieira1"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center before:content-['▹'] before:text-[#64ffda] before:mr-2 hover:text-[#64ffda] transition-colors"
-              >
-                GitHub
-              </motion.a>
-              <motion.a
-                href="https://www.linkedin.com/in/lukaviera/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center before:content-['▹'] before:text-[#64ffda] before:mr-2 hover:text-[#64ffda] transition-colors"
-              >
-                LinkedIn
-              </motion.a>
-            </motion.div>
-          </div>
-        </section>
+          {/* Projetos Section */}
+          <section id="projetos" className="py-20 relative z-10">
+            <motion.h2
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="flex items-center text-2xl font-bold text-[#ccd6f6] mb-8"
+            >
+              <span className="text-[#64ffda] font-mono mr-2">03.</span>
+              Alguns Projetos
+            </motion.h2>
+
+            {/* Toggle de Projetos */}
+            <div className="flex justify-center mb-12">
+              <div className="flex p-1 gap-1 bg-[#112240] rounded-lg">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setProjectType("professional")}
+                  className={`px-4 py-2 rounded-md transition-colors ${
+                    projectType === "professional"
+                      ? "bg-[#64ffda] text-[#0a192f]"
+                      : "text-[#8892b0] hover:text-[#ccd6f6]"
+                  }`}
+                >
+                  Profissionais
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setProjectType("personal")}
+                  className={`px-4 py-2 rounded-md transition-colors ${
+                    projectType === "personal"
+                      ? "bg-[#64ffda] text-[#0a192f]"
+                      : "text-[#8892b0] hover:text-[#ccd6f6]"
+                  }`}
+                >
+                  Pessoais
+                </motion.button>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {filteredProjects.map((project, index) => (
+                <ProjectCard key={index} {...project} />
+              ))}
+            </div>
+          </section>
+
+          {/* Contact Section */}
+          <section id="contato" className="py-20">
+            <motion.h2
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="flex items-center text-2xl font-bold text-[#ccd6f6] mb-8"
+            >
+              <span className="text-[#64ffda] font-mono mr-2">04.</span>
+              Vamos Conversar?
+            </motion.h2>
+            <div className="space-y-4">
+              <p>
+                Estou sempre aberto a novas oportunidades. Se você tem um
+                projeto interessante ou só quer bater um papo, me manda uma
+                mensagem!
+              </p>
+              <motion.div className="flex flex-col space-y-4">
+                <motion.a
+                  href="mailto:lukavieira14@gmail.com"
+                  className="flex items-center before:content-['▹'] before:text-[#64ffda] before:mr-2 hover:text-[#64ffda] transition-colors"
+                >
+                  lukavieira14@gmail.com
+                </motion.a>
+                <motion.a
+                  href="https://github.com/LukaVieira1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center before:content-['▹'] before:text-[#64ffda] before:mr-2 hover:text-[#64ffda] transition-colors"
+                >
+                  GitHub
+                </motion.a>
+                <motion.a
+                  href="https://www.linkedin.com/in/lukaviera/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center before:content-['▹'] before:text-[#64ffda] before:mr-2 hover:text-[#64ffda] transition-colors"
+                >
+                  LinkedIn
+                </motion.a>
+              </motion.div>
+            </div>
+          </section>
+        </div>
       </div>
     </div>
   );

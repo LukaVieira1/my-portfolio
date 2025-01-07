@@ -58,7 +58,7 @@ export function ProjectCard({
       <div className="p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-[#ccd6f6] text-xl font-bold">{title}</h3>
-          <div className="flex gap-4">
+          <div className="flex gap-4 relative z-10">
             {githubLink && isPersonal && (
               <motion.a
                 href={githubLink}
