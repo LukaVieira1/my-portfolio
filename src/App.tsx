@@ -2,9 +2,14 @@ import { motion } from "framer-motion";
 import { ExperienceCard } from "./components/ExperienceCard";
 import { useScrollToSection } from "./hooks/useScrollToSection";
 import { ParticlesBackground } from "./components/ParticlesBackground";
+import { ProjectCard } from "./components/ProjectCard";
+import { useState } from "react";
 
 function App() {
   const scrollToSection = useScrollToSection();
+  const [projectType, setProjectType] = useState<"professional" | "personal">(
+    "professional"
+  );
 
   const navItems = [
     { name: "Sobre", id: "sobre" },
@@ -117,6 +122,142 @@ function App() {
       ],
     },
   ];
+
+  const projects = [
+    {
+      title: "GetHub",
+      description: [
+        "Dashboard para visualização de pedidos, estoques, anúncios e problemas pendentes.",
+        "Alteração de preços de produtos para anúncios e sugestões de resolução de problemas.",
+        "Integração contínua com o ERP Millenium, garantindo que o estoque e os preços estejam sempre atualizados, além da integração com a Nota Fiscal Eletrônica.",
+      ],
+      link: "https://www.linkedin.com/company/getbuyhub/",
+      technologies: [
+        "Next.js",
+        "Tailwind CSS",
+        "React Query",
+        "XState",
+        "React Hook Form",
+        "Axios",
+        "Cypress",
+      ],
+      isPersonal: false,
+      image: "/projects/gethub.png",
+    },
+    {
+      title: "MeuPass",
+      description: [
+        "Aplicativo PWA em desenvolvimento, que oferece um sistema completo de cardápio, gerenciamento de pedidos, pagamentos, login e cadastro.",
+        "Com um design inovador e intuitivo, prioriza a usabilidade e a experiência do usuário.",
+        "Você pode conferir mais no instagram do MeuPass @meupassbr",
+      ],
+      technologies: [
+        "Next.js",
+        "TypeScript",
+        "Tailwind",
+        "Axios",
+        "Framer Motion",
+      ],
+      link: "https://token.meupass.com.br/",
+      isPersonal: false,
+      image: "/projects/meupass.png",
+    },
+    {
+      title: "Souplenus",
+      description: [
+        "Plataforma dedicada a conectar profissionais da área de psicologia com usuários, além de facilitar parcerias com empresas e disponibilizar locais para sessões de psicoterapia.",
+        "Utilizada por profissionais da psicologia para promover seus serviços e facilitar o contato com potenciais clientes.",
+        "Oferece diversos filtros para ajudar na busca pelo profissional ideal, além de um sistema de avaliações e comentários, e um recurso para agendamento de consultas.",
+      ],
+      technologies: ["Nuxt.js", "Tailwind", "React Query"],
+      link: "https://www.souplenus.com.br/",
+      isPersonal: false,
+      image: "/projects/souplenus.png",
+    },
+    {
+      title: "Awari",
+      description: [
+        "Plataforma de educação online com cursos e mentorias em tecnologia, focada em preparar alunos para o mercado de trabalho.",
+        "Oferece uma variedade de cursos, desde programação básica até desenvolvimento fullstack, com foco em prática e aplicação dos conhecimentos.",
+        "Além de mentorias, oferece acesso a uma comunidade de alunos e profissionais, para troca de conhecimentos e networking.",
+        "Também conta com um dashboard para acompanhamento de projetos e alunos, com relatórios e métricas.",
+      ],
+      technologies: ["JQuery", "Laravel", "PHP", "React", "TypeScript"],
+      link: "https://awari.com.br/",
+      isPersonal: false,
+      image: "/projects/awari.png",
+    },
+    {
+      title: "Sistema de gestão (ERP) - MPI Informatica",
+      description: [
+        "O Sistema de Gestão (ERP) da MPI Informática é uma solução completa para automatizar operações, eliminando a necessidade de múltiplos sistemas. Com controle de estoque, fluxo de caixa, emissão de notas fiscais e relatórios detalhados, oferece uma visão clara do negócio.",
+        "Funcionalidades incluem: Gestão de Vendas e Compras, Controle de Estoque, Relatórios Financeiros, Integração com gateways de pagamento e um ponto de venda (PDV) para atendimento ao cliente.",
+      ],
+      technologies: ["Vue 3", "Tailwind", "TypeScript", "Axios"],
+      link: "https://mpiinformatica.com/sistema-de-gestao/",
+      isPersonal: false,
+      image: "/projects/mpi.jpeg",
+    },
+    {
+      title: "Atlas Governance",
+      description: [
+        "Breve participação inicial da criação do dashboard da Atlas Governance, uma plataforma de governança corporativa. O dashboard permite a criação e convocação de reuniões, além de gerenciar os membros da organização.",
+        "Documentos, relatórios e atas são gerados automaticamente, facilitando a gestão de ações e projetos estratégicos. A plataforma também oferece indexação e busca com inteligência artificial, além de avaliações de conselhos e comitês.",
+      ],
+      technologies: ["React", "Tailwind", "TypeScript", "Axios", "Redux"],
+      link: "https://welcome.atlasgov.com/",
+      isPersonal: false,
+      image: "/projects/atlas.jpeg",
+    },
+    {
+      title: "Tetris",
+      description: [
+        "Um classico dos anos 80! ",
+        "O jogo conta com um sistema de pontuação e progressão de níveis, além de um ranking das melhores pontuações alcançadas e as próximas peças que serão geradas.",
+        "Apresenta um design moderno com animações fluidas e suporte a múltiplos idiomas, incluindo português e inglês.",
+        "Inclui um menu com opções para configuração de idioma e um tutorial interativo e a opção de pausar o jogo.",
+      ],
+      technologies: [
+        "React",
+        "Tailwind",
+        "TypeScript",
+        "Vite",
+        "Framer Motion",
+        "i18n",
+      ],
+      link: "https://tetris.lukavieira.tech/",
+      githubLink: "https://github.com/LukaVieira1/tetris",
+      isPersonal: true,
+      image: "/projects/tetris.png",
+    },
+    {
+      title: "Petwiiter",
+      description: [
+        "Um clonedo do X (Twitter) voltado para amantes de pets!",
+        "Foi um dos meus primeiros projetos, onde aprendi muito sobre React e APIs (que também foi feita por mim).",
+        "O Petwiiter é uma plataforma social onde você pode compartilhar textos e interagir com outros usuários.",
+        "Inclui um sistema de login, comentários e perfis de usuários.",
+      ],
+      technologies: [
+        "React",
+        "Chakra UI",
+        "Axios",
+        "Node.js",
+        "Fastify",
+        "PostgreSQL",
+        "Prisma",
+      ],
+      link: "https://petwitter.lukavieira.tech/",
+      githubLink:
+        "https://github.com/LukaVieira1/FinalProject-Petwitter-FrontEnd",
+      isPersonal: true,
+      image: "/projects/petwitter.png",
+    },
+  ];
+
+  const filteredProjects = projects.filter(
+    (project) => project.isPersonal === (projectType === "personal")
+  );
 
   return (
     <div className="min-h-screen bg-[#0a192f] text-[#8892b0] relative overflow-hidden">
@@ -293,98 +434,46 @@ function App() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="flex items-center text-2xl font-bold text-[#ccd6f6] mb-12"
+            className="flex items-center text-2xl font-bold text-[#ccd6f6] mb-8"
           >
             <span className="text-[#64ffda] font-mono mr-2">03.</span>
             Alguns Projetos
           </motion.h2>
-          <div className="space-y-32">
-            {/* Projeto 1 */}
-            <motion.div
-              className="relative md:grid md:grid-cols-12 gap-6"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="md:col-span-8 relative group">
-                <a
-                  href="https://seu-projeto.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  <div className="relative rounded-lg overflow-hidden">
-                    <img
-                      src="/projeto1.jpg"
-                      alt="E-commerce Dashboard"
-                      className="w-full transition-all duration-300 
-                               filter brightness-50 hover:brightness-100 
-                               hover:scale-105 transform"
-                    />
-                    <div className="absolute inset-0 bg-[#0a192f]/50 group-hover:bg-transparent transition-all duration-300" />
-                  </div>
-                </a>
-              </div>
 
-              <div className="md:col-span-6 md:col-start-7 relative z-10 md:absolute inset-y-0 right-0">
-                <div className="bg-[#112240] p-6 rounded-lg h-full shadow-xl">
-                  <p className="text-[#64ffda] font-mono text-sm mb-2">
-                    Projeto em Destaque
-                  </p>
-                  <h3 className="text-[#ccd6f6] text-xl font-bold mb-4">
-                    E-commerce Dashboard
-                  </h3>
-                  <div className="text-[#8892b0] mb-4">
-                    Dashboard para gerenciamento de e-commerce com análise de
-                    dados em tempo real, gestão de produtos e relatórios
-                    personalizados.
-                  </div>
-                  <div className="flex flex-wrap gap-2 font-mono text-sm text-[#64ffda]">
-                    <span>React</span>
-                    <span>TypeScript</span>
-                    <span>Tailwind</span>
-                    <span>Chart.js</span>
-                  </div>
-                  <div className="flex gap-4 mt-4">
-                    <a
-                      href="https://github.com/seu-usuario/projeto"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#ccd6f6] hover:text-[#64ffda] transition-colors"
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                      </svg>
-                    </a>
-                    <a
-                      href="https://seu-projeto.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#ccd6f6] hover:text-[#64ffda] transition-colors"
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                        />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+          {/* Toggle de Projetos */}
+          <div className="flex justify-center mb-12">
+            <div className="flex p-1 gap-1 bg-[#112240] rounded-lg">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setProjectType("professional")}
+                className={`px-4 py-2 rounded-md transition-colors ${
+                  projectType === "professional"
+                    ? "bg-[#64ffda] text-[#0a192f]"
+                    : "text-[#8892b0] hover:text-[#ccd6f6]"
+                }`}
+              >
+                Profissionais
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setProjectType("personal")}
+                className={`px-4 py-2 rounded-md transition-colors ${
+                  projectType === "personal"
+                    ? "bg-[#64ffda] text-[#0a192f]"
+                    : "text-[#8892b0] hover:text-[#ccd6f6]"
+                }`}
+              >
+                Pessoais
+              </motion.button>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {filteredProjects.map((project, index) => (
+              <ProjectCard key={index} {...project} />
+            ))}
           </div>
         </section>
 
