@@ -410,16 +410,24 @@ function App() {
               Alguns Projetos
             </motion.h2>
 
-            {/* Toggle de Projetos */}
             <div className="flex justify-center mb-12">
-              <div className="flex p-1 gap-1 bg-[#112240] rounded-lg">
+              <div className="relative flex items-center bg-[#112240]/50 rounded-full p-1 backdrop-blur-sm">
+                <motion.div
+                  className="absolute h-full bg-[#64ffda]/10 rounded-full"
+                  initial={false}
+                  animate={{
+                    width: "50%",
+                    x: projectType === "professional" ? "0%" : "100%",
+                  }}
+                  transition={{ duration: 0.2 }}
+                />
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setProjectType("professional")}
-                  className={`px-4 py-2 rounded-md transition-colors ${
+                  className={`relative px-6 py-2 text-sm font-medium rounded-full ${
                     projectType === "professional"
-                      ? "bg-[#64ffda] text-[#0a192f]"
+                      ? "text-[#64ffda]"
                       : "text-[#8892b0] hover:text-[#ccd6f6]"
                   }`}
                 >
@@ -429,9 +437,9 @@ function App() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setProjectType("personal")}
-                  className={`px-4 py-2 rounded-md transition-colors ${
+                  className={`relative px-6 py-2 text-sm font-medium rounded-full ${
                     projectType === "personal"
-                      ? "bg-[#64ffda] text-[#0a192f]"
+                      ? "text-[#64ffda]"
                       : "text-[#8892b0] hover:text-[#ccd6f6]"
                   }`}
                 >
