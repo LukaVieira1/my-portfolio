@@ -35,6 +35,89 @@ function App() {
     "Minha jornada começou no suporte técnico, onde desenvolvi um olhar aguçado para resolução de problemas e empatia com o usuário final. Hoje, transformo esse background em aplicações web que fazem a diferença, sempre focando na experiência do usuário e nas melhores práticas de desenvolvimento.",
   ];
 
+  const experiences = [
+    {
+      company: "GetHub",
+      role: "Frontend Developer",
+      period: "Mar 2023 - Presente",
+      description: [
+        "Na GetHub, atuo como Frontend Developer, onde sou responsável pelo desenvolvimento e manutenção de funcionalidades em Next.js, sempre com foco em performance e usabilidade. A GetHub é uma plataforma inovadora que conecta o ERP Millenium a grandes marketplaces, como Mercado Livre, Shopee, Amazon, Shein e Magalu, facilitando a integração e a gestão de vendas em múltiplos canais.",
+        "Minhas responsabilidades incluem a criação e execução de testes end-to-end (E2E) utilizando Cypress, garantindo a qualidade do código e a confiabilidade das funcionalidades implementadas. Participo ativamente de decisões estratégicas de produto, ajudando a definir regras de negócio que impactam diretamente a experiência do usuário.",
+        "Além disso, sou responsável pela elaboração e manutenção de documentação técnica, assegurando clareza e alinhamento entre as equipes. Realizo a análise de requisitos e viabilidade técnica para novas funcionalidades, colaborando de perto com Product Owners para garantir que as soluções atendam às necessidades do negócio.",
+        "Identifico e resolvo bugs, incluindo suporte em código legado, como Ruby, e também ofereço treinamento e suporte a novos membros da equipe, promovendo integração e produtividade. Conduzo calls com stakeholders e clientes, apresentando progresso e insights do projeto, além de fornecer suporte direto ao cliente, oferecendo soluções ágeis para problemas identificados.",
+      ],
+      technologies: [
+        "Next.js",
+        "Tailwind CSS",
+        "React Query",
+        "XState",
+        "React Hook Form",
+        "Axios",
+        "Cypress",
+        "Ruby",
+      ],
+    },
+    {
+      company: "Be Talent",
+      role: "Frontend Developer",
+      period: "Mar 2022 - Jan 2023",
+      link: "https://bemobile.tech",
+      description: [
+        "Na Be Talent, anteriormente conhecida como Be Mobile, atuei como Frontend Developer em diversos projetos, contribuindo para o desenvolvimento de soluções inovadoras e eficientes.",
+        "Fui responsável pelo desenvolvimento e manutenção de funcionalidades em jQuery, assegurando a performance e a funcionalidade de aplicações legadas, além de criar e otimizar recursos utilizando Nuxt.js, com foco em escalabilidade e experiência do usuário.",
+        "Minha atuação incluiu a implementação e manutenção de componentes modernos em React.js, priorizando a criação de código limpo e reutilizável, o que resultou em uma base de código mais sustentável e de fácil manutenção.",
+        "Trabalhei em colaboração com equipes multidisciplinares, participando ativamente de reuniões de planejamento e revisão, o que me permitiu alinhar as expectativas do cliente com as soluções técnicas propostas.",
+      ],
+      technologies: [
+        "jQuery",
+        "Nuxt.js",
+        "React",
+        "Tailwind CSS",
+        "XState",
+        "Redux",
+        "Axios",
+        "Git",
+        "Laravel",
+      ],
+    },
+    {
+      company: "Aggrandize",
+      link: "https://aggrandize.com.br/",
+      role: "A. de Suporte Jr.",
+      period: "Mar 2021 - Mar 2022",
+      description: [
+        "Na Aggrandize, atuei como Analista de Suporte Junior, onde fui responsável por fornecer suporte técnico de alta qualidade aos clientes, garantindo soluções rápidas e eficazes para problemas técnicos e operacionais.",
+        "Realizei a manutenção e monitoramento de recursos na Oracle Cloud Infrastructure (OCI), assegurando desempenho ideal e alta disponibilidade dos serviços, o que foi crucial para a continuidade das operações.",
+        "Além disso, identifiquei e resolvi pequenos problemas no banco de dados, realizando análises e ajustes que melhoraram a funcionalidade e a eficiência das operações, contribuindo para uma experiência mais fluida para os usuários.",
+        "Minha atuação proativa e habilidades de comunicação permitiram uma colaboração eficaz com as equipes internas, promovendo um ambiente de trabalho mais integrado e produtivo.",
+      ],
+      technologies: [
+        "Oracle Cloud Infrastructure (OCI)",
+        "Linux",
+        "SQL",
+        "Suporte Técnico",
+      ],
+    },
+    {
+      company: "Câmara Municipal de Vereadores de Canguçu",
+      link: "https://www.camaracangucu.rs.gov.br/",
+      role: "Estagiário em Informática",
+      period: "Jul 2018 - Jun 2020",
+      description: [
+        "Durante meu estágio na Câmara Municipal de Vereadores de Canguçu, atuei como Estagiário em Informática, onde desenvolvi habilidades práticas em suporte técnico e manutenção de sistemas.",
+        "Realizei assistência técnica em hardware, diagnosticando e realizando a manutenção de equipamentos para garantir seu funcionamento adequado.",
+        "Ofereci suporte em software, incluindo instalação, configuração e resolução de problemas em sistemas operacionais e aplicativos, contribuindo para a eficiência das operações diárias.",
+        "Além disso, apoiei na manutenção e configuração de redes, assegurando conectividade e funcionalidade para todos os usuários, o que foi fundamental para o bom andamento das atividades da instituição.",
+      ],
+      technologies: [
+        "Hardware",
+        "Sistemas Operacionais",
+        "Redes",
+        "Suporte Técnico",
+      ],
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-[#0a192f] text-[#8892b0] relative overflow-hidden">
       <ParticlesBackground />
@@ -190,20 +273,17 @@ function App() {
             Onde Trabalhei
           </motion.h2>
           <div>
-            <ExperienceCard
-              company="Nome da Empresa"
-              role="Frontend Developer"
-              period="Jan 2022 - Presente"
-              description="Desenvolvimento de aplicações web com React, TypeScript e outras tecnologias modernas."
-              technologies={["React", "TypeScript", "Redux"]}
-            />
-            <ExperienceCard
-              company="Outra Empresa"
-              role="Frontend Developer Jr"
-              period="Jan 2021 - Dez 2021"
-              description="Desenvolvimento e manutenção de interfaces web responsivas."
-              technologies={["Vue.js", "JavaScript", "SCSS"]}
-            />
+            {experiences.map((experience, index) => (
+              <ExperienceCard
+                key={index}
+                company={experience.company}
+                role={experience.role}
+                period={experience.period}
+                description={experience.description}
+                technologies={experience.technologies}
+                link={experience.link}
+              />
+            ))}
           </div>
         </section>
 
