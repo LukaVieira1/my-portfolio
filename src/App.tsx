@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { useScrollToSection } from "./hooks/useScrollToSection";
 import { ParticlesBackground } from "./components/ParticlesBackground";
-import { ProjectCard } from "./components/ProjectCard";
 import { useState } from "react";
 import { ExperienceTimeline } from "./components/ExperienceTimeline";
+import { ProjectCarousel } from "./components/ProjectCarousel";
 
 function App() {
   const scrollToSection = useScrollToSection();
@@ -399,7 +399,7 @@ function App() {
           </section>
 
           {/* Projetos Section */}
-          <section id="projetos" className="py-20 relative z-10">
+          <section id="projetos" className="py-20">
             <motion.h2
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -440,11 +440,7 @@ function App() {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              {filteredProjects.map((project, index) => (
-                <ProjectCard key={index} {...project} />
-              ))}
-            </div>
+            <ProjectCarousel projects={filteredProjects} key={projectType} />
           </section>
 
           {/* Contact Section */}
