@@ -6,6 +6,7 @@ interface ExperienceCardProps {
   period: string;
   description: string[];
   technologies: string[];
+  link?: string;
 }
 
 export function ExperienceCard({
@@ -14,6 +15,7 @@ export function ExperienceCard({
   period,
   description,
   technologies,
+  link,
 }: ExperienceCardProps) {
   return (
     <motion.div
@@ -24,11 +26,22 @@ export function ExperienceCard({
     >
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
         <div>
-          <h3 className="text-xl font-bold text-[#ccd6f6]">
+          <h3 className="text-xl font-bold text-[#ccd6f6] max-w-xl">
             {role} <span className="text-[#64ffda]">@ {company}</span>
           </h3>
           <p className="font-mono text-sm">{period}</p>
         </div>
+        {link && (
+          <motion.a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <span className="text-[#64ffda]">Saiba mais</span>
+          </motion.a>
+        )}
       </div>
       <div className="text-[#8892b0] mb-4 max-w-2xl space-y-4">
         {description.map((paragraph, index) => (
