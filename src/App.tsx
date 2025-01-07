@@ -17,9 +17,22 @@ function App() {
     "JavaScript (ES6+)",
     "TypeScript",
     "React",
+    "Vue",
+    "Next.js",
+    "Nuxt.js",
     "Node.js",
     "Tailwind CSS",
-    "Next.js",
+    "Axios",
+    "React Query",
+    "Zustand",
+    "Cypress",
+    "Git",
+    "Framer Motion",
+  ];
+
+  const aboutMeParagraphs = [
+    "Há mais de 6 anos mergulhado no universo da tecnologia, encontrei minha verdadeira paixão no desenvolvimento Frontend. Nos últimos 3 anos, venho construindo interfaces que não são apenas bonitas, mas também intuitivas e funcionais.",
+    "Minha jornada começou no suporte técnico, onde desenvolvi um olhar aguçado para resolução de problemas e empatia com o usuário final. Hoje, transformo esse background em aplicações web que fazem a diferença, sempre focando na experiência do usuário e nas melhores práticas de desenvolvimento.",
   ];
 
   return (
@@ -121,11 +134,15 @@ function App() {
           </motion.h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="md:col-span-2 space-y-4">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              {aboutMeParagraphs.map((paragraph, index) => (
+                <p key={index} className="text-[#8892b0] leading-relaxed">
+                  {paragraph}
+                </p>
+              ))}
+
+              <p className="mt-8">
+                Principais tecnologias com as quais trabalho:
               </p>
-              <p>Principais tecnologias:</p>
               <ul className="grid grid-cols-2 gap-2 font-mono text-sm">
                 {mainTechs.map((tech) => (
                   <motion.li
@@ -141,18 +158,22 @@ function App() {
               </ul>
             </div>
             <motion.div
-              className="relative group"
+              className="relative group w-[250px] h-[250px]"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="relative z-10 rounded-lg overflow-hidden">
+              <div className="relative z-10 rounded-lg overflow-hidden w-full h-full">
                 <img
                   src="/profile-pic.jpeg"
                   alt="Luka Vieira"
-                  className="grayscale hover:grayscale-0 transition-all duration-300"
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
                 />
               </div>
-              <div className="absolute inset-0 border-2 border-[#64ffda] rounded-lg translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-300" />
+              <div
+                className="absolute inset-0 border-2 border-[#64ffda] rounded-lg 
+                           translate-x-4 translate-y-4 group-hover:translate-x-2 
+                           group-hover:translate-y-2 transition-transform duration-300"
+              />
             </motion.div>
           </div>
         </section>
