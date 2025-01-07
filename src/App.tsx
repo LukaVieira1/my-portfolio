@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
-import { ExperienceCard } from "./components/ExperienceCard";
 import { useScrollToSection } from "./hooks/useScrollToSection";
 import { ParticlesBackground } from "./components/ParticlesBackground";
 import { ProjectCard } from "./components/ProjectCard";
 import { useState } from "react";
+import { ExperienceTimeline } from "./components/ExperienceTimeline";
 
 function App() {
   const scrollToSection = useScrollToSection();
@@ -395,19 +395,7 @@ function App() {
               <span className="text-[#64ffda] font-mono mr-2">02.</span>
               Onde Trabalhei
             </motion.h2>
-            <div>
-              {experiences.map((experience, index) => (
-                <ExperienceCard
-                  key={index}
-                  company={experience.company}
-                  role={experience.role}
-                  period={experience.period}
-                  description={experience.description}
-                  technologies={experience.technologies}
-                  link={experience.link}
-                />
-              ))}
-            </div>
+            <ExperienceTimeline experiences={experiences} />
           </section>
 
           {/* Projetos Section */}
