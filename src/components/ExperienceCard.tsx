@@ -4,7 +4,7 @@ interface ExperienceCardProps {
   company: string;
   role: string;
   period: string;
-  description: string;
+  description: string[];
   technologies: string[];
 }
 
@@ -30,7 +30,11 @@ export function ExperienceCard({
           <p className="font-mono text-sm">{period}</p>
         </div>
       </div>
-      <p className="text-[#8892b0] mb-4 max-w-2xl">{description}</p>
+      <div className="text-[#8892b0] mb-4 max-w-2xl space-y-4">
+        {description.map((paragraph, index) => (
+          <p key={index}>{paragraph}</p>
+        ))}
+      </div>
       <div className="flex flex-wrap gap-2 font-mono text-sm text-[#8892b0]">
         {technologies.map((tech) => (
           <motion.span
