@@ -80,7 +80,7 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
 
   return (
     <div className="relative">
-      <div className="absolute left-[23.5px] top-0 h-full w-px bg-[#64ffda] opacity-20" />
+      <div className="absolute left-[23.5px] top-0 h-full w-px bg-primary opacity-20" />
 
       <div
         ref={containerRef}
@@ -100,8 +100,8 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
               viewport={{ once: true }}
               className="absolute -left-[28px] top-[14px] flex items-center justify-center"
             >
-              <div className="w-2 h-2 rounded-full bg-[#64ffda]" />
-              <div className="absolute w-4 h-4 rounded-full border border-[#64ffda] opacity-50" />
+              <div className="w-2 h-2 rounded-full bg-primary" />
+              <div className="absolute w-4 h-4 rounded-full border border-primary opacity-50" />
             </motion.div>
             <ExperienceCard {...experience} />
           </motion.div>
@@ -114,18 +114,16 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ delay: 1 }}
-          className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center bg-[#112240] px-4 py-2 rounded-full shadow-lg"
+          className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center bg-background-light px-4 py-2 rounded-full shadow-lg"
         >
           <motion.button
-            animate={{
-              y: [0, 5, 0],
-            }}
+            animate={{ y: [0, 5, 0] }}
             transition={{
               duration: 2,
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="text-[#64ffda]"
+            className="text-primary"
             onClick={handleScroll}
           >
             <FiChevronDown size={16} />

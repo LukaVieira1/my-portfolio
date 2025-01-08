@@ -4,7 +4,7 @@
 
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: #64ffda20 transparent;
+  scrollbar-color: theme("colors.primary.dark") transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -16,10 +16,10 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #64ffda20;
+  background-color: theme("colors.primary.dark");
   border-radius: 20px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: #64ffda40;
+  background-color: theme("colors.primary.DEFAULT");
 }

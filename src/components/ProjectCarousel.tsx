@@ -69,7 +69,7 @@ export function ProjectCarousel({ projects, key }: ProjectCarouselProps) {
 
   return (
     <div
-      className="relative w-full min-h-[800px] md:min-h-[600px] flex items-start justify-center px-4 md:px-16"
+      className="relative w-full min-h-[600px] flex items-start justify-center px-4 md:px-16"
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
     >
@@ -77,7 +77,7 @@ export function ProjectCarousel({ projects, key }: ProjectCarouselProps) {
         <div className="absolute left-0 md:-left-16 top-[300px] z-10 transform -translate-x-full md:translate-x-0">
           <button
             onClick={handleManualPrev}
-            className="text-[#64ffda] hover:text-[#ccd6f6] transition-colors p-2"
+            className="text-primary hover:text-text-primary transition-colors p-2"
           >
             <FiChevronLeft size={32} />
           </button>
@@ -86,7 +86,7 @@ export function ProjectCarousel({ projects, key }: ProjectCarouselProps) {
         <div className="absolute right-0 md:-right-20 top-[300px] z-10 transform translate-x-full md:translate-x-0">
           <button
             onClick={handleManualNext}
-            className="text-[#64ffda] hover:text-[#ccd6f6] transition-colors p-2"
+            className="text-primary hover:text-text-primary transition-colors p-2"
           >
             <FiChevronRight size={32} />
           </button>
@@ -138,7 +138,7 @@ export function ProjectCarousel({ projects, key }: ProjectCarouselProps) {
               setCurrentIndex(index);
             }}
             className={`w-2 h-2 rounded-full transition-colors ${
-              index === currentIndex ? "bg-[#64ffda]" : "bg-[#64ffda]/20"
+              index === currentIndex ? "bg-primary" : "bg-primary/20"
             }`}
           />
         ))}
