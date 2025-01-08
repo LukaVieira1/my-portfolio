@@ -128,7 +128,6 @@ export function ProjectCarousel({ projects, key }: ProjectCarouselProps) {
         </AnimatePresence>
       </div>
 
-      {/* Indicadores */}
       <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 flex gap-2">
         {projects.map((_, index) => (
           <button
