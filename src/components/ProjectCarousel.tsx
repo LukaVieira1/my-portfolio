@@ -69,7 +69,7 @@ export function ProjectCarousel({ projects, key }: ProjectCarouselProps) {
 
   return (
     <div
-      className="relative w-full min-h-[600px] flex items-start justify-center px-4 md:px-16"
+      className="relative w-full min-h-[800px] md:min-h-[600px] flex items-start justify-center px-4 md:px-16"
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
     >
