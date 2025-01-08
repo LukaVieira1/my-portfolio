@@ -15,21 +15,14 @@ export function ParticlesBackground() {
       className="absolute inset-0 z-0"
       options={{
         fpsLimit: 120,
-        interactivity: {
-          events: {
-            onHover: {
-              enable: true,
-              mode: "repulse",
-            },
-          },
-          modes: {
-            repulse: {
-              distance: 100,
-              duration: 0.4,
-            },
-          },
-        },
         particles: {
+          number: {
+            value: 80,
+            density: {
+              enable: true,
+              value_area: 800,
+            },
+          },
           color: {
             value: "#64ffda",
           },
@@ -41,30 +34,36 @@ export function ParticlesBackground() {
             width: 1,
           },
           move: {
-            direction: "none",
             enable: true,
-            outModes: {
-              default: "bounce",
-            },
-            random: true,
             speed: 1,
+            direction: "none",
+            random: false,
             straight: false,
-          },
-          number: {
-            density: {
-              enable: true,
-              area: 800,
+            outModes: {
+              default: "out",
             },
-            value: 80,
+          },
+          size: {
+            value: { min: 1, max: 3 },
           },
           opacity: {
             value: 0.2,
           },
-          shape: {
-            type: "circle",
+        },
+        interactivity: {
+          events: {
+            onHover: {
+              enable: true,
+              mode: "grab",
+            },
           },
-          size: {
-            value: { min: 1, max: 3 },
+          modes: {
+            grab: {
+              distance: 140,
+              links: {
+                opacity: 0.5,
+              },
+            },
           },
         },
         detectRetina: true,
