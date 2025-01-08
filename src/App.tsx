@@ -4,18 +4,21 @@ import { ParticlesBackground } from "./components/ParticlesBackground";
 import { useState } from "react";
 import { ExperienceTimeline } from "./components/ExperienceTimeline";
 import { ProjectCarousel } from "./components/ProjectCarousel";
+import { useTranslation } from "react-i18next";
+import { LanguageSwitcher } from "./components/LanguageSwitcher";
 
 function App() {
+  const { t } = useTranslation();
   const scrollToSection = useScrollToSection();
   const [projectType, setProjectType] = useState<"professional" | "personal">(
     "professional"
   );
 
   const navItems = [
-    { name: "Sobre", id: "sobre" },
-    { name: "Experiência", id: "experiencia" },
-    { name: "Projetos", id: "projetos" },
-    { name: "Contato", id: "contato" },
+    { name: t("header.nav.about"), id: "sobre" },
+    { name: t("header.nav.experience"), id: "experiencia" },
+    { name: t("header.nav.projects"), id: "projetos" },
+    { name: t("header.nav.contact"), id: "contato" },
   ];
 
   const mainTechs = [
@@ -35,21 +38,18 @@ function App() {
     "Framer Motion",
   ];
 
-  const aboutMeParagraphs = [
-    "Há mais de 6 anos mergulhado no universo da tecnologia, encontrei minha verdadeira paixão no desenvolvimento Frontend. Nos últimos 3 anos, venho construindo interfaces que não são apenas bonitas, mas também intuitivas e funcionais.",
-    "Minha jornada começou no suporte técnico, onde desenvolvi um olhar aguçado para resolução de problemas e empatia com o usuário final. Hoje, transformo esse background em aplicações web que fazem a diferença, sempre focando na experiência do usuário e nas melhores práticas de desenvolvimento.",
-  ];
+  const aboutMeParagraphs = [t("about.paragraphs.0"), t("about.paragraphs.1")];
 
   const experiences = [
     {
-      company: "GetHub",
-      role: "Frontend Developer",
-      period: "Mar 2023 - Presente",
+      company: t("experience.getHub.company"),
+      role: t("experience.getHub.role"),
+      period: t("experience.getHub.period"),
       description: [
-        "Na GetHub, atuo como Frontend Developer, onde sou responsável pelo desenvolvimento e manutenção de funcionalidades em Next.js, sempre com foco em performance e usabilidade. A GetHub é uma plataforma inovadora que conecta o ERP Millenium a grandes marketplaces, como Mercado Livre, Shopee, Amazon, Shein e Magalu, facilitando a integração e a gestão de vendas em múltiplos canais.",
-        "Minhas responsabilidades incluem a criação e execução de testes end-to-end (E2E) utilizando Cypress, garantindo a qualidade do código e a confiabilidade das funcionalidades implementadas. Participo ativamente de decisões estratégicas de produto, ajudando a definir regras de negócio que impactam diretamente a experiência do usuário.",
-        "Além disso, sou responsável pela elaboração e manutenção de documentação técnica, assegurando clareza e alinhamento entre as equipes. Realizo a análise de requisitos e viabilidade técnica para novas funcionalidades, colaborando de perto com Product Owners para garantir que as soluções atendam às necessidades do negócio.",
-        "Identifico e resolvo bugs, incluindo suporte em código legado, como Ruby, e também ofereço treinamento e suporte a novos membros da equipe, promovendo integração e produtividade. Conduzo calls com stakeholders e clientes, apresentando progresso e insights do projeto, além de fornecer suporte direto ao cliente, oferecendo soluções ágeis para problemas identificados.",
+        t("experience.getHub.description.0"),
+        t("experience.getHub.description.1"),
+        t("experience.getHub.description.2"),
+        t("experience.getHub.description.3"),
       ],
       technologies: [
         "Next.js",
@@ -63,15 +63,15 @@ function App() {
       ],
     },
     {
-      company: "Be Talent",
-      role: "Frontend Developer",
-      period: "Mar 2022 - Jan 2023",
+      company: t("experience.beMobile.company"),
+      role: t("experience.beMobile.role"),
+      period: t("experience.beMobile.period"),
       link: "https://bemobile.tech",
       description: [
-        "Na Be Talent, anteriormente conhecida como Be Mobile, atuei como Frontend Developer em diversos projetos, contribuindo para o desenvolvimento de soluções inovadoras e eficientes.",
-        "Fui responsável pelo desenvolvimento e manutenção de funcionalidades em jQuery, assegurando a performance e a funcionalidade de aplicações legadas, além de criar e otimizar recursos utilizando Nuxt.js, com foco em escalabilidade e experiência do usuário.",
-        "Minha atuação incluiu a implementação e manutenção de componentes modernos em React.js, priorizando a criação de código limpo e reutilizável, o que resultou em uma base de código mais sustentável e de fácil manutenção.",
-        "Trabalhei em colaboração com equipes multidisciplinares, participando ativamente de reuniões de planejamento e revisão, o que me permitiu alinhar as expectativas do cliente com as soluções técnicas propostas.",
+        t("experience.beMobile.description.0"),
+        t("experience.beMobile.description.1"),
+        t("experience.beMobile.description.2"),
+        t("experience.beMobile.description.3"),
       ],
       technologies: [
         "jQuery",
@@ -86,15 +86,15 @@ function App() {
       ],
     },
     {
-      company: "Aggrandize",
+      company: t("experience.aggrandize.company"),
       link: "https://aggrandize.com.br/",
-      role: "A. de Suporte Jr.",
-      period: "Mar 2021 - Mar 2022",
+      role: t("experience.aggrandize.role"),
+      period: t("experience.aggrandize.period"),
       description: [
-        "Na Aggrandize, atuei como Analista de Suporte Junior, onde fui responsável por fornecer suporte técnico de alta qualidade aos clientes, garantindo soluções rápidas e eficazes para problemas técnicos e operacionais.",
-        "Realizei a manutenção e monitoramento de recursos na Oracle Cloud Infrastructure (OCI), assegurando desempenho ideal e alta disponibilidade dos serviços, o que foi crucial para a continuidade das operações.",
-        "Além disso, identifiquei e resolvi pequenos problemas no banco de dados, realizando análises e ajustes que melhoraram a funcionalidade e a eficiência das operações, contribuindo para uma experiência mais fluida para os usuários.",
-        "Minha atuação proativa e habilidades de comunicação permitiram uma colaboração eficaz com as equipes internas, promovendo um ambiente de trabalho mais integrado e produtivo.",
+        t("experience.aggrandize.description.0"),
+        t("experience.aggrandize.description.1"),
+        t("experience.aggrandize.description.2"),
+        t("experience.aggrandize.description.3"),
       ],
       technologies: [
         "Oracle Cloud Infrastructure (OCI)",
@@ -104,15 +104,15 @@ function App() {
       ],
     },
     {
-      company: "Câmara Municipal de Vereadores de Canguçu",
+      company: t("experience.cmcgu.company"),
       link: "https://www.camaracangucu.rs.gov.br/",
-      role: "Estagiário em Informática",
-      period: "Jul 2018 - Jun 2020",
+      role: t("experience.cmcgu.role"),
+      period: t("experience.cmcgu.period"),
       description: [
-        "Durante meu estágio na Câmara Municipal de Vereadores de Canguçu, atuei como Estagiário em Informática, onde desenvolvi habilidades práticas em suporte técnico e manutenção de sistemas.",
-        "Realizei assistência técnica em hardware, diagnosticando e realizando a manutenção de equipamentos para garantir seu funcionamento adequado.",
-        "Ofereci suporte em software, incluindo instalação, configuração e resolução de problemas em sistemas operacionais e aplicativos, contribuindo para a eficiência das operações diárias.",
-        "Além disso, apoiei na manutenção e configuração de redes, assegurando conectividade e funcionalidade para todos os usuários, o que foi fundamental para o bom andamento das atividades da instituição.",
+        t("experience.cmcgu.description.0"),
+        t("experience.cmcgu.description.1"),
+        t("experience.cmcgu.description.2"),
+        t("experience.cmcgu.description.3"),
       ],
       technologies: [
         "Hardware",
@@ -125,11 +125,11 @@ function App() {
 
   const projects = [
     {
-      title: "GetHub",
+      title: t("projects.getHub.title"),
       description: [
-        "Dashboard para visualização de pedidos, estoques, anúncios e problemas pendentes.",
-        "Alteração de preços de produtos para anúncios e sugestões de resolução de problemas.",
-        "Integração contínua com o ERP Millenium, garantindo que o estoque e os preços estejam sempre atualizados, além da integração com a Nota Fiscal Eletrônica.",
+        t("projects.getHub.description.0"),
+        t("projects.getHub.description.1"),
+        t("projects.getHub.description.2"),
       ],
       link: "https://www.linkedin.com/company/getbuyhub/",
       technologies: [
@@ -145,11 +145,11 @@ function App() {
       image: "/projects/gethub.png",
     },
     {
-      title: "MeuPass",
+      title: t("projects.meupass.title"),
       description: [
-        "Aplicativo PWA em desenvolvimento, que oferece um sistema completo de cardápio, gerenciamento de pedidos, pagamentos, login e cadastro.",
-        "Com um design inovador e intuitivo, prioriza a usabilidade e a experiência do usuário.",
-        "Você pode conferir mais no instagram do MeuPass @meupassbr",
+        t("projects.meupass.description.0"),
+        t("projects.meupass.description.1"),
+        t("projects.meupass.description.2"),
       ],
       technologies: [
         "Next.js",
@@ -163,11 +163,11 @@ function App() {
       image: "/projects/meupass.png",
     },
     {
-      title: "Souplenus",
+      title: t("projects.souplenus.title"),
       description: [
-        "Plataforma dedicada a conectar profissionais da área de psicologia com usuários, além de facilitar parcerias com empresas e disponibilizar locais para sessões de psicoterapia.",
-        "Utilizada por profissionais da psicologia para promover seus serviços e facilitar o contato com potenciais clientes.",
-        "Oferece diversos filtros para ajudar na busca pelo profissional ideal, além de um sistema de avaliações e comentários, e um recurso para agendamento de consultas.",
+        t("projects.souplenus.description.0"),
+        t("projects.souplenus.description.1"),
+        t("projects.souplenus.description.2"),
       ],
       technologies: ["Nuxt.js", "Tailwind", "React Query"],
       link: "https://www.souplenus.com.br/",
@@ -175,12 +175,12 @@ function App() {
       image: "/projects/souplenus.png",
     },
     {
-      title: "Awari",
+      title: t("projects.awari.title"),
       description: [
-        "Plataforma de educação online com cursos e mentorias em tecnologia, focada em preparar alunos para o mercado de trabalho.",
-        "Oferece uma variedade de cursos, desde programação básica até desenvolvimento fullstack, com foco em prática e aplicação dos conhecimentos.",
-        "Além de mentorias, oferece acesso a uma comunidade de alunos e profissionais, para troca de conhecimentos e networking.",
-        "Também conta com um dashboard para acompanhamento de projetos e alunos, com relatórios e métricas.",
+        t("projects.awari.description.0"),
+        t("projects.awari.description.1"),
+        t("projects.awari.description.2"),
+        t("projects.awari.description.3"),
       ],
       technologies: ["JQuery", "Laravel", "PHP", "React", "TypeScript"],
       link: "https://awari.com.br/",
@@ -188,10 +188,10 @@ function App() {
       image: "/projects/awari.png",
     },
     {
-      title: "Sistema de gestão (ERP) - MPI Informatica",
+      title: t("projects.mpi.title"),
       description: [
-        "O Sistema de Gestão (ERP) da MPI Informática é uma solução completa para automatizar operações, eliminando a necessidade de múltiplos sistemas. Com controle de estoque, fluxo de caixa, emissão de notas fiscais e relatórios detalhados, oferece uma visão clara do negócio.",
-        "Funcionalidades incluem: Gestão de Vendas e Compras, Controle de Estoque, Relatórios Financeiros, Integração com gateways de pagamento e um ponto de venda (PDV) para atendimento ao cliente.",
+        t("projects.mpi.description.0"),
+        t("projects.mpi.description.1"),
       ],
       technologies: ["Vue 3", "Tailwind", "TypeScript", "Axios"],
       link: "https://mpiinformatica.com/sistema-de-gestao/",
@@ -199,10 +199,10 @@ function App() {
       image: "/projects/mpi.jpeg",
     },
     {
-      title: "Atlas Governance",
+      title: t("projects.atlas.title"),
       description: [
-        "Breve participação inicial da criação do dashboard da Atlas Governance, uma plataforma de governança corporativa. O dashboard permite a criação e convocação de reuniões, além de gerenciar os membros da organização.",
-        "Documentos, relatórios e atas são gerados automaticamente, facilitando a gestão de ações e projetos estratégicos. A plataforma também oferece indexação e busca com inteligência artificial, além de avaliações de conselhos e comitês.",
+        t("projects.atlas.description.0"),
+        t("projects.atlas.description.1"),
       ],
       technologies: ["React", "Tailwind", "TypeScript", "Axios", "Redux"],
       link: "https://welcome.atlasgov.com/",
@@ -210,12 +210,12 @@ function App() {
       image: "/projects/atlas.jpeg",
     },
     {
-      title: "Tetris",
+      title: t("projects.tetris.title"),
       description: [
-        "Um classico dos anos 80! ",
-        "O jogo conta com um sistema de pontuação e progressão de níveis, além de um ranking das melhores pontuações alcançadas e as próximas peças que serão geradas.",
-        "Apresenta um design moderno com animações fluidas e suporte a múltiplos idiomas, incluindo português e inglês.",
-        "Inclui um menu com opções para configuração de idioma e um tutorial interativo e a opção de pausar o jogo.",
+        t("projects.tetris.description.0"),
+        t("projects.tetris.description.1"),
+        t("projects.tetris.description.2"),
+        t("projects.tetris.description.3"),
       ],
       technologies: [
         "React",
@@ -231,12 +231,12 @@ function App() {
       image: "/projects/tetris.png",
     },
     {
-      title: "Petwiiter",
+      title: t("projects.petwiiter.title"),
       description: [
-        "Um clonedo do X (Twitter) voltado para amantes de pets!",
-        "Foi um dos meus primeiros projetos, onde aprendi muito sobre React e APIs (que também foi feita por mim).",
-        "O Petwiiter é uma plataforma social onde você pode compartilhar textos e interagir com outros usuários.",
-        "Inclui um sistema de login, comentários e perfis de usuários.",
+        t("projects.petwiiter.description.0"),
+        t("projects.petwiiter.description.1"),
+        t("projects.petwiiter.description.2"),
+        t("projects.petwiiter.description.3"),
       ],
       technologies: [
         "React",
@@ -271,7 +271,7 @@ function App() {
               animate={{ opacity: 1 }}
               className="text-[#64ffda] font-mono"
             >
-              luka-vieira.dev
+              {t("header.logo")}
             </motion.div>
             <div className="hidden md:flex space-x-8 font-mono text-sm">
               {navItems.map((item, i) => (
@@ -289,6 +289,7 @@ function App() {
                 </motion.button>
               ))}
             </div>
+            <LanguageSwitcher />
           </div>
         </nav>
 
@@ -300,13 +301,7 @@ function App() {
               animate={{ opacity: 1, y: 0 }}
               className="text-[#64ffda] font-mono mb-5"
             >
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 0.5 }}
-              >
-                &gt; Olá, me chamo
-              </motion.span>
+              {t("hero.greeting")}
             </motion.p>
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
@@ -314,7 +309,7 @@ function App() {
               transition={{ delay: 0.1 }}
               className="text-4xl font-bold text-[#ccd6f6] mb-4"
             >
-              Luka Vieira.
+              {t("hero.name")}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -322,13 +317,12 @@ function App() {
               transition={{ delay: 0.2 }}
               className="text-lg mb-8"
             >
-              Apaixonado por resolver problemas e criar experiências digitais
-              excepcionais.
+              {t("hero.description")}
             </motion.p>
           </section>
 
           {/* About Section */}
-          <section id="sobre" className="py-20">
+          <section id="about" className="py-20">
             <motion.h2
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -336,7 +330,7 @@ function App() {
               className="flex items-center text-2xl font-bold text-[#ccd6f6] mb-8"
             >
               <span className="text-[#64ffda] font-mono mr-2">01.</span>
-              Sobre Mim
+              {t("about.title")}
             </motion.h2>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="md:col-span-2 space-y-4">
@@ -346,9 +340,7 @@ function App() {
                   </p>
                 ))}
 
-                <p className="mt-8">
-                  Principais tecnologias com as quais trabalho:
-                </p>
+                <p className="mt-8">{t("about.mainTechs")}</p>
                 <ul className="grid grid-cols-2 gap-2 font-mono text-sm">
                   {mainTechs.map((tech) => (
                     <motion.li
@@ -385,7 +377,7 @@ function App() {
           </section>
 
           {/* Experience Section */}
-          <section id="experiencia" className="py-20">
+          <section id="experience" className="py-20">
             <motion.h2
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -393,13 +385,13 @@ function App() {
               className="flex items-center text-2xl font-bold text-[#ccd6f6] mb-8"
             >
               <span className="text-[#64ffda] font-mono mr-2">02.</span>
-              Onde Trabalhei
+              {t("experience.title")}
             </motion.h2>
             <ExperienceTimeline experiences={experiences} />
           </section>
 
           {/* Projetos Section */}
-          <section id="projetos" className="py-20">
+          <section id="projects" className="py-20">
             <motion.h2
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -407,7 +399,7 @@ function App() {
               className="flex items-center text-2xl font-bold text-[#ccd6f6] mb-8"
             >
               <span className="text-[#64ffda] font-mono mr-2">03.</span>
-              Alguns Projetos
+              {t("projects.title")}
             </motion.h2>
 
             <div className="flex justify-center mb-12">
@@ -431,7 +423,7 @@ function App() {
                       : "text-[#8892b0] hover:text-[#ccd6f6]"
                   }`}
                 >
-                  Profissionais
+                  {t("projects.filters.professional")}
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
@@ -443,7 +435,7 @@ function App() {
                       : "text-[#8892b0] hover:text-[#ccd6f6]"
                   }`}
                 >
-                  Pessoais
+                  {t("projects.filters.personal")}
                 </motion.button>
               </div>
             </div>
@@ -452,7 +444,7 @@ function App() {
           </section>
 
           {/* Contact Section */}
-          <section id="contato" className="py-20">
+          <section id="contact" className="py-20">
             <motion.h2
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -460,14 +452,10 @@ function App() {
               className="flex items-center text-2xl font-bold text-[#ccd6f6] mb-8"
             >
               <span className="text-[#64ffda] font-mono mr-2">04.</span>
-              Vamos Conversar?
+              {t("contact.title")}
             </motion.h2>
             <div className="space-y-4">
-              <p>
-                Estou sempre aberto a novas oportunidades. Se você tem um
-                projeto interessante ou só quer bater um papo, me manda uma
-                mensagem!
-              </p>
+              <p>{t("contact.description")}</p>
               <motion.div className="flex flex-col space-y-4">
                 <motion.a
                   href="mailto:lukavieira14@gmail.com"

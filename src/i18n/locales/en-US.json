@@ -1,0 +1,148 @@
+{
+  "header": {
+    "nav": {
+      "about": "About",
+      "experience": "Experience",
+      "projects": "Projects",
+      "contact": "Contact"
+    },
+    "logo": "luka-vieira.dev"
+  },
+  "hero": {
+    "greeting": "Hi, my name is",
+    "name": "Luka Vieira.",
+    "description": "I'm passionate about solving problems and creating exceptional digital experiences."
+  },
+  "about": {
+    "title": "About Me",
+    "mainTechs": "Main technologies I work with:",
+    "paragraphs": [
+      "With over 6 years immersed in the technology universe, I found my true passion in Frontend development. For the past 3 years, I've been building interfaces that are not just beautiful, but intuitive and functional.",
+      "My journey began in technical support, where I developed a keen eye for problem-solving and empathy with end users. Today, I transform this background into web applications that make a difference, always focusing on user experience and development best practices."
+    ]
+  },
+  "experience": {
+    "title": "Where I've Worked",
+    "seeMore": "See more",
+    "getHub": {
+      "company": "GetHub",
+      "role": "Frontend Developer",
+      "period": "Mar 2023 - Present",
+      "description": [
+        "At GetHub, I work as a Frontend Developer, where I am responsible for developing and maintaining features in Next.js, always focusing on performance and usability. GetHub is an innovative platform that connects the ERP Millenium to major marketplaces such as Mercado Livre, Shopee, Amazon, Shein, and Magalu, facilitating integration and sales management across multiple channels.",
+        "My responsibilities include creating and executing end-to-end (E2E) tests using Cypress, ensuring code quality and the reliability of implemented features. I actively participate in strategic product decisions, helping to define business rules that directly impact the user experience.",
+        "Additionally, I am responsible for creating and maintaining technical documentation, ensuring clarity and alignment among teams. I analyze requirements and technical feasibility for new features, working closely with Product Owners to ensure the solutions meet business needs.",
+        "I identify and resolve bugs, including providing support for legacy code, such as Ruby. I also offer training and support to new team members, fostering integration and productivity. I conduct calls with stakeholders and clients, presenting project progress and insights, as well as providing direct customer support, offering agile solutions to identified issues."
+      ]
+    },
+    "beMobile": {
+      "company": "Be Talent",
+      "role": "Frontend Developer",
+      "period": "Mar 2022 - Jan 2023",
+      "description": [
+        "At Be Talent, formerly known as Be Mobile, I worked as a Frontend Developer on various projects, contributing to the development of innovative and efficient solutions.",
+        "I was responsible for developing and maintaining features using jQuery, ensuring the performance and functionality of legacy applications, as well as creating and optimizing resources with Nuxt.js, focusing on scalability and user experience.",
+        "My role included implementing and maintaining modern components in React.js, prioritizing the creation of clean and reusable code, which resulted in a more sustainable and easily maintainable codebase.",
+        "I collaborated with multidisciplinary teams, actively participating in planning and review meetings, which allowed me to align client expectations with the proposed technical solutions."
+      ]
+    },
+    "aggrandize": {
+      "company": "Aggrandize",
+      "role": "Support Analyst JR.",
+      "period": "Mar 2021 - Mar 2022",
+      "description": [
+        "At Aggrandize, I worked as a Junior Support Analyst, where I was responsible for providing high-quality technical support to clients, ensuring quick and effective solutions for technical and operational issues.",
+        "I performed maintenance and monitoring of resources on Oracle Cloud Infrastructure (OCI), ensuring optimal performance and high availability of services, which was crucial for operational continuity.",
+        "Additionally, I identified and resolved minor database issues, conducting analyses and adjustments that improved functionality and operational efficiency, contributing to a smoother user experience.",
+        "My proactive approach and communication skills enabled effective collaboration with internal teams, fostering a more integrated and productive work environment."
+      ]
+    },
+    "cmcgu": {
+      "company": "Câmara Municipal de Vereadores de Canguçu",
+      "role": "IT Intern",
+      "period": "Jul 2018 - Jun 2020",
+      "description": [
+        "During my internship at the City Council of Canguçu, I worked as an IT Intern, where I developed practical skills in technical support and system maintenance.",
+        "I provided technical assistance in hardware, diagnosing and performing maintenance on equipment to ensure proper functionality.",
+        "I offered software support, including installation, configuration, and troubleshooting of operating systems and applications, contributing to the efficiency of daily operations.",
+        "Additionally, I assisted in network maintenance and configuration, ensuring connectivity and functionality for all users, which was essential for the smooth operation of the institution's activities."
+      ]
+    }
+  },
+  "projects": {
+    "title": "Some Things I've Built",
+    "filters": {
+      "professional": "Professional",
+      "personal": "Personal"
+    },
+    "getHub": {
+      "title": "GetHub",
+      "description": [
+        "Dashboard for viewing orders, stocks, ads, and pending issues.",
+        "Price changes for products in ads and suggestions for problem resolution.",
+        "Continuous integration with the ERP Millenium, ensuring that the stock and prices are always updated, as well as integration with the Electronic Invoice."
+      ]
+    },
+    "meupass": {
+      "title": "MeuPass",
+      "description": [
+        "PWA application in development, offering a complete system of menu, order management, payments, login, and registration.",
+        "With an innovative and intuitive design, prioritizing usability and user experience.",
+        "You can check more on the MeuPass instagram @meupassapp"
+      ]
+    },
+    "souplenus": {
+      "title": "Souplenus",
+      "description": [
+        "Platform dedicated to connecting psychology professionals with users, as well as facilitating partnerships with companies and providing locations for psychotherapy sessions.",
+        "Used by psychology professionals to promote their services and facilitate contact with potential clients.",
+        "Offers various filters to help find the ideal professional, as well as a system of evaluations and comments, and a resource for scheduling consultations."
+      ]
+    },
+    "awari": {
+      "title": "Awari",
+      "description": [
+        "Online education platform with courses and mentorship in technology, focused on preparing students for the job market.",
+        "Offers a variety of courses, from basic programming to fullstack development, with a focus on practice and application of knowledge.",
+        "In addition to mentorship, it offers access to a community of students and professionals, for knowledge exchange and networking.",
+        "It also includes a dashboard for tracking projects and students, with reports and metrics."
+      ]
+    },
+    "mpi": {
+      "title": "MPI ERP",
+      "description": [
+        "Complete ERP solution for automating operations, eliminating the need for multiple systems. With inventory control, cash flow, invoice issuance, and detailed reports, it provides a clear view of the business.",
+        "Features include: Sales and Purchases Management, Inventory Control, Financial Reports, Integration with payment gateways, and a Point of Sale (POS) for customer service."
+      ]
+    },
+    "atlas": {
+      "title": "Atlas Governance",
+      "description": [
+        "Brief initial participation in the creation of the Atlas Governance dashboard, a corporate governance platform. The dashboard allows for the creation and convocation of meetings, as well as managing the organization's members.",
+        "Documents, reports, and minutes are generated automatically, facilitating the management of strategic actions and projects. The platform also offers indexing and search with artificial intelligence, as well as evaluations of councils and committees."
+      ]
+    },
+    "tetris": {
+      "title": "Tetris",
+      "description": [
+        "A classic from the 80s! ",
+        "The game includes a scoring system and level progression, as well as a ranking of the highest scores achieved and the next pieces to be generated.",
+        "It presents a modern design with fluid animations and support for multiple languages, including Portuguese and English.",
+        "Includes a menu with options for language configuration, an interactive tutorial, and the option to pause the game."
+      ]
+    },
+    "petwiiter": {
+      "title": "Petwiiter",
+      "description": [
+        "A clone of X (Twitter) focused on pet lovers!",
+        "It was one of my first projects, where I learned a lot about React and APIs (which I also made).",
+        "The Petwiiter is a social platform where you can share texts and interact with other users.",
+        "Includes a login system, comments, and user profiles."
+      ]
+    }
+  },
+  "contact": {
+    "title": "Let's Talk?",
+    "description": "I'm always open to new opportunities. If you have an interesting project or just want to chat, send me a message!"
+  }
+}

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 interface ExperienceCardProps {
   company: string;
@@ -17,6 +18,7 @@ export function ExperienceCard({
   technologies,
   link,
 }: ExperienceCardProps) {
+  const { t } = useTranslation();
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
@@ -39,7 +41,7 @@ export function ExperienceCard({
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <span className="text-[#64ffda]">Saiba mais</span>
+            <span className="text-[#64ffda]">{t("experience.seeMore")}</span>
           </motion.a>
         )}
       </div>
