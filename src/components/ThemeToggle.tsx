@@ -10,7 +10,7 @@ export function ThemeToggle() {
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       onClick={toggleTheme}
-      className="p-2 rounded-full hover:bg-background-light transition-colors"
+      className="p-2 rounded-full hover:bg-background-light transition-colors cursor-pointer"
       aria-label="Toggle theme"
     >
       {theme === "dark" ? (

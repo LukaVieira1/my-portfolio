@@ -10,7 +10,7 @@ export function LanguageSwitcher() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => i18n.changeLanguage("en")}
-        className={`px-2 py-1 rounded ${
+        className={`px-2 py-1 rounded cursor-pointer ${
           i18n.language === "en"
             ? "text-primary border border-primary"
             : "text-text-secondary"
@@ -22,7 +22,7 @@ export function LanguageSwitcher() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => i18n.changeLanguage("pt")}
-        className={`px-2 py-1 rounded ${
+        className={`px-2 py-1 rounded cursor-pointer ${
           i18n.language === "pt"
             ? "text-primary border border-primary"
             : "text-text-secondary"

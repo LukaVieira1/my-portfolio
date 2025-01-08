@@ -121,7 +121,7 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="text-primary"
+            className="text-primary cursor-pointer"
             onClick={handleScroll}
           >
             <FiChevronDown size={16} />
