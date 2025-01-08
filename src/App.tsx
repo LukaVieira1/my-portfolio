@@ -15,10 +15,10 @@ function App() {
   );
 
   const navItems = [
-    { name: t("header.nav.about"), id: "sobre" },
-    { name: t("header.nav.experience"), id: "experiencia" },
-    { name: t("header.nav.projects"), id: "projetos" },
-    { name: t("header.nav.contact"), id: "contato" },
+    { name: t("header.nav.about"), id: "about" },
+    { name: t("header.nav.experience"), id: "experience" },
+    { name: t("header.nav.projects"), id: "projects" },
+    { name: t("header.nav.contact"), id: "contact" },
   ];
 
   const mainTechs = [
