@@ -1,3 +1,76 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@variant dark (&:is(.dark *));
+
+@theme {
+  --color-primary-light: var(--primary-light);
+  --color-primary: var(--primary-default);
+  --color-primary-dark: var(--primary-dark);
+
+  --color-background: var(--background-default);
+  --color-background-light: var(--background-light);
+  --color-background-lighter: var(--background-lighter);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@layer base {
+  :root {
+    --primary-light: var(--color-sky-400);
+    --primary-default: var(--color-sky-600);
+    --primary-dark: theme("colors.sky.600/0.2");
+
+    --background-default: var(--color-slate-50);
+    --background-light: var(--color-slate-200);
+    --background-lighter: var(--color-slate-300);
+
+    --text-primary: var(--color-slate-800);
+    --text-secondary: var(--color-slate-600);
+  }
+
+  .dark {
+    --primary-light: #64ffda;
+    --primary-default: #64ffda;
+    --primary-dark: #64ffda20;
+
+    --background-default: #0a192f;
+    --background-light: #112240;
+    --background-lighter: #233554;
+
+    --text-primary: #ccd6f6;
+    --text-secondary: #8892b0;
+  }
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary-dark) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary-dark);
+  border-radius: 20px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-primary);
+}

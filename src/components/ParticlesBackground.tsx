@@ -2,8 +2,11 @@ import { useCallback } from "react";
 import Particles from "react-particles";
 import type { Engine } from "tsparticles-engine";
 import { loadSlim } from "tsparticles-slim";
+import { useTheme } from "../contexts/ThemeContext";
 
 export function ParticlesBackground() {
+  const { theme } = useTheme();
+
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadSlim(engine);
   }, []);
@@ -16,38 +19,41 @@ export function ParticlesBackground() {
       options={{
         fpsLimit: 120,
         particles: {
-          number: {
-            value: 80,
-            density: {
-              enable: true,
-              value_area: 800,
-            },
-          },
           color: {
-            value: "#64ffda",
+            value: theme === "dark" ? "#64ffda" : "#0284c7",
           },
           links: {
-            color: "#64ffda",
+            color: theme === "dark" ? "#64ffda20" : "#0284c720",
             distance: 150,
             enable: true,
-            opacity: 0.2,
+            opacity: 0.5,
             width: 1,
           },
           move: {
-            enable: true,
-            speed: 1,
             direction: "none",
-            random: false,
-            straight: false,
+            enable: true,
             outModes: {
-              default: "out",
+              default: "bounce",
             },
+            random: false,
+            speed: 1,
+            straight: false,
           },
-          size: {
-            value: { min: 1, max: 3 },
+          number: {
+            density: {
+              enable: true,
+              area: 800,
+            },
+            value: 80,
           },
           opacity: {
-            value: 0.2,
+            value: 0.5,
+          },
+          shape: {
+            type: "circle",
+          },
+          size: {
+            value: { min: 1, max: 5 },
           },
         },
         interactivity: {
@@ -56,6 +62,10 @@ export function ParticlesBackground() {
               enable: true,
               mode: "grab",
             },
+            onClick: {
+              enable: true,
+              mode: "push",
+            },
           },
           modes: {
             grab: {
@@ -63,6 +73,9 @@ export function ParticlesBackground() {
               links: {
                 opacity: 0.5,
               },
+            },
+            push: {
+              quantity: 4,
             },
           },
         },
