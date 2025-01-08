@@ -1,0 +1,16 @@
+export const mainTechs = [
+  "JavaScript (ES6+)",
+  "TypeScript",
+  "React",
+  "Vue",
+  "Next.js",
+  "Nuxt.js",
+  "Node.js",
+  "Tailwind CSS",
+  "Axios",
+  "React Query",
+  "Zustand",
+  "Cypress",
+  "Git",
+  "Framer Motion",
+];

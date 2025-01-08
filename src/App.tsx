@@ -1,14 +1,26 @@
-import { motion } from "framer-motion";
-import { useScrollToSection } from "./hooks/useScrollToSection";
-import { ParticlesBackground } from "./components/ParticlesBackground";
+// React
 import { useState, useEffect } from "react";
+
+// Framer Motion
+import { motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
+
+// Hooks
+import { useScrollToSection } from "./hooks/useScrollToSection";
+import { useTranslation } from "react-i18next";
+
+// Components
+import { ParticlesBackground } from "./components/ParticlesBackground";
 import { ExperienceTimeline } from "./components/ExperienceTimeline";
 import { ProjectCarousel } from "./components/ProjectCarousel";
-import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "./components/LanguageSwitcher";
-import { FiMail, FiLinkedin, FiGithub } from "react-icons/fi";
 import { SplashScreen } from "./components/SplashScreen";
-import { AnimatePresence } from "framer-motion";
+
+// Icons
+import { FiMail, FiLinkedin, FiGithub } from "react-icons/fi";
+
+// Data
+import { navItems, mainTechs, getExperiences, getProjects } from "./data";
 
 function App() {
   const { t } = useTranslation();
@@ -18,257 +30,20 @@ function App() {
   );
   const [loading, setLoading] = useState(true);
 
+  const aboutMeParagraphs = [t("about.paragraphs.0"), t("about.paragraphs.1")];
+  const experiences = getExperiences(t);
+  const projects = getProjects(t);
+  const navigation = navItems(t);
+
+  const filteredProjects = projects.filter(
+    (project) => project.isPersonal === (projectType === "personal")
+  );
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 2000);
   }, []);
-
-  const navItems = [
-    { name: t("header.nav.about"), id: "about" },
-    { name: t("header.nav.experience"), id: "experience" },
-    { name: t("header.nav.projects"), id: "projects" },
-    { name: t("header.nav.contact"), id: "contact" },
-  ];
-
-  const mainTechs = [
-    "JavaScript (ES6+)",
-    "TypeScript",
-    "React",
-    "Vue",
-    "Next.js",
-    "Nuxt.js",
-    "Node.js",
-    "Tailwind CSS",
-    "Axios",
-    "React Query",
-    "Zustand",
-    "Cypress",
-    "Git",
-    "Framer Motion",
-  ];
-
-  const aboutMeParagraphs = [t("about.paragraphs.0"), t("about.paragraphs.1")];
-
-  const experiences = [
-    {
-      company: t("experience.getHub.company"),
-      role: t("experience.getHub.role"),
-      period: t("experience.getHub.period"),
-      link: "https://www.linkedin.com/company/getbuyhub/",
-      description: [
-        t("experience.getHub.description.0"),
-        t("experience.getHub.description.1"),
-        t("experience.getHub.description.2"),
-        t("experience.getHub.description.3"),
-      ],
-      technologies: [
-        "Next.js",
-        "Tailwind CSS",
-        "React Query",
-        "XState",
-        "React Hook Form",
-        "Axios",
-        "Cypress",
-        "Ruby",
-      ],
-    },
-    {
-      company: t("experience.beMobile.company"),
-      role: t("experience.beMobile.role"),
-      period: t("experience.beMobile.period"),
-      link: "https://bemobile.tech",
-      description: [
-        t("experience.beMobile.description.0"),
-        t("experience.beMobile.description.1"),
-        t("experience.beMobile.description.2"),
-        t("experience.beMobile.description.3"),
-      ],
-      technologies: [
-        "jQuery",
-        "Nuxt.js",
-        "React",
-        "Tailwind CSS",
-        "XState",
-        "Redux",
-        "Axios",
-        "Git",
-        "Laravel",
-      ],
-    },
-    {
-      company: t("experience.aggrandize.company"),
-      link: "https://aggrandize.com.br/",
-      role: t("experience.aggrandize.role"),
-      period: t("experience.aggrandize.period"),
-      description: [
-        t("experience.aggrandize.description.0"),
-        t("experience.aggrandize.description.1"),
-        t("experience.aggrandize.description.2"),
-        t("experience.aggrandize.description.3"),
-      ],
-      technologies: [
-        "Oracle Cloud Infrastructure (OCI)",
-        "Linux",
-        "SQL",
-        "Suporte Técnico",
-      ],
-    },
-    {
-      company: t("experience.cmcgu.company"),
-      link: "https://www.camaracangucu.rs.gov.br/",
-      role: t("experience.cmcgu.role"),
-      period: t("experience.cmcgu.period"),
-      description: [
-        t("experience.cmcgu.description.0"),
-        t("experience.cmcgu.description.1"),
-        t("experience.cmcgu.description.2"),
-        t("experience.cmcgu.description.3"),
-      ],
-      technologies: [
-        "Hardware",
-        "Sistemas Operacionais",
-        "Redes",
-        "Suporte Técnico",
-      ],
-    },
-  ];
-
-  const projects = [
-    {
-      title: t("projects.getHub.title"),
-      description: [
-        t("projects.getHub.description.0"),
-        t("projects.getHub.description.1"),
-        t("projects.getHub.description.2"),
-      ],
-      link: "https://www.linkedin.com/company/getbuyhub/",
-      technologies: [
-        "Next.js",
-        "Tailwind CSS",
-        "React Query",
-        "XState",
-        "React Hook Form",
-        "Axios",
-        "Cypress",
-      ],
-      isPersonal: false,
-      image: "/projects/gethub.png",
-    },
-    {
-      title: t("projects.meupass.title"),
-      description: [
-        t("projects.meupass.description.0"),
-        t("projects.meupass.description.1"),
-        t("projects.meupass.description.2"),
-      ],
-      technologies: [
-        "Next.js",
-        "TypeScript",
-        "Tailwind",
-        "Axios",
-        "Framer Motion",
-      ],
-      link: "https://token.meupass.com.br/",
-      isPersonal: false,
-      image: "/projects/meupass.png",
-    },
-    {
-      title: t("projects.souplenus.title"),
-      description: [
-        t("projects.souplenus.description.0"),
-        t("projects.souplenus.description.1"),
-        t("projects.souplenus.description.2"),
-      ],
-      technologies: ["Nuxt.js", "Tailwind", "React Query"],
-      link: "https://www.souplenus.com.br/",
-      isPersonal: false,
-      image: "/projects/souplenus.png",
-    },
-    {
-      title: t("projects.awari.title"),
-      description: [
-        t("projects.awari.description.0"),
-        t("projects.awari.description.1"),
-        t("projects.awari.description.2"),
-        t("projects.awari.description.3"),
-      ],
-      technologies: ["JQuery", "Laravel", "PHP", "React", "TypeScript"],
-      link: "https://awari.com.br/",
-      isPersonal: false,
-      image: "/projects/awari.png",
-    },
-    {
-      title: t("projects.mpi.title"),
-      description: [
-        t("projects.mpi.description.0"),
-        t("projects.mpi.description.1"),
-      ],
-      technologies: ["Vue 3", "Tailwind", "TypeScript", "Axios"],
-      link: "https://mpiinformatica.com/sistema-de-gestao/",
-      isPersonal: false,
-      image: "/projects/mpi.jpeg",
-    },
-    {
-      title: t("projects.atlas.title"),
-      description: [
-        t("projects.atlas.description.0"),
-        t("projects.atlas.description.1"),
-      ],
-      technologies: ["React", "Tailwind", "TypeScript", "Axios", "Redux"],
-      link: "https://welcome.atlasgov.com/",
-      isPersonal: false,
-      image: "/projects/atlas.jpeg",
-    },
-    {
-      title: t("projects.tetris.title"),
-      description: [
-        t("projects.tetris.description.0"),
-        t("projects.tetris.description.1"),
-        t("projects.tetris.description.2"),
-        t("projects.tetris.description.3"),
-      ],
-      technologies: [
-        "React",
-        "Tailwind",
-        "TypeScript",
-        "Vite",
-        "Framer Motion",
-        "i18n",
-      ],
-      link: "https://tetris.lukavieira.tech/",
-      githubLink: "https://github.com/LukaVieira1/tetris",
-      isPersonal: true,
-      image: "/projects/tetris.png",
-    },
-    {
-      title: t("projects.petwiiter.title"),
-      description: [
-        t("projects.petwiiter.description.0"),
-        t("projects.petwiiter.description.1"),
-        t("projects.petwiiter.description.2"),
-        t("projects.petwiiter.description.3"),
-      ],
-      technologies: [
-        "React",
-        "Chakra UI",
-        "Axios",
-        "Node.js",
-        "Fastify",
-        "PostgreSQL",
-        "Prisma",
-      ],
-      link: "https://petwitter.lukavieira.tech/",
-      githubLink:
-        "https://github.com/LukaVieira1/FinalProject-Petwitter-FrontEnd",
-      isPersonal: true,
-      image: "/projects/petwitter.png",
-    },
-  ];
-
-  const filteredProjects = projects.filter(
-    (project) => project.isPersonal === (projectType === "personal")
-  );
 
   return (
     <div className="min-h-screen bg-background text-text-secondary relative">
@@ -300,7 +75,7 @@ function App() {
                     {t("header.logo")}
                   </motion.div>
                   <div className="hidden md:flex space-x-8 font-mono text-sm">
-                    {navItems.map((item, i) => (
+                    {navigation.map((item, i) => (
                       <motion.button
                         key={item.name}
                         onClick={() => scrollToSection(item.id)}
