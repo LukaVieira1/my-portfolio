@@ -1,5 +1,48 @@
 # Changelog
 
+## v1.0.0 (2025-01-08)
+
+### 🎨 Theme System
+
+- Implemented light/dark theme system
+- Added ThemeContext for theme management
+- Created ThemeToggle component
+- Added theme persistence in localStorage
+- Updated color system with CSS variables
+- Adapted ParticlesBackground to support both themes
+- Updated all components to use current theme colors
+
+### 🏗 Structure
+
+- Reorganized file structure
+- Created data folder with separate files for:
+  - experiences.ts
+  - navigation.ts
+  - projects.ts
+  - skills.ts
+- Added index.ts file to centralize exports
+- Improved data typing
+- Optimized imports
+
+### 🎨 UI/UX
+
+- Added smooth theme transitions
+- Improved language switch animations
+- Optimized animation performance
+- Adjusted contrast and readability in both themes
+
+### 📦 Dependencies
+
+- Updated Tailwind v3 to v4 beta
+
+### 💅 Refinements
+
+- Improved code organization
+- Added explanatory comments
+- Optimized code reusability
+- Standardized code style
+- Enhanced documentation
+
 ## v0.2.1 (2025-01-08)
 
 ### 🐛 Bug Fixes
