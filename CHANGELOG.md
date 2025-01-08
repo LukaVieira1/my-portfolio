@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.2.0 (2025-01-08)
+
+### 🌐 Internationalization
+
+- Added i18n support for multiple languages
+- Implemented language switcher component
+- Added translations for:
+  - English (en-US)
+  - Portuguese (pt-BR)
+- Created translation files for all static content
+- Added language persistence in localStorage
+
+### 🏗 Components
+
+- `LanguageSwitcher`: Toggle between available languages
+- Updated all components to support i18n
+
+### 📦 Dependencies
+
+- Added i18next for internationalization
+- Added react-i18next for React integration
+
 ## v0.1.0 (2025-01-07)
 
 ### 🎨 UI/UX
