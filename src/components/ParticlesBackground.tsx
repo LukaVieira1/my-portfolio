@@ -64,7 +64,7 @@ export function ParticlesBackground() {
             },
             onClick: {
               enable: true,
-              mode: "push",
+              mode: "repulse",
             },
           },
           modes: {
@@ -74,8 +74,9 @@ export function ParticlesBackground() {
                 opacity: 0.5,
               },
             },
-            push: {
-              quantity: 4,
+            repulse: {
+              distance: 200,
+              duration: 0.4,
             },
           },
         },
