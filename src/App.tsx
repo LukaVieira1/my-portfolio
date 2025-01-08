@@ -61,9 +61,9 @@ function App() {
               delay: 0.2,
               ease: "easeOut",
             }}
-            className="relative z-1"
+            className="relative z-10"
           >
-            <div className="relative z-1">
+            <div className="relative">
               {/* Header */}
               <nav className="fixed w-full px-8 py-4 bg-background/90 backdrop-blur-sm z-50">
                 <div className="max-w-3xl mx-auto flex justify-between items-center">
@@ -222,7 +222,7 @@ function App() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => setProjectType("professional")}
-                        className={`relative px-6 py-2 text-sm font-medium rounded-full ${
+                        className={`relative px-6 py-2 text-sm font-medium rounded-full z-10 ${
                           projectType === "professional"
                             ? "text-primary"
                             : "text-text-secondary hover:text-text-primary"
@@ -234,7 +234,7 @@ function App() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => setProjectType("personal")}
-                        className={`relative px-6 py-2 text-sm font-medium rounded-full ${
+                        className={`relative px-6 py-2 text-sm font-medium rounded-full z-10 ${
                           projectType === "personal"
                             ? "text-primary"
                             : "text-text-secondary hover:text-text-primary"
@@ -315,7 +315,6 @@ function App() {
           </motion.div>
         )}
       </AnimatePresence>
-      <ParticlesBackground />
     </div>
   );
 }

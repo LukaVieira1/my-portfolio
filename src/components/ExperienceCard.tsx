@@ -40,8 +40,9 @@ export function ExperienceCard({
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            className="text-primary hover:opacity-80 transition-opacity"
           >
-            <span className="text-primary">{t("experience.seeMore")}</span>
+            {t("experience.seeMore")}
           </motion.a>
         )}
       </div>

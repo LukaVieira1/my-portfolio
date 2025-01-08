@@ -34,19 +34,16 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
       setIsMobile(window.innerWidth < 768);
     };
 
-    checkScroll();
-    checkMobile();
-
-    window.addEventListener("resize", () => {
+    const handleResize = () => {
       checkScroll();
       checkMobile();
-    });
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("resize", () => {
-        checkScroll();
-        checkMobile();
-      });
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -85,6 +82,7 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
       <div
         ref={containerRef}
         className="space-y-12 pl-12 max-h-[600px] overflow-y-auto custom-scrollbar pr-4 pb-12"
+        onScroll={checkIfAtBottom}
       >
         {experiences.map((experience, index) => (
           <motion.div
