@@ -6,6 +6,7 @@ import { ExperienceTimeline } from "./components/ExperienceTimeline";
 import { ProjectCarousel } from "./components/ProjectCarousel";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "./components/LanguageSwitcher";
+import { FiMail, FiLinkedin, FiGithub } from "react-icons/fi";
 
 function App() {
   const { t } = useTranslation();
@@ -445,43 +446,63 @@ function App() {
           </section>
 
           {/* Contact Section */}
-          <section id="contact" className="py-20">
-            <motion.h2
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+          <section id="contato" className="py-32">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="flex items-center text-2xl font-bold text-[#ccd6f6] mb-8"
+              className="text-center max-w-2xl mx-auto px-8"
             >
-              <span className="text-[#64ffda] font-mono mr-2">04.</span>
-              {t("contact.title")}
-            </motion.h2>
-            <div className="space-y-4">
-              <p>{t("contact.description")}</p>
-              <motion.div className="flex flex-col space-y-4">
+              <motion.h2
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                className="flex items-center justify-center text-2xl font-bold text-[#ccd6f6] mb-8"
+              >
+                <span className="text-[#64ffda] font-mono mr-2">04.</span>
+                {t("contact.title")}
+              </motion.h2>
+
+              <p className="text-lg mb-12 text-[#8892b0]">
+                {t("contact.description")}
+              </p>
+
+              <div className="flex flex-col items-center gap-8">
                 <motion.a
                   href="mailto:lukavieira14@gmail.com"
-                  className="flex items-center before:content-['▹'] before:text-[#64ffda] before:mr-2 hover:text-[#64ffda] transition-colors"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 border-2 border-[#64ffda] text-[#64ffda] rounded-lg font-mono 
+                    hover:bg-[#64ffda]/10 transition-colors flex items-center gap-3"
                 >
+                  <FiMail size={20} />
                   lukavieira14@gmail.com
                 </motion.a>
-                <motion.a
-                  href="https://github.com/LukaVieira1"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center before:content-['▹'] before:text-[#64ffda] before:mr-2 hover:text-[#64ffda] transition-colors"
-                >
-                  GitHub
-                </motion.a>
-                <motion.a
-                  href="https://www.linkedin.com/in/lukaviera/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center before:content-['▹'] before:text-[#64ffda] before:mr-2 hover:text-[#64ffda] transition-colors"
-                >
-                  LinkedIn
-                </motion.a>
-              </motion.div>
-            </div>
+
+                <div className="flex gap-6">
+                  <motion.a
+                    href="https://www.linkedin.com/in/lukaviera/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="text-[#8892b0] hover:text-[#64ffda] transition-colors"
+                  >
+                    <FiLinkedin size={24} />
+                  </motion.a>
+                  <motion.a
+                    href="https://github.com/LukaVieira1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="text-[#8892b0] hover:text-[#64ffda] transition-colors"
+                  >
+                    <FiGithub size={24} />
+                  </motion.a>
+                </div>
+              </div>
+            </motion.div>
           </section>
         </div>
       </div>
