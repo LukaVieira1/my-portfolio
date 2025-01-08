@@ -65,7 +65,7 @@ function App() {
             className="relative z-10"
           >
             <div className="relative">
-              <nav className="fixed w-full px-8 py-4 bg-background/90 backdrop-blur-sm z-50">
+              <nav className="fixed w-full px-8 py-4 bg-background/90 backdrop-blur-xs z-50">
                 <div className="max-w-3xl mx-auto flex justify-between items-center">
                   <motion.div
                     initial={{ opacity: 0 }}
@@ -218,7 +218,7 @@ function App() {
                       </motion.h2>
 
                       <div className="flex justify-center mb-12">
-                        <div className="relative flex items-center bg-background-light/50 rounded-full p-1 backdrop-blur-sm">
+                        <div className="relative flex items-center bg-background-light/50 rounded-full p-1 backdrop-blur-xs">
                           <motion.div
                             className="absolute h-full bg-primary/10 rounded-full"
                             initial={false}

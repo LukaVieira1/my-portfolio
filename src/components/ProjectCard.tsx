@@ -55,7 +55,7 @@ export function ProjectCard({
       </div>
 
       <div className="p-6 flex flex-col flex-1">
-        <div className="flex-grow">
+        <div className="grow">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-text-primary text-xl font-bold">{title}</h3>
             <div className="flex gap-4 relative z-10">
