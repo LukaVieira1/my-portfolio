@@ -45,6 +45,7 @@ function App() {
       company: t("experience.getHub.company"),
       role: t("experience.getHub.role"),
       period: t("experience.getHub.period"),
+      link: "https://www.linkedin.com/company/getbuyhub/",
       description: [
         t("experience.getHub.description.0"),
         t("experience.getHub.description.1"),
