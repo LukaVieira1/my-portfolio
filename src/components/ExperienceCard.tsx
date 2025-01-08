@@ -28,7 +28,7 @@ export function ExperienceCard({
     >
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
         <div>
-          <h3 className="text-xl font-bold text-text-primary max-w-xl">
+          <h3 className="text-xl font-bold text-text-primary max-w-[400px]">
             {role} <span className="text-primary">@ {company}</span>
           </h3>
           <p className="font-mono text-sm">{period}</p>
