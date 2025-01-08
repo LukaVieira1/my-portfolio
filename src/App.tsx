@@ -15,6 +15,7 @@ import { ExperienceTimeline } from "./components/ExperienceTimeline";
 import { ProjectCarousel } from "./components/ProjectCarousel";
 import { LanguageSwitcher } from "./components/LanguageSwitcher";
 import { SplashScreen } from "./components/SplashScreen";
+import { ThemeToggle } from "./components/ThemeToggle";
 
 // Icons
 import { FiMail, FiLinkedin, FiGithub } from "react-icons/fi";
@@ -90,7 +91,10 @@ function App() {
                       </motion.button>
                     ))}
                   </div>
-                  <LanguageSwitcher />
+                  <div className="flex items-center gap-4">
+                    <LanguageSwitcher />
+                    <ThemeToggle />
+                  </div>
                 </div>
               </nav>
 
@@ -182,8 +186,8 @@ function App() {
                           </div>
                           <div
                             className="absolute inset-0 border-2 border-primary rounded-lg 
-                                       translate-x-4 translate-y-4 group-hover:translate-x-2 
-                                       group-hover:translate-y-2 transition-transform duration-300"
+                                         translate-x-4 translate-y-4 group-hover:translate-x-2 
+                                         group-hover:translate-y-2 transition-transform duration-300"
                           />
                         </motion.div>
                       </div>
@@ -286,7 +290,7 @@ function App() {
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             className="px-8 py-4 border-2 border-primary text-primary rounded-lg font-mono 
-                              hover:bg-primary/10 transition-colors flex items-center gap-3"
+                                hover:bg-primary/10 transition-colors flex items-center gap-3"
                           >
                             <FiMail size={20} />
                             lukavieira14@gmail.com

@@ -1,29 +1,26 @@
+const { theme } = require("./src/theme");
+
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+module.exports = {
+  darkMode: "class",
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       colors: {
         primary: {
-          light: "#64ffda",
-          DEFAULT: "#64ffda",
-          dark: "#64ffda20",
+          light: "var(--primary-light)",
+          DEFAULT: "var(--primary-default)",
+          dark: "var(--primary-dark)",
         },
         background: {
-          DEFAULT: "#0a192f",
-          light: "#112240",
-          lighter: "#233554",
+          DEFAULT: "var(--background-default)",
+          light: "var(--background-light)",
+          lighter: "var(--background-lighter)",
         },
         text: {
-          primary: "#ccd6f6",
-          secondary: "#8892b0",
+          primary: "var(--text-primary)",
+          secondary: "var(--text-secondary)",
         },
-      },
-      maxWidth: {
-        container: "1024px",
-      },
-      height: {
-        section: "600px",
       },
     },
   },
