@@ -1,50 +1,89 @@
-# React + TypeScript + Vite
+# Portfolio Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, interactive portfolio website built with React, TypeScript, and Tailwind CSS. Features smooth animations, responsive design, and an elegant user interface.
 
-Currently, two official plugins are available:
+## 🌟 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Interactive Particle Background**: Dynamic particle system that responds to user interaction
+- **Smooth Animations**: Powered by Framer Motion for fluid transitions and micro-interactions
+- **Project Carousel**: Custom-built carousel with auto-play and interactive controls
+- **Experience Timeline**: Vertical timeline showcasing professional experience
+- **Responsive Design**: Fully responsive layout that works on all devices
+- **Dark Theme**: Modern dark theme with accent colors
+- **Performance Optimized**: Efficient rendering and animations
 
-## Expanding the ESLint configuration
+## 🛠 Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- React
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- React Particles
+- React Icons
 
-- Configure the top-level `parserOptions` property like this:
+## 🚀 Getting Started
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. Clone the repository:
+
+```bash
+git clone https://github.com/LukaVieira1/portfolio.git
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2. Install dependencies:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+cd portfolio
+yarn install
 ```
+
+3. Start the development server:
+
+```bash
+yarn dev
+```
+
+4. Open [http://localhost:5173](http://localhost:5173) in your browser
+
+## 🏗 Project Structure
+
+```
+src/
+├── components/
+│   ├── ParticlesBackground.tsx
+│   ├── ProjectCard.tsx
+│   ├── ProjectCarousel.tsx
+│   └── ExperienceTimeline.tsx
+├── hooks/
+│   └── useScrollToSection.ts
+├── App.tsx
+└── index.css
+```
+
+## 🎨 Key Components
+
+- **ParticlesBackground**: Interactive particle system background
+- **ProjectCarousel**: Showcase of professional and personal projects
+- **ExperienceTimeline**: Vertical timeline of work experience
+- **ProjectCard**: Individual project display with hover effects
+
+## 📱 Responsive Design
+
+The website is fully responsive and optimized for:
+
+- Desktop (1200px+)
+- Laptop (1024px)
+- Tablet (768px)
+- Mobile (320px+)
+
+## 🔧 Customization
+
+The website can be easily customized by modifying:
+
+- Color scheme in Tailwind config
+- Content in App.tsx
+- Animation parameters in components
+- Particle system configuration
+
+## 🤝 Contact
+
+Luka Vieira - [LinkedIn](https://www.linkedin.com/in/lukaviera/) - lukavieira14@gmail.com
