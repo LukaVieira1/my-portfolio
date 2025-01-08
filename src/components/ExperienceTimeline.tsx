@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ExperienceCard } from "./ExperienceCard";
 import { FiChevronDown } from "react-icons/fi";
-import { useTranslation } from "react-i18next";
+import { useEffect, useRef, useState } from "react";
 
 interface Experience {
   company: string;
@@ -17,13 +17,75 @@ interface ExperienceTimelineProps {
 }
 
 export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
-  const { t } = useTranslation();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [hasScroll, setHasScroll] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isAtBottom, setIsAtBottom] = useState(false);
+
+  useEffect(() => {
+    const checkScroll = () => {
+      if (containerRef.current) {
+        const { scrollHeight, clientHeight } = containerRef.current;
+        setHasScroll(scrollHeight > clientHeight);
+      }
+    };
+
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkScroll();
+    checkMobile();
+
+    window.addEventListener("resize", () => {
+      checkScroll();
+      checkMobile();
+    });
+
+    return () => {
+      window.removeEventListener("resize", () => {
+        checkScroll();
+        checkMobile();
+      });
+    };
+  }, []);
+
+  const handleScroll = () => {
+    if (containerRef.current) {
+      const currentScroll = containerRef.current.scrollTop;
+      const scrollAmount = 200;
+
+      containerRef.current.scrollTo({
+        top: currentScroll + scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const checkIfAtBottom = () => {
+    if (containerRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+      const isBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+      setIsAtBottom(isBottom);
+    }
+  };
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener("scroll", checkIfAtBottom);
+      return () => container.removeEventListener("scroll", checkIfAtBottom);
+    }
+  }, []);
 
   return (
     <div className="relative">
       <div className="absolute left-[23.5px] top-0 h-full w-px bg-[#64ffda] opacity-20" />
 
-      <div className="space-y-12 pl-12 max-h-[600px] overflow-y-auto custom-scrollbar pr-4">
+      <div
+        ref={containerRef}
+        className="space-y-12 pl-12 max-h-[600px] overflow-y-auto custom-scrollbar pr-4 pb-12"
+      >
         {experiences.map((experience, index) => (
           <motion.div
             key={index}
@@ -46,27 +108,30 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
         ))}
       </div>
 
-      {/* Indicador de scroll */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 flex flex-col items-center text-[#8892b0] text-sm"
-      >
-        <span className="mb-2">{t("experience.seeMore")}</span>
+      {hasScroll && !isMobile && !isAtBottom && (
         <motion.div
-          animate={{
-            y: [0, 5, 0],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ delay: 1 }}
+          className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center bg-[#112240] px-4 py-2 rounded-full shadow-lg"
         >
-          <FiChevronDown size={20} className="text-[#64ffda]" />
+          <motion.button
+            animate={{
+              y: [0, 5, 0],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="text-[#64ffda]"
+            onClick={handleScroll}
+          >
+            <FiChevronDown size={16} />
+          </motion.button>
         </motion.div>
-      </motion.div>
+      )}
     </div>
   );
 }
