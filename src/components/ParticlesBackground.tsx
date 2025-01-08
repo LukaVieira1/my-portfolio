@@ -56,6 +56,29 @@ export function ParticlesBackground() {
             value: { min: 1, max: 5 },
           },
         },
+        interactivity: {
+          events: {
+            onHover: {
+              enable: true,
+              mode: "grab",
+            },
+            onClick: {
+              enable: true,
+              mode: "push",
+            },
+          },
+          modes: {
+            grab: {
+              distance: 140,
+              links: {
+                opacity: 0.5,
+              },
+            },
+            push: {
+              quantity: 4,
+            },
+          },
+        },
         detectRetina: true,
       }}
     />
