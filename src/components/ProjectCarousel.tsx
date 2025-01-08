@@ -115,12 +115,12 @@ export function ProjectCarousel({ projects, key }: ProjectCarouselProps) {
                 transition={{ duration: 0.3 }}
                 className="absolute top-0 left-0 w-full origin-top"
               >
-                <div className="relative">
-                  {distance === 0 ? (
-                    <ProjectCard {...project} />
-                  ) : (
-                    <div className="bg-[#0a192f] rounded-lg shadow-xl h-[600px]" />
-                  )}
+                <div
+                  className={`relative ${
+                    distance > 0 ? "opacity-30 pointer-events-none" : ""
+                  }`}
+                >
+                  <ProjectCard {...project} />
                 </div>
               </motion.div>
             );
