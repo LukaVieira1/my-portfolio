@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.1.0 (2025-01-09)
+
+### 🎨 UI/UX
+
+- Remove push interaction from particles background
+
 ## v1.0.0 (2025-01-08)
 
 ### 🎨 Theme System
