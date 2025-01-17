@@ -139,6 +139,14 @@
         "The Petwiiter is a social platform where you can share texts and interact with other users.",
         "Includes a login system, comments, and user profiles."
       ]
+    },
+    "wikiMovies": {
+      "title": "WikiMovies",
+      "description": [
+        "A Wiki of movies, where you can search for movies and see their synopses, cast, reviews and trailers.",
+        "It presents a modern design with fluid animations and support for multiple languages, including Portuguese and English.",
+        "It also includes a filtering by text and category."
+      ]
     }
   },
   "contact": {
