@@ -5,15 +5,15 @@ export function LanguageSwitcher() {
   const { i18n } = useTranslation();
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-1">
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => i18n.changeLanguage("en")}
-        className={`px-2 py-1 rounded cursor-pointer ${
+        className={`px-2 py-1 rounded text-sm cursor-pointer ${
           i18n.language === "en"
             ? "text-primary border border-primary"
-            : "text-text-secondary"
+            : "text-text-secondary hover:text-primary transition-colors"
         }`}
       >
         EN
@@ -22,10 +22,10 @@ export function LanguageSwitcher() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => i18n.changeLanguage("pt")}
-        className={`px-2 py-1 rounded cursor-pointer ${
+        className={`px-2 py-1 rounded text-sm cursor-pointer ${
           i18n.language === "pt"
             ? "text-primary border border-primary"
-            : "text-text-secondary"
+            : "text-text-secondary hover:text-primary transition-colors"
         }`}
       >
         PT

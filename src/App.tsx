@@ -10,12 +10,10 @@ import { useScrollToSection } from "./hooks/useScrollToSection";
 import { useTranslation } from "react-i18next";
 
 // Components
-import { ParticlesBackground } from "./components/ParticlesBackground";
 import { ExperienceTimeline } from "./components/ExperienceTimeline";
 import { ProjectCarousel } from "./components/ProjectCarousel";
-import { LanguageSwitcher } from "./components/LanguageSwitcher";
 import { SplashScreen } from "./components/SplashScreen";
-import { ThemeToggle } from "./components/ThemeToggle";
+import { SettingsMenu } from "./components/SettingsMenu";
 
 // Icons
 import { FiMail, FiLinkedin, FiGithub } from "react-icons/fi";
@@ -48,7 +46,6 @@ function App() {
 
   return (
     <div className="min-h-screen bg-background text-text-secondary relative">
-      <ParticlesBackground />
       <AnimatePresence mode="wait">
         {loading ? (
           <SplashScreen key="splash" />
@@ -65,8 +62,8 @@ function App() {
             className="relative z-10"
           >
             <div className="relative">
-              <nav className="fixed w-full px-8 py-4 bg-background/90 backdrop-blur-xs z-50">
-                <div className="max-w-3xl mx-auto flex justify-between items-center">
+              <nav className="fixed w-full px-8 py-4 bg-background/90 backdrop-blur-sm z-50">
+                <div className="max-w-3xl mx-auto flex items-center justify-between">
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -74,7 +71,8 @@ function App() {
                   >
                     {t("header.logo")}
                   </motion.div>
-                  <div className="hidden md:flex space-x-8 font-mono text-sm">
+
+                  <div className="hidden md:flex items-center space-x-8 font-mono text-sm">
                     {navigation.map((item, i) => (
                       <motion.button
                         key={item.name}
@@ -84,16 +82,12 @@ function App() {
                         transition={{ delay: i * 0.1 }}
                         whileHover={{ y: -2 }}
                         whileTap={{ scale: 0.97 }}
-                        className="text-text-primary hover:text-primary transition-colors cursor-pointer"
+                        className="text-text-primary hover:text-primary transition-colors"
                       >
                         <span className="text-primary">0{i + 1}.</span>{" "}
                         {item.name}
                       </motion.button>
                     ))}
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <LanguageSwitcher />
-                    <ThemeToggle />
                   </div>
                 </div>
               </nav>
@@ -325,6 +319,7 @@ function App() {
                 </AnimatePresence>
               </div>
             </div>
+            <SettingsMenu />
           </motion.div>
         )}
       </AnimatePresence>

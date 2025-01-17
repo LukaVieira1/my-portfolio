@@ -106,6 +106,25 @@ export const getProjects = (t: (key: string) => string) => [
     image: "/projects/tetris.png",
   },
   {
+    title: t("projects.wikiMovies.title"),
+    description: [
+      t("projects.wikiMovies.description.0"),
+      t("projects.wikiMovies.description.1"),
+      t("projects.wikiMovies.description.2"),
+    ],
+    technologies: [
+      "Next.js",
+      "Tailwind",
+      "TypeScript",
+      "Framer Motion",
+      "i18n",
+    ],
+    link: "https://wikimovies.lukavieira.tech/",
+    githubLink: "https://github.com/LukaVieira1/WikiMovies",
+    isPersonal: true,
+    image: "/projects/wikimovies.png",
+  },
+  {
     title: t("projects.petwiiter.title"),
     description: [
       t("projects.petwiiter.description.0"),
