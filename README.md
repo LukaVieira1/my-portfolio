@@ -2,6 +2,8 @@
 
 A modern, interactive portfolio website built with React, TypeScript, and Tailwind CSS. Features smooth animations, responsive design, and an elegant user interface.
 
+[lukavieira.tech](https://www.lukavieira.tech/)
+
 ## 🌟 Features
 
 - **Interactive Particle Background**: Dynamic particle system that responds to user interaction
