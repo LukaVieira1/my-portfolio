@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.2.0 (2025-01-17)
+
+### 🎨 UI/UX
+
+- Added settings menu
+- Added language switcher
+- Switch background particles to splash screen, for better experience
+
 ## v1.1.0 (2025-01-09)
 
 ### 🎨 UI/UX
