@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { ExperienceCard } from "./ExperienceCard";
-import { FiChevronDown } from "react-icons/fi";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
 interface Experience {
   company: string;
@@ -18,62 +17,62 @@ interface ExperienceTimelineProps {
 
 export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [hasScroll, setHasScroll] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [isAtBottom, setIsAtBottom] = useState(false);
+  // const [hasScroll, setHasScroll] = useState(false);
+  // const [isMobile, setIsMobile] = useState(false);
+  // const [isAtBottom, setIsAtBottom] = useState(false);
 
-  useEffect(() => {
-    const checkScroll = () => {
-      if (containerRef.current) {
-        const { scrollHeight, clientHeight } = containerRef.current;
-        setHasScroll(scrollHeight > clientHeight);
-      }
-    };
+  // useEffect(() => {
+  //   const checkScroll = () => {
+  //     if (containerRef.current) {
+  //       const { scrollHeight, clientHeight } = containerRef.current;
+  //       setHasScroll(scrollHeight > clientHeight);
+  //     }
+  //   };
 
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+  // const checkMobile = () => {
+  //   setIsMobile(window.innerWidth < 768);
+  // };
 
-    const handleResize = () => {
-      checkScroll();
-      checkMobile();
-    };
+  // const handleResize = () => {
+  //   checkScroll();
+  //   checkMobile();
+  // };
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
+  //   handleResize();
+  //   window.addEventListener("resize", handleResize);
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
 
-  const handleScroll = () => {
-    if (containerRef.current) {
-      const currentScroll = containerRef.current.scrollTop;
-      const scrollAmount = 200;
+  // const handleScroll = () => {
+  //   if (containerRef.current) {
+  //     const currentScroll = containerRef.current.scrollTop;
+  //     const scrollAmount = 200;
 
-      containerRef.current.scrollTo({
-        top: currentScroll + scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
+  //     containerRef.current.scrollTo({
+  //       top: currentScroll + scrollAmount,
+  //       behavior: "smooth",
+  //     });
+  //   }
+  // };
 
-  const checkIfAtBottom = () => {
-    if (containerRef.current) {
-      const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
-      const isBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-      setIsAtBottom(isBottom);
-    }
-  };
+  // const checkIfAtBottom = () => {
+  //   if (containerRef.current) {
+  //     const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+  //     const isBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+  //     setIsAtBottom(isBottom);
+  //   }
+  // };
 
-  useEffect(() => {
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener("scroll", checkIfAtBottom);
-      return () => container.removeEventListener("scroll", checkIfAtBottom);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const container = containerRef.current;
+  //   if (container) {
+  //     container.addEventListener("scroll", checkIfAtBottom);
+  //     return () => container.removeEventListener("scroll", checkIfAtBottom);
+  //   }
+  // }, []);
 
   return (
     <div className="relative">
@@ -81,8 +80,8 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
 
       <div
         ref={containerRef}
-        className="space-y-12 pl-12 max-h-[600px] overflow-y-auto custom-scrollbar pr-4 pb-12"
-        onScroll={checkIfAtBottom}
+        className="space-y-12 pl-12 pr-4 pb-12"
+        // onScroll={checkIfAtBottom}
       >
         {experiences.map((experience, index) => (
           <motion.div
@@ -106,7 +105,7 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
         ))}
       </div>
 
-      {hasScroll && !isMobile && !isAtBottom && (
+      {/* {hasScroll && !isMobile && !isAtBottom && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -127,7 +126,7 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
             <FiChevronDown size={16} />
           </motion.button>
         </motion.div>
-      )}
+      )} */}
     </div>
   );
 }
