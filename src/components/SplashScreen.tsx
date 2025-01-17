@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-
+import { ParticlesBackground } from "./ParticlesBackground";
 export function SplashScreen() {
   return (
     <motion.div
@@ -19,6 +19,7 @@ export function SplashScreen() {
         },
       }}
     >
+      <ParticlesBackground />
       <div className="relative">
         <motion.div
           initial={{ width: 0 }}

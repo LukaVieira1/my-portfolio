@@ -10,7 +10,6 @@ import { useScrollToSection } from "./hooks/useScrollToSection";
 import { useTranslation } from "react-i18next";
 
 // Components
-import { ParticlesBackground } from "./components/ParticlesBackground";
 import { ExperienceTimeline } from "./components/ExperienceTimeline";
 import { ProjectCarousel } from "./components/ProjectCarousel";
 import { SplashScreen } from "./components/SplashScreen";
@@ -47,7 +46,6 @@ function App() {
 
   return (
     <div className="min-h-screen bg-background text-text-secondary relative">
-      <ParticlesBackground />
       <AnimatePresence mode="wait">
         {loading ? (
           <SplashScreen key="splash" />
