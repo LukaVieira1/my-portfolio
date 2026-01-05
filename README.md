@@ -2,7 +2,7 @@
 
 A modern, interactive portfolio website built with React, TypeScript, and Tailwind CSS. Features smooth animations, responsive design, and an elegant user interface.
 
-[lukavieira.tech](https://www.lukavieira.tech/)
+[lukavieira.com](https://www.lukavieira.com/)
 
 ## 🌟 Features
 

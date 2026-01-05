@@ -61,7 +61,7 @@ export function SplashScreen() {
             {"<"}
           </motion.span>
           <motion.h1 className="text-4xl md:text-6xl font-mono font-bold text-primary">
-            {"lukavieira.tech"}
+            {"lukavieira.com"}
           </motion.h1>
           <motion.span
             initial={{ opacity: 0, scale: 0, rotate: 180 }}
