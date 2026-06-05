@@ -17,22 +17,33 @@
     "title": "About Me",
     "mainTechs": "Main technologies I work with:",
     "paragraphs": [
-      "With over 6 years immersed in the technology universe, I found my true passion in Frontend development. For the past 3 years, I've been building interfaces that are not just beautiful, but intuitive and functional.",
-      "My journey began in technical support, where I developed a keen eye for problem-solving and empathy with end users. Today, I transform this background into web applications that make a difference, always focusing on user experience and development best practices."
+      "Front-End / Full-Stack Developer with 8 years of experience in IT, including 5 years focused on software development. I work mainly with React, Next.js, TypeScript, JavaScript and Node.js, building modern, responsive, scalable and user-focused web applications.",
+      "Experienced in dynamic, product-driven environments, with a strong background in feature development, API integrations, component-driven development, code reviews, technical documentation and continuous improvement of engineering processes. My journey began in technical support, where I developed empathy with end users, a foundation I carry to this day to build solutions that make a difference."
     ]
   },
   "experience": {
     "title": "Where I've Worked",
     "seeMore": "See more",
-    "getHub": {
-      "company": "GetHub",
-      "role": "Frontend Developer",
-      "period": "Mar 2023 - Present",
+    "murabei": {
+      "company": "Murabei · Data & Decision Science",
+      "role": "Senior Software Engineer",
+      "period": "Jul 2025 - Present",
       "description": [
-        "At GetHub, I work as a Frontend Developer, where I am responsible for developing and maintaining features in Next.js, always focusing on performance and usability. GetHub is an innovative platform that connects the ERP Millenium to major marketplaces such as Mercado Livre, Shopee, Amazon, Shein, and Magalu, facilitating integration and sales management across multiple channels.",
-        "My responsibilities include creating and executing end-to-end (E2E) tests using Cypress, ensuring code quality and the reliability of implemented features. I actively participate in strategic product decisions, helping to define business rules that directly impact the user experience.",
-        "Additionally, I am responsible for creating and maintaining technical documentation, ensuring clarity and alignment among teams. I analyze requirements and technical feasibility for new features, working closely with Product Owners to ensure the solutions meet business needs.",
-        "I identify and resolve bugs, including providing support for legacy code, such as Ruby. I also offer training and support to new team members, fostering integration and productivity. I conduct calls with stakeholders and clients, presenting project progress and insights, as well as providing direct customer support, offering agile solutions to identified issues."
+        "Working as a Senior Software Engineer on strategic projects for large enterprise clients, including BAT, CEMIG and PREVIC, contributing to the delivery of scalable, maintainable solutions aligned with business needs.",
+        "Perform Pull Request reviews for senior, mid-level and junior developers, ensuring code quality, best practices, maintainability and technical alignment. Participate in client calls, supporting requirement gathering, technical discussions and solution clarification.",
+        "Support the creation of client proposals, contributing to execution time estimates, required hours, team allocation and pricing definition. Build prototypes and Proofs of Concept (PoCs) to validate technical solutions and support commercial proposals.",
+        "Develop internal tools for the team, including system design solutions, shared service libraries and backend integrations. Provide technical support to team members, encouraging development best practices and cross-functional collaboration."
+      ]
+    },
+    "getHub": {
+      "company": "Gethub",
+      "role": "Full-Stack Developer",
+      "period": "Mar 2023 - Jul 2025",
+      "description": [
+        "Led the front-end development of a product-driven web application using Next.js, React, TypeScript and Cypress, focusing on performance, usability, maintainability and product scalability.",
+        "Responsible for development and maintenance of features using Next.js, creation and execution of end-to-end (E2E) tests with Cypress, and active participation in strategic product decisions and business rules definition.",
+        "Creation and upkeep of technical documentation, requirement analysis and technical feasibility evaluation for new functionalities in collaboration with Product Owners, and identification and resolution of bugs including support for legacy code in Ruby.",
+        "Onboarding and training of new team members, leading calls with stakeholders and clients presenting progress and insights, and providing direct client support with quick and efficient solutions to reported issues."
       ]
     },
     "beMobile": {

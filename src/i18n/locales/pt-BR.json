@@ -17,22 +17,33 @@
     "title": "Sobre Mim",
     "mainTechs": "Principais tecnologias com as quais trabalho:",
     "paragraphs": [
-      "Há mais de 6 anos mergulhado no universo da tecnologia, encontrei minha verdadeira paixão no desenvolvimento Frontend. Nos últimos 3 anos, venho construindo interfaces que não são apenas bonitas, mas também intuitivas e funcionais.",
-      "Minha jornada começou no suporte técnico, onde desenvolvi um olhar aguçado para resolução de problemas e empatia com o usuário final. Hoje, transformo esse background em aplicações web que fazem a diferença, sempre focando na experiência do usuário e nas melhores práticas de desenvolvimento."
+      "Desenvolvedor Front-End / Full-Stack com 8 anos de experiência em TI, sendo 5 anos focados em desenvolvimento de software. Trabalho principalmente com React, Next.js, TypeScript, JavaScript e Node.js, construindo aplicações web modernas, responsivas, escaláveis e centradas no usuário.",
+      "Tenho experiência em ambientes dinâmicos e orientados a produto, com forte atuação em desenvolvimento de features, integrações com APIs, desenvolvimento orientado a componentes, code reviews, documentação técnica e melhoria contínua dos processos de engenharia. Minha jornada começou no suporte técnico, onde desenvolvi empatia com o usuário final, base que carrego até hoje para criar soluções que fazem a diferença."
     ]
   },
   "experience": {
     "title": "Onde Trabalhei",
     "seeMore": "Saiba mais",
-    "getHub": {
-      "company": "GetHub",
-      "role": "Desenvolvedor Frontend",
-      "period": "Mar 2023 - Presente",
+    "murabei": {
+      "company": "Murabei · Data & Decision Science",
+      "role": "Senior Software Engineer",
+      "period": "Jul 2025 - Presente",
       "description": [
-        "Na GetHub, atuo como Frontend Developer, onde sou responsável pelo desenvolvimento e manutenção de funcionalidades em Next.js, sempre com foco em performance e usabilidade. A GetHub é uma plataforma inovadora que conecta o ERP Millenium a grandes marketplaces, como Mercado Livre, Shopee, Amazon, Shein e Magalu, facilitando a integração e a gestão de vendas em múltiplos canais.",
-        "Minhas responsabilidades incluem a criação e execução de testes end-to-end (E2E) utilizando Cypress, garantindo a qualidade do código e a confiabilidade das funcionalidades implementadas. Participo ativamente de decisões estratégicas de produto, ajudando a definir regras de negócio que impactam diretamente a experiência do usuário.",
-        "Além disso, sou responsável pela elaboração e manutenção de documentação técnica, assegurando clareza e alinhamento entre as equipes. Realizo a análise de requisitos e viabilidade técnica para novas funcionalidades, colaborando de perto com Product Owners para garantir que as soluções atendam às necessidades do negócio.",
-        "Identifico e resolvo bugs, incluindo suporte em código legado, como Ruby, e também ofereço treinamento e suporte a novos membros da equipe, promovendo integração e produtividade. Conduzo calls com stakeholders e clientes, apresentando progresso e insights do projeto, além de fornecer suporte direto ao cliente, oferecendo soluções ágeis para problemas identificados."
+        "Atuo como Senior Software Engineer em projetos estratégicos para grandes clientes enterprise, incluindo BAT, CEMIG e PREVIC, contribuindo para a entrega de soluções escaláveis e alinhadas às necessidades de negócio.",
+        "Realizo revisões de Pull Requests para desenvolvedores sênior, pleno e júnior, assegurando qualidade de código, boas práticas e alinhamento técnico. Participo de calls com clientes, apoiando o levantamento de requisitos, discussões técnicas e esclarecimento de soluções.",
+        "Contribuo na criação de propostas comerciais, incluindo estimativas de prazo, horas necessárias, alocação de equipe e definição de preços. Desenvolvo protótipos e Provas de Conceito (PoCs) para validar soluções técnicas e embasar propostas comerciais.",
+        "Desenvolvo ferramentas internas para o time, incluindo design de sistemas, bibliotecas de serviços compartilhados e integrações backend. Ofereço suporte técnico aos membros do time, incentivando boas práticas de desenvolvimento e colaboração entre áreas."
+      ]
+    },
+    "getHub": {
+      "company": "Gethub",
+      "role": "Desenvolvedor Full-Stack",
+      "period": "Mar 2023 - Jul 2025",
+      "description": [
+        "Liderou o desenvolvimento front-end de uma aplicação web orientada a produto usando Next.js, React, TypeScript e Cypress, com foco em performance, usabilidade, manutenibilidade e escalabilidade do produto.",
+        "Responsável pelo desenvolvimento e manutenção de funcionalidades com Next.js, criação e execução de testes end-to-end (E2E) com Cypress, e participação ativa em decisões estratégicas de produto e definição de regras de negócio.",
+        "Elaboração e manutenção de documentação técnica, análise de requisitos e viabilidade técnica de novas funcionalidades em colaboração com Product Owners, e identificação e resolução de bugs, incluindo suporte a código legado em Ruby.",
+        "Onboarding e treinamento de novos membros da equipe, condução de calls com stakeholders e clientes apresentando progresso e insights, e suporte direto ao cliente com soluções ágeis para problemas reportados."
       ]
     },
     "beMobile": {

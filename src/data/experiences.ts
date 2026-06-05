@@ -1,5 +1,28 @@
 export const getExperiences = (t: (key: string) => string) => [
   {
+    company: t("experience.murabei.company"),
+    role: t("experience.murabei.role"),
+    period: t("experience.murabei.period"),
+    link: "https://www.linkedin.com/company/murabei-datascience/",
+    description: [
+      t("experience.murabei.description.0"),
+      t("experience.murabei.description.1"),
+      t("experience.murabei.description.2"),
+      t("experience.murabei.description.3"),
+    ],
+    technologies: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Node.js",
+      "PostgreSQL",
+      "Prisma",
+      "Tailwind CSS",
+      "Docker",
+      "Azure",
+    ],
+  },
+  {
     company: t("experience.getHub.company"),
     role: t("experience.getHub.role"),
     period: t("experience.getHub.period"),
