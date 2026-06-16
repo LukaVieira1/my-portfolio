@@ -40,10 +40,10 @@
       "role": "Desenvolvedor Full-Stack",
       "period": "Mar 2023 - Jul 2025",
       "description": [
-        "Liderou o desenvolvimento front-end de uma aplicação web orientada a produto usando Next.js, React, TypeScript e Cypress, com foco em performance, usabilidade, manutenibilidade e escalabilidade do produto.",
-        "Responsável pelo desenvolvimento e manutenção de funcionalidades com Next.js, criação e execução de testes end-to-end (E2E) com Cypress, e participação ativa em decisões estratégicas de produto e definição de regras de negócio.",
-        "Elaboração e manutenção de documentação técnica, análise de requisitos e viabilidade técnica de novas funcionalidades em colaboração com Product Owners, e identificação e resolução de bugs, incluindo suporte a código legado em Ruby.",
-        "Onboarding e treinamento de novos membros da equipe, condução de calls com stakeholders e clientes apresentando progresso e insights, e suporte direto ao cliente com soluções ágeis para problemas reportados."
+        "Liderei o desenvolvimento front-end de uma aplicação web orientada a produto usando Next.js, React, TypeScript e Cypress, com foco em performance, usabilidade, manutenibilidade e escalabilidade do produto.",
+        "Fui responsável pelo desenvolvimento e manutenção de funcionalidades com Next.js, pela criação e execução de testes end-to-end (E2E) com Cypress, e pela participação ativa em decisões estratégicas de produto e definição de regras de negócio.",
+        "Elaborei e mantive documentação técnica, analisei requisitos e viabilidade técnica de novas funcionalidades em colaboração com Product Owners, e identifiquei e resolvi bugs, incluindo suporte a código legado em Ruby.",
+        "Realizei onboarding e treinamento de novos membros da equipe, conduzi calls com stakeholders e clientes apresentando progresso e insights, e prestei suporte direto ao cliente com soluções ágeis para problemas reportados."
       ]
     },
     "beMobile": {
@@ -136,7 +136,7 @@
     "tetris": {
       "title": "Tetris",
       "description": [
-        "Um classico dos anos 80! ",
+        "Um clássico dos anos 80!",
         "O jogo conta com um sistema de pontuação e progressão de níveis, além de um ranking das melhores pontuações alcançadas e as próximas peças que serão geradas.",
         "Apresenta um design moderno com animações fluidas e suporte a múltiplos idiomas, incluindo português e inglês.",
         "Inclui um menu com opções para configuração de idioma e um tutorial interativo e a opção de pausar o jogo."
@@ -145,8 +145,8 @@
     "petwiiter": {
       "title": "Petwiiter",
       "description": [
-        "Um clon do X (Twitter) voltado para amantes de pets!",
-        "Foi um dos meus primeiros projetos, onde aprendi muito sobre React e APIs (que também foi feita por mim).",
+        "Um clone do X (Twitter) voltado para amantes de pets!",
+        "Foi um dos meus primeiros projetos, onde aprendi muito sobre React e APIs (que também foram feitas por mim).",
         "O Petwiiter é uma plataforma social onde você pode compartilhar textos e interagir com outros usuários.",
         "Inclui um sistema de login, comentários e perfis de usuários."
       ]

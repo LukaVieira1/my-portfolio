@@ -41,9 +41,9 @@
       "period": "Mar 2023 - Jul 2025",
       "description": [
         "Led the front-end development of a product-driven web application using Next.js, React, TypeScript and Cypress, focusing on performance, usability, maintainability and product scalability.",
-        "Responsible for development and maintenance of features using Next.js, creation and execution of end-to-end (E2E) tests with Cypress, and active participation in strategic product decisions and business rules definition.",
-        "Creation and upkeep of technical documentation, requirement analysis and technical feasibility evaluation for new functionalities in collaboration with Product Owners, and identification and resolution of bugs including support for legacy code in Ruby.",
-        "Onboarding and training of new team members, leading calls with stakeholders and clients presenting progress and insights, and providing direct client support with quick and efficient solutions to reported issues."
+        "I was responsible for developing and maintaining features using Next.js, creating and executing end-to-end (E2E) tests with Cypress, and actively participating in strategic product decisions and business rules definition.",
+        "I created and maintained technical documentation, analyzed requirements and evaluated technical feasibility for new features in collaboration with Product Owners, and identified and resolved bugs including support for legacy code in Ruby.",
+        "I onboarded and trained new team members, led calls with stakeholders and clients presenting progress and insights, and provided direct client support with quick and efficient solutions to reported issues."
       ]
     },
     "beMobile": {
@@ -98,7 +98,7 @@
       "title": "MeuPass",
       "description": [
         "PWA application in development, offering a complete system of menu, order management, payments, login, and registration.",
-        "With an innovative and intuitive design, prioritizing usability and user experience.",
+        "It features an innovative and intuitive design, prioritizing usability and user experience.",
         "You can check more on the MeuPass instagram @meupassapp"
       ]
     },
@@ -129,7 +129,7 @@
     "atlas": {
       "title": "Atlas Governance",
       "description": [
-        "Brief initial participation in the creation of the Atlas Governance dashboard, a corporate governance platform. The dashboard allows for the creation and convocation of meetings, as well as managing the organization's members.",
+        "I participated in the initial development of the Atlas Governance dashboard, a corporate governance platform. The dashboard enables creating and scheduling meetings, as well as managing the organization's members.",
         "Documents, reports, and minutes are generated automatically, facilitating the management of strategic actions and projects. The platform also offers indexing and search with artificial intelligence, as well as evaluations of councils and committees."
       ]
     },
@@ -154,9 +154,9 @@
     "wikiMovies": {
       "title": "WikiMovies",
       "description": [
-        "A Wiki of movies, where you can search for movies and see their synopses, cast, reviews and trailers.",
+        "A movie wiki where you can search for films and browse their synopses, cast, reviews and trailers.",
         "It presents a modern design with fluid animations and support for multiple languages, including Portuguese and English.",
-        "It also includes a filtering by text and category."
+        "It also supports filtering by text and category."
       ]
     }
   },
