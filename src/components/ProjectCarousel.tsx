@@ -2,23 +2,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback } from "react";
 import { ProjectCard } from "./ProjectCard";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import type { IProject } from "../types";
 
-interface Project {
-  title: string;
-  description: string[];
-  technologies: string[];
-  link?: string;
-  isPersonal: boolean;
-  githubLink?: string;
-  image?: string;
+interface IProjectCarouselProps {
+  projects: IProject[];
+  resetKey?: string | number;
 }
 
-interface ProjectCarouselProps {
-  projects: Project[];
-  key?: string | number;
-}
-
-export function ProjectCarousel({ projects, key }: ProjectCarouselProps) {
+export function ProjectCarousel({ projects, resetKey }: IProjectCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const autoPlayDelay = 3000;
@@ -44,8 +35,8 @@ export function ProjectCarousel({ projects, key }: ProjectCarouselProps) {
 
   // Autoplay
   useEffect(() => {
-    let autoPlayTimer: number;
-    let resumeTimer: number;
+    let autoPlayTimer: ReturnType<typeof setInterval>;
+    let resumeTimer: ReturnType<typeof setTimeout>;
 
     if (isAutoPlaying) {
       autoPlayTimer = setInterval(handleNext, autoPlayDelay);
@@ -65,7 +56,7 @@ export function ProjectCarousel({ projects, key }: ProjectCarouselProps) {
 
   useEffect(() => {
     setCurrentIndex(0);
-  }, [key]);
+  }, [resetKey]);
 
   return (
     <div
