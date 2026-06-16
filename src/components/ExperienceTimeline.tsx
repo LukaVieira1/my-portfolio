@@ -1,132 +1,88 @@
-import { motion } from "framer-motion";
-import { ExperienceCard } from "./ExperienceCard";
 import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ExperienceCard } from "./ExperienceCard";
+import type { IExperience } from "../types";
 
-interface Experience {
-  company: string;
-  role: string;
-  period: string;
-  description: string[];
-  technologies: string[];
-  link?: string;
+interface IExperienceTimelineProps {
+  experiences: IExperience[];
 }
 
-interface ExperienceTimelineProps {
-  experiences: Experience[];
-}
+const cardVariants = {
+  hidden: { opacity: 0, x: -40, filter: "blur(8px)" },
+  visible: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    filter: "blur(0px)",
+    transition: {
+      duration: 0.6,
+      delay: i * 0.05,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  }),
+};
 
-export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
+export function ExperienceTimeline({ experiences }: IExperienceTimelineProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  // const [hasScroll, setHasScroll] = useState(false);
-  // const [isMobile, setIsMobile] = useState(false);
-  // const [isAtBottom, setIsAtBottom] = useState(false);
 
-  // useEffect(() => {
-  //   const checkScroll = () => {
-  //     if (containerRef.current) {
-  //       const { scrollHeight, clientHeight } = containerRef.current;
-  //       setHasScroll(scrollHeight > clientHeight);
-  //     }
-  //   };
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start 80%", "end 20%"],
+  });
 
-  // const checkMobile = () => {
-  //   setIsMobile(window.innerWidth < 768);
-  // };
-
-  // const handleResize = () => {
-  //   checkScroll();
-  //   checkMobile();
-  // };
-
-  //   handleResize();
-  //   window.addEventListener("resize", handleResize);
-
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // }, []);
-
-  // const handleScroll = () => {
-  //   if (containerRef.current) {
-  //     const currentScroll = containerRef.current.scrollTop;
-  //     const scrollAmount = 200;
-
-  //     containerRef.current.scrollTo({
-  //       top: currentScroll + scrollAmount,
-  //       behavior: "smooth",
-  //     });
-  //   }
-  // };
-
-  // const checkIfAtBottom = () => {
-  //   if (containerRef.current) {
-  //     const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
-  //     const isBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-  //     setIsAtBottom(isBottom);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const container = containerRef.current;
-  //   if (container) {
-  //     container.addEventListener("scroll", checkIfAtBottom);
-  //     return () => container.removeEventListener("scroll", checkIfAtBottom);
-  //   }
-  // }, []);
+  const lineScaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
-    <div className="relative">
-      <div className="absolute left-[23.5px] top-0 h-full w-px bg-primary opacity-20" />
+    <div className="relative" ref={containerRef}>
+      <div className="absolute left-[23.5px] top-0 h-full w-px bg-primary opacity-10" />
 
-      <div
-        ref={containerRef}
-        className="space-y-12 pl-12 pr-4 pb-12"
-        // onScroll={checkIfAtBottom}
-      >
+      <motion.div
+        className="absolute left-[23.5px] top-0 w-px bg-primary origin-top"
+        style={{ scaleY: lineScaleY, height: "100%" }}
+      />
+
+      <div className="space-y-12 pl-12 pr-4 pb-12">
         {experiences.map((experience, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            custom={index}
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
             className="relative"
           >
             <motion.div
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
+              initial={{ scale: 0, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
+              transition={{
+                delay: index * 0.05 + 0.2,
+                type: "spring",
+                stiffness: 200,
+              }}
               className="absolute -left-[28px] top-[14px] flex items-center justify-center"
             >
-              <div className="w-2 h-2 rounded-full bg-primary" />
-              <div className="absolute w-4 h-4 rounded-full border border-primary opacity-50" />
+              <motion.div
+                className="w-2 h-2 rounded-full bg-primary"
+                whileInView={{
+                  boxShadow: [
+                    "0 0 0px #64ffda",
+                    "0 0 8px #64ffda",
+                    "0 0 0px #64ffda",
+                  ],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: 1,
+                  delay: index * 0.05 + 0.4,
+                }}
+              />
+              <div className="absolute w-4 h-4 rounded-full border border-primary opacity-40" />
             </motion.div>
             <ExperienceCard {...experience} />
           </motion.div>
         ))}
       </div>
-
-      {/* {hasScroll && !isMobile && !isAtBottom && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ delay: 1 }}
-          className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center bg-background-light px-4 py-2 rounded-full shadow-lg"
-        >
-          <motion.button
-            animate={{ y: [0, 5, 0] }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="text-primary cursor-pointer"
-            onClick={handleScroll}
-          >
-            <FiChevronDown size={16} />
-          </motion.button>
-        </motion.div>
-      )} */}
     </div>
   );
 }
