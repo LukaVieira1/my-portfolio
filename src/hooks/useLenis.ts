@@ -7,28 +7,30 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function useLenis() {
   useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: reduced ? 0 : 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
-      smoothWheel: true,
+      smoothWheel: !reduced,
       syncTouch: true,
+      touchMultiplier: 1.2,
     });
 
-    // Integrate Lenis with ScrollTrigger
-    lenis.on('scroll', () => {
-      ScrollTrigger.update();
-    });
+    lenis.on("scroll", ScrollTrigger.update);
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
+    const ticker = (time: number) => {
+      lenis.raf(time * 1000);
+    };
+    gsap.ticker.add(ticker);
+    gsap.ticker.lagSmoothing(0);
 
-    const animFrame = requestAnimationFrame(raf);
+    const onResize = () => ScrollTrigger.refresh();
+    window.addEventListener("resize", onResize);
 
     return () => {
-      cancelAnimationFrame(animFrame);
+      window.removeEventListener("resize", onResize);
+      gsap.ticker.remove(ticker);
       lenis.destroy();
     };
   }, []);

@@ -18,34 +18,42 @@
 @layer base {
   *,
   ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
+  ::before {
+    border-color: color-mix(in oklab, var(--primary-default) 22%, transparent);
   }
-}
 
-@layer base {
   :root {
     --primary-light: var(--color-sky-400);
     --primary-default: var(--color-sky-600);
     --primary-dark: theme("colors.sky.600/0.2");
-    --background-default: var(--color-slate-50);
-    --background-light: var(--color-slate-200);
-    --background-lighter: var(--color-slate-300);
-    --text-primary: var(--color-slate-800);
-    --text-secondary: var(--color-slate-600);
+    --background-default: #f4f1ea;
+    --background-light: #e7e2d6;
+    --background-lighter: #d9d2c3;
+    --text-primary: #161410;
+    --text-secondary: #5a5348;
+    --scene: #f4f1ea;
+    --scene-hero: #f4f1ea;
+    --scene-about: #efe8d8;
+    --scene-experience: #e7e2d6;
+    --scene-projects: #ddd4c4;
+    --scene-contact: #f4f1ea;
   }
 
   .dark {
-    --primary-light: #7dffe4;
+    --primary-light: #9ffff0;
     --primary-default: #64ffda;
-    --primary-dark: #64ffda20;
-    --background-default: #07111f;
-    --background-light: #0d1b2e;
-    --background-lighter: #16324d;
-    --text-primary: #e6f1ff;
-    --text-secondary: #8ba0b8;
+    --primary-dark: #64ffda26;
+    --background-default: #04070c;
+    --background-light: #0a121c;
+    --background-lighter: #132333;
+    --text-primary: #f3fff9;
+    --text-secondary: #8ea3b5;
+    --scene: #04070c;
+    --scene-hero: #04070c;
+    --scene-about: #071018;
+    --scene-experience: #050d12;
+    --scene-projects: #07161a;
+    --scene-contact: #04070c;
   }
 
   html,
@@ -56,66 +64,51 @@
   }
 
   html {
-    scroll-behavior: auto;
+    background: var(--scene);
+    transition: background-color 0.6s ease;
   }
 
   body {
     font-family: var(--font-sans);
-    background: var(--background-default);
+    background: var(--scene);
     color: var(--text-secondary);
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-primary-dark) transparent;
+    cursor: none;
   }
 
-  body::-webkit-scrollbar {
-    width: 4px;
+  @media (pointer: coarse) {
+    body {
+      cursor: auto;
+    }
   }
 
-  body::-webkit-scrollbar-thumb {
-    background-color: var(--color-primary-dark);
-    border-radius: 20px;
+  a,
+  button {
+    cursor: none;
+  }
+
+  @media (pointer: coarse) {
+    a,
+    button {
+      cursor: pointer;
+    }
   }
 }
 
-.site-grid {
-  background-image:
-    linear-gradient(to right, color-mix(in oklab, var(--primary-default) 8%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in oklab, var(--primary-default) 8%, transparent) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+.word-dim {
+  color: color-mix(in oklab, var(--text-secondary) 55%, transparent);
 }
 
-.site-scan {
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent 0,
-    transparent 2px,
-    rgba(0, 0, 0, 0.08) 2px,
-    rgba(0, 0, 0, 0.08) 4px
-  );
+.word-on {
+  color: var(--text-primary);
 }
 
-.noise-overlay::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 128px 128px;
-}
-
-.term-window {
-  border: 1px solid color-mix(in oklab, var(--primary-default) 28%, transparent);
-  background: color-mix(in oklab, var(--background-light) 88%, transparent);
-  box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary-default) 8%, transparent),
-    0 20px 50px rgba(0, 0, 0, 0.25);
-}
-
-.glow-line {
-  box-shadow: 0 0 12px color-mix(in oklab, var(--primary-default) 70%, transparent);
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
