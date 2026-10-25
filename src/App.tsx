@@ -11,13 +11,14 @@ import { useScrollToSection } from "./hooks/useScrollToSection";
 import { useLenis } from "./hooks/useLenis";
 import { useActiveSection } from "./hooks/useActiveSection";
 
-import { ExperienceTimeline } from "./components/ExperienceTimeline";
 import { ProjectCarousel } from "./components/ProjectCarousel";
 import { SplashScreen } from "./components/SplashScreen";
 import { SettingsMenu } from "./components/SettingsMenu";
-import { HeroTitle } from "./components/HeroTitle";
-import { SectionReveal } from "./components/SectionReveal";
-import { ParallaxImage } from "./components/ParallaxImage";
+import { KineticHero } from "./components/KineticHero";
+import { SectionTitleReveal } from "./components/SectionTitleReveal";
+import { GlowingTimeline } from "./components/GlowingTimeline";
+import { ClipPathReveal } from "./components/ClipPathReveal";
+import { ScrollReactiveMarquee } from "./components/ScrollReactiveMarquee";
 import { AnimatedCounter } from "./components/AnimatedCounter";
 
 import { FiMail, FiLinkedin, FiGithub } from "react-icons/fi";
@@ -171,87 +172,16 @@ function App() {
                   exit={{ opacity: 0.8 }}
                   transition={{ duration: 0.2, ease: "linear" }}
                 >
-                  <section
-                    ref={heroRef}
-                    className="py-20 relative min-h-[75vh] flex flex-col justify-center"
-                  >
-                    <motion.div
-                      style={{ y: heroY, opacity: heroOpacity }}
-                      className="relative z-10"
-                    >
-                      <motion.div
-                        variants={staggerContainer}
-                        initial="hidden"
-                        animate="visible"
-                      >
-                        <motion.p
-                          variants={fadeUpVariant}
-                          className="text-primary font-mono mb-5"
-                        >
-                          {t("hero.greeting")}
-                        </motion.p>
-                        <HeroTitle
-                          text={t("hero.name")}
-                          className="text-5xl md:text-6xl font-bold text-text-primary mb-4 leading-tight"
-                        />
-                        <motion.p
-                          variants={fadeUpVariant}
-                          className="text-lg mb-8 max-w-xl"
-                        >
-                          {t("hero.description")}
-                        </motion.p>
-                        <motion.div
-                          variants={fadeUpVariant}
-                          className="flex items-center gap-4 mt-8"
-                        >
-                          <motion.button
-                            onClick={() => scrollToSection("about")}
-                            whileHover={{
-                              scale: 1.05,
-                              boxShadow: "0 0 20px rgba(100,255,218,0.2)",
-                            }}
-                            whileTap={{ scale: 0.97 }}
-                            className="px-6 py-3 border border-primary text-primary rounded font-mono text-sm hover:bg-primary/10 transition-colors"
-                          >
-                            {t("header.nav.about")} →
-                          </motion.button>
-                        </motion.div>
-                      </motion.div>
-                    </motion.div>
+                  <KineticHero
+                    greeting={t("hero.greeting")}
+                    name={t("hero.name")}
+                    description={t("hero.description")}
+                    ctaText={t("header.nav.about")}
+                    onCtaClick={() => scrollToSection("about")}
+                  />
 
-                    <motion.div
-                      className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 1.8 }}
-                    >
-                      <motion.div
-                        className="w-px h-12 bg-gradient-to-b from-transparent to-primary"
-                        animate={{
-                          scaleY: [0.5, 1, 0.5],
-                          opacity: [0.3, 1, 0.3],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
-                      />
-                    </motion.div>
-                  </section>
-
-                  <SectionReveal>
-                    <section id="about" className="py-20">
-                      <motion.h2
-                        variants={sectionTitleVariants}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        className="flex items-center text-2xl font-bold text-text-primary mb-8"
-                      >
-                        <span className="text-primary font-mono mr-2">01.</span>
-                        {t("about.title")}
-                      </motion.h2>
+                  <section id="about" className="py-20">
+                    <SectionTitleReveal number="01" title={t("about.title")} />
                       <div className="grid md:grid-cols-3 gap-8">
                         <div className="md:col-span-2 space-y-4">
                           <motion.div
@@ -304,75 +234,36 @@ function App() {
                             whileInView={{ opacity: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.3 }}
-                            className="mt-8"
+                            className="mt-8 mb-4"
                           >
                             {t("about.mainTechs")}
                           </motion.p>
-                          <ul className="grid grid-cols-2 gap-2 font-mono text-sm">
-                            {mainTechs.map((tech, i) => (
-                              <motion.li
-                                key={tech}
-                                initial={{ opacity: 0, x: -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: i * 0.06, duration: 0.4 }}
-                                className="flex items-center before:content-['▹'] before:text-primary before:mr-2"
-                              >
-                                {tech}
-                              </motion.li>
-                            ))}
-                          </ul>
+                          <ScrollReactiveMarquee items={mainTechs} />
                         </div>
                         <motion.div
-                          className="relative group w-[250px] h-[250px]"
+                          className="w-[250px] h-[250px]"
                           initial={{ opacity: 0, scale: 0.9 }}
                           whileInView={{ opacity: 1, scale: 1 }}
                           viewport={{ once: true }}
                           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                           whileHover={{ scale: 1.05 }}
                         >
-                          <div className="relative z-10 rounded-lg overflow-hidden w-full h-full">
-                            <ParallaxImage
-                              src="/profile-pic.jpeg"
-                              alt="Luka Vieira"
-                              className="w-full h-full grayscale hover:grayscale-0 transition-all duration-300"
-                              speed={0.3}
-                            />
-                          </div>
-                          <div className="absolute inset-0 border-2 border-primary rounded-lg translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-300" />
+                          <ClipPathReveal
+                            src="/profile-pic.jpeg"
+                            alt="Luka Vieira"
+                            className="w-full h-full"
+                          />
                         </motion.div>
                       </div>
                     </section>
-                  </SectionReveal>
 
-                  <SectionReveal>
-                    <section id="experience" className="py-20">
-                      <motion.h2
-                        variants={sectionTitleVariants}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        className="flex items-center text-2xl font-bold text-text-primary mb-8"
-                      >
-                        <span className="text-primary font-mono mr-2">02.</span>
-                        {t("experience.title")}
-                      </motion.h2>
-                      <ExperienceTimeline experiences={experiences} />
-                    </section>
-                  </SectionReveal>
+                  <section id="experience" className="py-20">
+                    <SectionTitleReveal number="02" title={t("experience.title")} />
+                    <GlowingTimeline experiences={experiences} />
+                  </section>
 
-                  <SectionReveal>
-                    <section id="projects" className="py-20">
-                      <motion.h2
-                        variants={sectionTitleVariants}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        className="flex items-center text-2xl font-bold text-text-primary mb-8"
-                      >
-                        <span className="text-primary font-mono mr-2">03.</span>
-                        {t("projects.title")}
-                      </motion.h2>
+                  <section id="projects" className="py-20">
+                    <SectionTitleReveal number="03" title={t("projects.title")} />
 
                       <div className="flex justify-center mb-12">
                         <div className="relative flex items-center bg-background-light/50 rounded-full p-1 backdrop-blur-xs">
@@ -418,26 +309,17 @@ function App() {
                         resetKey={projectType}
                       />
                     </section>
-                  </SectionReveal>
 
-                  <SectionReveal>
-                    <section id="contact" className="py-32">
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-center max-w-2xl mx-auto px-8"
-                      >
-                        <motion.h2
-                          variants={sectionTitleVariants}
-                          initial="hidden"
-                          whileInView="visible"
-                          viewport={{ once: true }}
-                          className="flex items-center justify-center text-2xl font-bold text-text-primary mb-8"
-                        >
-                          <span className="text-primary font-mono mr-2">04.</span>
-                          {t("contact.title")}
-                        </motion.h2>
+                  <section id="contact" className="py-32">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      className="text-center max-w-2xl mx-auto px-8"
+                    >
+                      <div className="flex justify-center mb-8">
+                        <SectionTitleReveal number="04" title={t("contact.title")} />
+                      </div>
 
                         <p className="text-lg mb-12 text-text-secondary">
                           {t("contact.description")}
@@ -478,11 +360,10 @@ function App() {
                             >
                               <FiGithub size={24} />
                             </motion.a>
-                          </div>
                         </div>
-                      </motion.div>
-                    </section>
-                  </SectionReveal>
+                      </div>
+                    </motion.div>
+                  </section>
                 </motion.div>
               </AnimatePresence>
             </div>

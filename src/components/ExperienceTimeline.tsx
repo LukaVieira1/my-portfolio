@@ -1,12 +1,7 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
 import { ExperienceCard } from "./ExperienceCard";
-import { useGSAP } from "../hooks/useGSAP";
 import type { IExperience } from "../types";
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface IExperienceTimelineProps {
   experiences: IExperience[];
@@ -28,8 +23,6 @@ const cardVariants = {
 
 export function ExperienceTimeline({ experiences }: IExperienceTimelineProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLDivElement[]>([]);
-  const { prefersReducedMotion } = useGSAP();
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -37,54 +30,6 @@ export function ExperienceTimeline({ experiences }: IExperienceTimelineProps) {
   });
 
   const lineScaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
-
-  useEffect(() => {
-    if (!containerRef.current || prefersReducedMotion) return;
-
-    const cards = cardsRef.current.filter(Boolean);
-
-    cards.forEach((card, index) => {
-      gsap.fromTo(
-        card,
-        {
-          scale: 0.95,
-          opacity: 0.7,
-        },
-        {
-          scale: 1,
-          opacity: 1,
-          duration: 0.6,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 90%",
-            end: "top 60%",
-            scrub: 1,
-          },
-        }
-      );
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.vars.trigger && cards.includes(trigger.vars.trigger as HTMLDivElement)) {
-          trigger.kill();
-        }
-      });
-    };
-  }, [experiences, prefersReducedMotion]);
-
-  const addToRefs = (el: HTMLDivElement | null) => {
-    if (el && !cardsRef.current.includes(el)) {
-      cardsRef.current.push(el);
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      cardsRef.current = [];
-    };
-  }, []);
 
   return (
     <div className="relative" ref={containerRef}>
@@ -99,7 +44,6 @@ export function ExperienceTimeline({ experiences }: IExperienceTimelineProps) {
         {experiences.map((experience, index) => (
           <motion.div
             key={index}
-            ref={addToRefs}
             custom={index}
             variants={cardVariants}
             initial="hidden"
