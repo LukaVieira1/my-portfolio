@@ -59,13 +59,18 @@ export function KineticHero({
   }, [prefersReducedMotion, name]);
 
   const splitText = (text: string) => {
-    return text.split("").map((char, index) => (
-      <span
-        key={index}
-        className="kinetic-char inline-block"
-        style={{ transformOrigin: "center center" }}
-      >
-        {char === " " ? "\u00A0" : char}
+    return text.split(" ").map((word, wordIndex, words) => (
+      <span key={wordIndex} className="inline-block whitespace-nowrap">
+        {word.split("").map((char, charIndex) => (
+          <span
+            key={`${wordIndex}-${charIndex}`}
+            className="kinetic-char inline-block"
+            style={{ transformOrigin: "center center" }}
+          >
+            {char}
+          </span>
+        ))}
+        {wordIndex < words.length - 1 ? "\u00A0" : null}
       </span>
     ));
   };
@@ -94,7 +99,7 @@ export function KineticHero({
 
         <h1
           ref={nameRef}
-          className="text-6xl md:text-8xl font-bold text-text-primary mb-6 leading-tight"
+          className="text-5xl md:text-6xl font-bold text-text-primary mb-6 leading-tight"
         >
           {splitText(name)}
         </h1>

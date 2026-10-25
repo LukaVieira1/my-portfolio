@@ -20,24 +20,27 @@ export function ClipPathReveal({ src, alt, className = "" }: ClipPathRevealProps
 
     const element = imageRef.current;
 
-    gsap.fromTo(
+    const tween = gsap.fromTo(
       element,
       {
-        clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
-        scale: 1.2,
+        clipPath: "inset(100% 0% 0% 0%)",
       },
       {
-        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-        scale: 1,
-        duration: 1.5,
+        clipPath: "inset(0% 0% 0% 0%)",
+        duration: 1.2,
         ease: "power3.out",
         scrollTrigger: {
           trigger: element,
-          start: "top 80%",
+          start: "top 90%",
           once: true,
         },
       }
     );
+
+    if (element.getBoundingClientRect().top < window.innerHeight) {
+      tween.scrollTrigger?.kill();
+      gsap.set(element, { clipPath: "inset(0% 0% 0% 0%)" });
+    }
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => {
@@ -53,6 +56,7 @@ export function ClipPathReveal({ src, alt, className = "" }: ClipPathRevealProps
       <div
         ref={imageRef}
         className="relative z-10 rounded-lg overflow-hidden w-full h-full"
+        style={{ clipPath: prefersReducedMotion ? "none" : "inset(100% 0 0 0)" }}
       >
         <img
           src={src}
