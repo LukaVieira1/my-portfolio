@@ -38,23 +38,19 @@ export function SectionTitleReveal({ number, title }: SectionTitleRevealProps) {
       },
     });
 
-    // Big number animation with glow
     tl.fromTo(
       numberEl,
       {
-        scale: 0,
+        scale: 0.4,
         opacity: 0,
-        rotateY: -180,
+        y: 24,
       },
       {
         scale: 1,
         opacity: 1,
-        rotateY: 0,
-        duration: 1,
-        ease: "elastic.out(1, 0.5)",
-        onUpdate: () => {
-          setCount(Math.floor(counter.value));
-        },
+        y: 0,
+        duration: 0.9,
+        ease: "back.out(1.6)",
       }
     );
 
@@ -116,7 +112,7 @@ export function SectionTitleReveal({ number, title }: SectionTitleRevealProps) {
     >
       <span
         ref={numberRef}
-        className="text-6xl md:text-8xl font-bold text-primary font-mono tabular-nums"
+        className="text-4xl md:text-6xl font-bold text-primary font-mono tabular-nums leading-none"
         style={{
           textShadow: "0 0 20px rgba(100,255,218,0.3)",
         }}

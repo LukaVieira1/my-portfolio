@@ -41,18 +41,18 @@ export function KineticHero({
       chars,
       {
         opacity: 0,
-        scale: 0,
-        rotateZ: -180,
-        y: 100,
+        y: 80,
+        scale: 0.4,
+        filter: "blur(12px)",
       },
       {
         opacity: 1,
-        scale: 1,
-        rotateZ: 0,
         y: 0,
-        duration: 1.2,
-        stagger: 0.03,
-        ease: "elastic.out(1, 0.6)",
+        scale: 1,
+        filter: "blur(0px)",
+        duration: 0.9,
+        stagger: 0.04,
+        ease: "back.out(1.5)",
         delay: 0.3,
       }
     );

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import {
   motion,
   AnimatePresence,
@@ -20,36 +20,13 @@ import { SectionTitleReveal } from "./components/SectionTitleReveal";
 import { ClipPathReveal } from "./components/ClipPathReveal";
 import { ScrollReactiveMarquee } from "./components/ScrollReactiveMarquee";
 import { AnimatedCounter } from "./components/AnimatedCounter";
+import { ScrollSpotlight } from "./components/ScrollSpotlight";
 
 import { FiMail, FiLinkedin, FiGithub } from "react-icons/fi";
 
 import { navItems, mainTechs, getExperiences, getProjects } from "./data";
 
 const SECTION_IDS = ["about", "experience", "projects", "contact"];
-
-const sectionTitleVariants = {
-  hidden: { clipPath: "inset(0 100% 0 0)", opacity: 0 },
-  visible: {
-    clipPath: "inset(0 0% 0 0)",
-    opacity: 1,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
-  },
-};
-
-const staggerContainer = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
-};
-
-const fadeUpVariant = {
-  hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
-  },
-};
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -65,14 +42,6 @@ function App() {
 
   const { scrollYProgress } = useScroll();
   const progressScaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
-
-  const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress: heroScroll } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const heroY = useTransform(heroScroll, [0, 1], ["0%", "25%"]);
-  const heroOpacity = useTransform(heroScroll, [0, 0.75], [1, 0]);
 
   const aboutMeParagraphs = [t("about.paragraphs.0"), t("about.paragraphs.1")];
   const experiences = getExperiences(t);
@@ -91,6 +60,7 @@ function App() {
 
   return (
     <div className="noise-overlay min-h-screen bg-background text-text-secondary relative">
+      <ScrollSpotlight />
       <motion.div
         className="fixed top-0 left-0 right-0 h-[2px] bg-primary z-[9997] origin-left shadow-[0_0_8px_rgba(100,255,218,0.5)]"
         style={{ scaleX: progressScaleX }}
