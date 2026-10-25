@@ -99,7 +99,7 @@ export function ImmersiveHero({ name, description, mark }: ImmersiveHeroProps) {
           </p>
           <h1
             ref={nameRef}
-            className="max-w-full origin-bottom-left text-[18vw] font-extrabold leading-[0.82] tracking-[-0.05em] text-text-primary md:text-[11vw] lg:text-[9vw] min-[1920px]:text-[8.4vw]"
+            className="max-w-full origin-bottom-left text-[18vw] font-extrabold leading-[0.82] tracking-[-0.05em] text-text-primary md:text-[11vw] lg:text-[9.4vw] min-[1920px]:text-[9vw]"
           >
             {display.split("").map((ch, i) =>
               ch === " " ? (
@@ -112,7 +112,7 @@ export function ImmersiveHero({ name, description, mark }: ImmersiveHeroProps) {
             )}
           </h1>
         </div>
-        <p className="mt-8 max-w-md text-sm leading-relaxed text-text-secondary md:text-base xl:mb-3 xl:mt-0 xl:max-w-sm 2xl:max-w-md">
+        <p className="mt-8 max-w-md text-sm leading-relaxed text-text-secondary md:text-base xl:mb-4 xl:mt-0 xl:max-w-md xl:text-xl xl:leading-snug min-[1920px]:max-w-lg min-[1920px]:text-3xl min-[3000px]:max-w-xl min-[3000px]:text-4xl">
           {description}
         </p>
       </Shell>

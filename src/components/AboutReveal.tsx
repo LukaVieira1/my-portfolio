@@ -69,7 +69,7 @@ export function AboutReveal({
   return (
     <section id="about" ref={rootRef} className="min-w-0 py-24 md:py-32">
       <Shell>
-        <div className="grid min-w-0 items-start gap-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)] lg:gap-16 xl:gap-24">
+        <div className="grid min-w-0 items-start gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(300px,0.8fr)] lg:gap-16 xl:gap-20">
           <div className="min-w-0">
             <p className="break-words text-[7.4vw] font-extrabold leading-[1.2] tracking-[-0.03em] [word-spacing:0.12em] md:text-4xl lg:text-[2.55rem] xl:text-[2.9rem] min-[1920px]:text-[3.15rem]">
               {words.map((word, i) => (

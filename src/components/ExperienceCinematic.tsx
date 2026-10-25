@@ -168,7 +168,7 @@ export function ExperienceCinematic({ experiences }: ExperienceCinematicProps) {
                 key={`${job.company}-${job.period}`}
                 data-job-scene
                 data-year={year}
-                className="relative grid min-h-[88dvh] min-w-0 items-center gap-6 overflow-hidden pl-8 lg:grid-cols-[minmax(240px,0.42fr)_1fr] lg:gap-16 lg:overflow-visible lg:pl-0 xl:gap-24"
+                className="relative grid min-h-[88dvh] min-w-0 items-center gap-6 overflow-hidden pl-8 lg:min-h-[80dvh] lg:grid-cols-[minmax(260px,0.4fr)_1fr] lg:gap-16 lg:overflow-visible lg:pl-0 xl:gap-20 min-[1400px]:min-h-[70dvh]"
               >
                 <span className="absolute left-0 top-7 h-3 w-3 -translate-x-1/2 rounded-full bg-primary shadow-[0_0_18px_#64ffda] lg:hidden" />
                 <div
@@ -181,7 +181,7 @@ export function ExperienceCinematic({ experiences }: ExperienceCinematicProps) {
                 <div className="hidden min-w-0 lg:block">
                   <div
                     data-year
-                    className="font-mono text-[7rem] font-extrabold leading-none text-primary/35 xl:text-[9rem] min-[1920px]:text-[10.5rem]"
+                    className="font-mono text-[7rem] font-extrabold leading-none text-primary/50 xl:text-[9rem] min-[1920px]:text-[10.5rem]"
                   >
                     {year || ""}
                   </div>
