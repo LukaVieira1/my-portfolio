@@ -18,28 +18,29 @@ export function ParallaxImage({
   className = "",
   speed = 0.5,
 }: ParallaxImageProps) {
-  const imageRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
   const { prefersReducedMotion } = useGSAP();
 
   useEffect(() => {
-    if (!imageRef.current || prefersReducedMotion) return;
+    if (!containerRef.current || !imageRef.current || prefersReducedMotion) return;
 
-    const element = imageRef.current;
+    const image = imageRef.current;
 
-    gsap.to(element, {
-      yPercent: 20 * speed,
+    gsap.to(image, {
+      y: -30 * speed,
       ease: "none",
       scrollTrigger: {
-        trigger: element,
+        trigger: containerRef.current,
         start: "top bottom",
         end: "bottom top",
-        scrub: true,
+        scrub: 1,
       },
     });
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.vars.trigger === element) {
+        if (trigger.vars.trigger === containerRef.current) {
           trigger.kill();
         }
       });
@@ -47,10 +48,13 @@ export function ParallaxImage({
   }, [speed, prefersReducedMotion]);
 
   return (
-    <div className={`overflow-hidden ${className}`}>
-      <div ref={imageRef} className="w-full h-full">
-        <img src={src} alt={alt} className="w-full h-full object-cover" />
-      </div>
+    <div ref={containerRef} className={`overflow-hidden ${className}`}>
+      <img 
+        ref={imageRef} 
+        src={src} 
+        alt={alt} 
+        className="w-full h-full object-cover will-change-transform"
+      />
     </div>
   );
 }

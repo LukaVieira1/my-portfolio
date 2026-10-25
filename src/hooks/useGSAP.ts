@@ -28,5 +28,23 @@ export function useGSAP() {
     }
   }, [prefersReducedMotion]);
 
+  useEffect(() => {
+    ScrollTrigger.config({
+      autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
+      ignoreMobileResize: true,
+    });
+
+    ScrollTrigger.normalizeScroll({
+      allowNestedScroll: true,
+      lockAxis: false,
+      momentum: (self) => Math.min(3, self.velocityY * -0.5),
+      type: "touch,wheel,pointer",
+    });
+
+    return () => {
+      ScrollTrigger.normalizeScroll(false);
+    };
+  }, []);
+
   return { prefersReducedMotion, gsap, ScrollTrigger };
 }

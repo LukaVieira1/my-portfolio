@@ -28,19 +28,21 @@ export function SectionReveal({
       element,
       {
         opacity: 0,
-        y: 60,
-        filter: "blur(10px)",
+        y: 80,
+        scale: 0.95,
       },
       {
         opacity: 1,
         y: 0,
-        filter: "blur(0px)",
-        duration: 1.2,
+        scale: 1,
+        duration: 1,
         ease: "power3.out",
         delay,
         scrollTrigger: {
           trigger: element,
           start: "top 85%",
+          end: "top 50%",
+          scrub: 1,
           once: true,
         },
       }

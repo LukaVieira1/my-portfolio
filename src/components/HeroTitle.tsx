@@ -25,16 +25,16 @@ export function HeroTitle({ text, className = "" }: HeroTitleProps) {
       chars,
       {
         opacity: 0,
-        y: 50,
-        rotateX: -90,
+        y: 30,
+        filter: "blur(10px)",
       },
       {
         opacity: 1,
         y: 0,
-        rotateX: 0,
-        duration: 0.8,
+        filter: "blur(0px)",
+        duration: 0.6,
         stagger: {
-          amount: 0.8,
+          amount: 0.6,
           from: "start",
         },
         ease: "power3.out",
@@ -48,7 +48,6 @@ export function HeroTitle({ text, className = "" }: HeroTitleProps) {
       <span
         key={index}
         className="char inline-block"
-        style={{ transformOrigin: "bottom center" }}
       >
         {char === " " ? "\u00A0" : char}
       </span>
@@ -56,7 +55,7 @@ export function HeroTitle({ text, className = "" }: HeroTitleProps) {
   };
 
   return (
-    <h1 ref={titleRef} className={className} style={{ perspective: "1000px" }}>
+    <h1 ref={titleRef} className={className}>
       {splitText(text)}
     </h1>
   );

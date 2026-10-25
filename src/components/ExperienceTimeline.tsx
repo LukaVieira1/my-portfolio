@@ -43,22 +43,22 @@ export function ExperienceTimeline({ experiences }: IExperienceTimelineProps) {
 
     const cards = cardsRef.current.filter(Boolean);
 
-    cards.forEach((card) => {
+    cards.forEach((card, index) => {
       gsap.fromTo(
         card,
         {
-          rotateY: -15,
-          opacity: 0.8,
+          scale: 0.95,
+          opacity: 0.7,
         },
         {
-          rotateY: 0,
+          scale: 1,
           opacity: 1,
-          duration: 0.8,
+          duration: 0.6,
           ease: "power2.out",
           scrollTrigger: {
             trigger: card,
-            start: "top 85%",
-            end: "top 50%",
+            start: "top 90%",
+            end: "top 60%",
             scrub: 1,
           },
         }
@@ -106,7 +106,6 @@ export function ExperienceTimeline({ experiences }: IExperienceTimelineProps) {
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
             className="relative"
-            style={{ perspective: "1000px" }}
           >
             <motion.div
               initial={{ scale: 0, opacity: 0 }}
