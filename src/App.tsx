@@ -11,12 +11,12 @@ import { useScrollToSection } from "./hooks/useScrollToSection";
 import { useLenis } from "./hooks/useLenis";
 import { useActiveSection } from "./hooks/useActiveSection";
 
+import { ExperienceTimeline } from "./components/ExperienceTimeline";
 import { ProjectCarousel } from "./components/ProjectCarousel";
 import { SplashScreen } from "./components/SplashScreen";
 import { SettingsMenu } from "./components/SettingsMenu";
 import { KineticHero } from "./components/KineticHero";
 import { SectionTitleReveal } from "./components/SectionTitleReveal";
-import { GlowingTimeline } from "./components/GlowingTimeline";
 import { ClipPathReveal } from "./components/ClipPathReveal";
 import { ScrollReactiveMarquee } from "./components/ScrollReactiveMarquee";
 import { AnimatedCounter } from "./components/AnimatedCounter";
@@ -259,7 +259,7 @@ function App() {
 
                   <section id="experience" className="py-20">
                     <SectionTitleReveal number="02" title={t("experience.title")} />
-                    <GlowingTimeline experiences={experiences} />
+                    <ExperienceTimeline experiences={experiences} />
                   </section>
 
                   <section id="projects" className="py-20">
