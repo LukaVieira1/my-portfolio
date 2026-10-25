@@ -1,5 +1,9 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function useLenis() {
   useEffect(() => {
@@ -8,6 +12,12 @@ export function useLenis() {
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       smoothWheel: true,
+      syncTouch: true,
+    });
+
+    // Integrate Lenis with ScrollTrigger
+    lenis.on('scroll', () => {
+      ScrollTrigger.update();
     });
 
     function raf(time: number) {
