@@ -60,7 +60,9 @@
   body,
   #root {
     max-width: 100%;
+    min-height: 100%;
     overflow-x: clip;
+    overflow-y: visible;
   }
 
   html {

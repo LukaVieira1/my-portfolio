@@ -45,6 +45,7 @@ export function ExperienceCinematic({ experiences }: ExperienceCinematicProps) {
     const root = rootRef.current;
     const path = pathRef.current;
     if (!root || prefersReducedMotion) return;
+    try {
 
     if (path) {
       const length = path.getTotalLength();
@@ -132,9 +133,14 @@ export function ExperienceCinematic({ experiences }: ExperienceCinematicProps) {
       );
     });
 
+    } catch {
+      return;
+    }
+
     return () => {
       ScrollTrigger.getAll().forEach((st) => {
-        if (st.vars.trigger && root.contains(st.vars.trigger as Node)) st.kill();
+        const trigger = st.vars.trigger;
+        if (trigger instanceof Node && root.contains(trigger)) st.kill();
       });
     };
   }, [experiences, prefersReducedMotion]);

@@ -1,5 +1,6 @@
-import { chromium } from "playwright";
+import { chromium, webkit, devices } from "playwright";
 import { spawn } from "child_process";
+import { mkdirSync } from "fs";
 import { setTimeout as sleep } from "timers/promises";
 
 const VIEWPORT = { width: 390, height: 844 };
@@ -13,6 +14,9 @@ const REQUIRED = [
   "GetHub",
   "lukavieira14@gmail.com",
 ];
+const TARGET = process.env.PREVIEW_URL || "";
+const SHOTS = "/opt/cursor/artifacts/screenshots";
+mkdirSync(SHOTS, { recursive: true });
 
 function startPreview(cwd, port) {
   const child = spawn(
@@ -25,6 +29,7 @@ function startPreview(cwd, port) {
 }
 
 function stopPreview(child) {
+  if (!child) return;
   try {
     process.kill(-child.pid, "SIGTERM");
   } catch {
@@ -36,35 +41,47 @@ function stopPreview(child) {
   }
 }
 
-async function prepare(page, port) {
-  await page.addInitScript(() => {
-    localStorage.setItem("i18nextLng", "en");
+function disableWebGL(page) {
+  return page.addInitScript(() => {
+    const proto = HTMLCanvasElement.prototype;
+    const original = proto.getContext;
+    proto.getContext = function (type, ...args) {
+      if (String(type).toLowerCase().includes("webgl")) return null;
+      return original.call(this, type, ...args);
+    };
   });
-  await page.goto(`http://127.0.0.1:${port}`, {
-    waitUntil: "domcontentloaded",
-    timeout: 25000,
-  });
-  await sleep(300);
-  const skip = page.getByText("tap to skip");
-  if (await skip.count()) {
-    await skip.click();
-  } else {
-    await sleep(1600);
-  }
-  await page.waitForSelector("#about", { timeout: 20000 });
 }
 
-async function measureOverflow(page) {
-  let max = 0;
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await sleep(400);
-  for (let i = 0; i < 18; i++) {
-    const width = await page.evaluate(() => document.documentElement.scrollWidth);
-    max = Math.max(max, width);
-    await page.evaluate(() => window.scrollBy(0, window.innerHeight * 0.65));
-    await sleep(220);
-  }
-  return max;
+async function gotoFresh(page, url) {
+  await page.addInitScript(() => {
+    try {
+      localStorage.setItem("i18nextLng", "en");
+    } catch {
+      /* ignore */
+    }
+  });
+  const res = await page.goto(url, { waitUntil: "domcontentloaded", timeout: 45000 });
+  return res;
+}
+
+function heroVisible(page) {
+  return page.evaluate(() => {
+    const heading = document.querySelector("h1");
+    if (!heading) return { ok: false, reason: "no h1" };
+    const text = (heading.innerText || "").replace(/\s+/g, " ");
+    if (!text.includes("Luka Vieira")) return { ok: false, reason: `h1="${text}"` };
+    const style = getComputedStyle(heading);
+    if (style.display === "none" || style.visibility === "hidden") {
+      return { ok: false, reason: "hidden" };
+    }
+    if (parseFloat(style.opacity || "1") < 0.2) return { ok: false, reason: `opacity ${style.opacity}` };
+    const rect = heading.getBoundingClientRect();
+    if (rect.width < 8 || rect.height < 8) return { ok: false, reason: "zero size" };
+    if (rect.bottom < 0 || rect.top > window.innerHeight) {
+      return { ok: false, reason: "offscreen" };
+    }
+    return { ok: true, text, top: rect.top, height: rect.height };
+  });
 }
 
 function isVisibleOn(page, snippet) {
@@ -86,49 +103,132 @@ function isVisibleOn(page, snippet) {
   }, snippet);
 }
 
-const branchPort = 4311;
-const server = startPreview("/workspace", branchPort);
-await sleep(4000);
+async function measureOverflow(page) {
+  let max = 0;
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await sleep(300);
+  for (let i = 0; i < 16; i++) {
+    const width = await page.evaluate(() => document.documentElement.scrollWidth);
+    max = Math.max(max, width);
+    await page.evaluate(() => window.scrollBy(0, window.innerHeight * 0.7));
+    await sleep(160);
+  }
+  return max;
+}
 
-const browser = await chromium.launch({ headless: true });
-const failures = [];
-
-try {
-  const ctx = await browser.newContext({
-    viewport: VIEWPORT,
-    hasTouch: true,
-    isMobile: true,
+async function runCase({ browserType, label, contextOpts, url, webgl = true, shots = false }) {
+  const failures = [];
+  const errors = [];
+  const browser = await browserType.launch({ headless: true });
+  const context = await browser.newContext({
+    ...contextOpts,
+    ignoreHTTPSErrors: true,
   });
-  const page = await ctx.newPage();
-  await prepare(page, branchPort);
+  const page = await context.newPage();
+  page.on("pageerror", (err) => errors.push(err.message));
+  if (!webgl) await disableWebGL(page);
 
-  const scrollWidth = await measureOverflow(page);
-  console.log("BRANCH max scrollWidth", scrollWidth);
-  if (scrollWidth > VIEWPORT.width) {
-    failures.push(`horizontal overflow: scrollWidth=${scrollWidth}`);
+  try {
+    const res = await gotoFresh(page, url);
+    if (!res || res.status() >= 400) {
+      failures.push(`${label}: HTTP ${res?.status()}`);
+    }
+
+    await sleep(1000);
+    if (shots) await page.screenshot({ path: `${SHOTS}/${label}-1s.png` });
+    await sleep(2000);
+    if (shots) await page.screenshot({ path: `${SHOTS}/${label}-3s.png` });
+    const at3 = await heroVisible(page);
+    if (!at3.ok) failures.push(`${label}: hero not visible at 3s (${at3.reason})`);
+    const hasAbout = await page.evaluate(() => !!document.querySelector("#about"));
+    if (!hasAbout) failures.push(`${label}: #about missing after load (React tree crashed)`);
+    await sleep(3000);
+    if (shots) await page.screenshot({ path: `${SHOTS}/${label}-6s.png` });
+    const at6 = await heroVisible(page);
+    if (!at6.ok) failures.push(`${label}: hero not visible at 6s (${at6.reason})`);
+
+    if (errors.length) {
+      failures.push(`${label}: pageerror ${errors.join(" | ")}`);
+    }
+
+    const skip = page.getByText("tap to skip");
+    if (await skip.count()) await skip.click().catch(() => {});
+    await page.waitForSelector("#about", { timeout: 12000 });
+    const fallbackOnly = await page.evaluate(() => !document.querySelector("#about") && !!document.querySelector("h1"));
+    if (fallbackOnly) failures.push(`${label}: crashed to static fallback`);
+
+    if (label.includes("webkit") || label.includes("iphone")) {
+      const scrollWidth = await measureOverflow(page);
+      console.log(label, "scrollWidth", scrollWidth);
+      if (scrollWidth > VIEWPORT.width) {
+        failures.push(`${label}: horizontal overflow ${scrollWidth}`);
+      }
+    }
+
+    for (const snippet of REQUIRED) {
+      await page.evaluate((text) => {
+        const el = Array.from(document.querySelectorAll("body *")).find((node) =>
+          (node.innerText || "").includes(text),
+        );
+        el?.scrollIntoView({ block: "center" });
+      }, snippet);
+      await sleep(250);
+      const found = await isVisibleOn(page, snippet);
+      if (!found.ok) failures.push(`${label}: missing or hidden "${snippet}"`);
+    }
+  } catch (err) {
+    failures.push(`${label}: ${err.message}`);
+  } finally {
+    await browser.close();
   }
 
-  for (const snippet of REQUIRED) {
-    await page.evaluate((text) => {
-      const el = Array.from(document.querySelectorAll("body *")).find((node) =>
-        (node.innerText || "").includes(text),
-      );
-      el?.scrollIntoView({ block: "center" });
-    }, snippet);
-    await sleep(350);
-    const found = await isVisibleOn(page, snippet);
-    if (!found.ok) failures.push(`missing or hidden: "${snippet}"`);
-  }
+  return failures;
+}
 
-  if (failures.length) {
-    console.log("\nFAILED CHECKS");
-    failures.forEach((item) => console.log(" -", item));
-    process.exitCode = 1;
-  } else {
-    console.log("\nPASSED: no horizontal overflow; required content visible");
-    process.exitCode = 0;
-  }
+const port = 4311;
+const localUrl = `http://127.0.0.1:${port}`;
+const server = TARGET ? null : startPreview("/workspace", port);
+if (!TARGET) await sleep(4000);
+const url = TARGET || localUrl;
+
+const failures = [];
+try {
+  failures.push(
+    ...(await runCase({
+      browserType: webkit,
+      label: "webkit-iphone",
+      contextOpts: { ...devices["iPhone 13"] },
+      url,
+      shots: Boolean(TARGET),
+    })),
+  );
+  failures.push(
+    ...(await runCase({
+      browserType: chromium,
+      label: "chromium-desktop",
+      contextOpts: { viewport: { width: 1440, height: 900 } },
+      url,
+      shots: Boolean(TARGET),
+    })),
+  );
+  failures.push(
+    ...(await runCase({
+      browserType: chromium,
+      label: "chromium-nowebgl",
+      contextOpts: { viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true },
+      url,
+      webgl: false,
+    })),
+  );
 } finally {
-  await browser.close();
   stopPreview(server);
+}
+
+if (failures.length) {
+  console.log("\nFAILED CHECKS");
+  failures.forEach((item) => console.log(" -", item));
+  process.exitCode = 1;
+} else {
+  console.log("\nPASSED: hero visible after load on WebKit + Chromium; WebGL-off still readable");
+  process.exitCode = 0;
 }

@@ -16,64 +16,75 @@ import { getExperiences, getProjects } from "./data";
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [booting, setBooting] = useState(true);
   const dismissBoot = useCallback(() => setBooting(false), []);
 
   useLenis();
 
   useEffect(() => {
-    if (booting) return;
-    document.documentElement.style.setProperty("--scene", "var(--scene-hero)");
-    const id = window.setTimeout(() => ScrollTrigger.refresh(), 240);
+    const id = window.setTimeout(() => setBooting(false), 2200);
     return () => window.clearTimeout(id);
-  }, [booting, i18n.language]);
+  }, []);
 
   useEffect(() => {
-    if (booting) return;
-    const scenes = ["about", "experience", "projects", "contact"] as const;
-    const triggers = scenes.map((id) =>
-      ScrollTrigger.create({
-        trigger: `#${id}`,
-        start: "top 58%",
-        onEnter: () => {
-          document.documentElement.style.setProperty("--scene", `var(--scene-${id})`);
-        },
-        onEnterBack: () => {
-          document.documentElement.style.setProperty("--scene", `var(--scene-${id})`);
-        },
-      }),
-    );
-    return () => triggers.forEach((st) => st.kill());
+    document.documentElement.style.setProperty("--scene", "var(--scene-hero)");
+    const id = window.setTimeout(() => {
+      try {
+        ScrollTrigger.refresh();
+      } catch {
+        /* keep page readable */
+      }
+    }, 240);
+    return () => window.clearTimeout(id);
   }, [booting]);
+
+  useEffect(() => {
+    try {
+      const scenes = ["about", "experience", "projects", "contact"] as const;
+      const triggers = scenes.map((id) =>
+        ScrollTrigger.create({
+          trigger: `#${id}`,
+          start: "top 58%",
+          onEnter: () => {
+            document.documentElement.style.setProperty("--scene", `var(--scene-${id})`);
+          },
+          onEnterBack: () => {
+            document.documentElement.style.setProperty("--scene", `var(--scene-${id})`);
+          },
+        }),
+      );
+      return () => triggers.forEach((st) => st.kill());
+    } catch {
+      return undefined;
+    }
+  }, []);
 
   return (
     <div className="relative min-h-screen max-w-[100vw] overflow-x-clip text-text-secondary">
       <Progress />
       <CursorTrail />
+      <main className="min-w-0">
+        <ImmersiveHero
+          name={t("hero.name")}
+          description={t("hero.description")}
+          mark={t("header.logo")}
+        />
+        <AboutReveal
+          paragraphs={[t("about.paragraphs.0"), t("about.paragraphs.1")]}
+          techsLabel={t("about.mainTechs")}
+          yearsIt={t("about.yearsIt")}
+          yearsDev={t("about.yearsDev")}
+        />
+        <ExperienceCinematic experiences={getExperiences(t)} />
+        <ProjectGallery
+          projects={getProjects(t)}
+          professionalLabel={t("projects.filters.professional")}
+          personalLabel={t("projects.filters.personal")}
+        />
+        <ContactClose title={t("contact.title")} description={t("contact.description")} />
+      </main>
       {booting && <BootIntro onDone={dismissBoot} />}
-      {!booting && (
-        <main key={i18n.language} className="min-w-0">
-          <ImmersiveHero
-            name={t("hero.name")}
-            description={t("hero.description")}
-            mark={t("header.logo")}
-          />
-          <AboutReveal
-            paragraphs={[t("about.paragraphs.0"), t("about.paragraphs.1")]}
-            techsLabel={t("about.mainTechs")}
-            yearsIt={t("about.yearsIt")}
-            yearsDev={t("about.yearsDev")}
-          />
-          <ExperienceCinematic experiences={getExperiences(t)} />
-          <ProjectGallery
-            projects={getProjects(t)}
-            professionalLabel={t("projects.filters.professional")}
-            personalLabel={t("projects.filters.personal")}
-          />
-          <ContactClose title={t("contact.title")} description={t("contact.description")} />
-        </main>
-      )}
       <SettingsMenu />
     </div>
   );

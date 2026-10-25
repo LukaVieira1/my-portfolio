@@ -45,7 +45,8 @@ export function AboutReveal({
     });
     return () => {
       ScrollTrigger.getAll().forEach((st) => {
-        if (st.vars.trigger && root.contains(st.vars.trigger as Node)) st.kill();
+        const trigger = st.vars.trigger;
+        if (trigger instanceof Node && root.contains(trigger)) st.kill();
       });
     };
   }, [prefersReducedMotion, words.length]);

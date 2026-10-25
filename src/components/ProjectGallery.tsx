@@ -62,17 +62,26 @@ export function ProjectGallery({
       });
     };
 
-    let st = setup();
-    const refresh = () => {
-      st.kill();
-      gsap.set(track, { x: 0, skewX: 0 });
+    let st: ScrollTrigger | undefined;
+    try {
       st = setup();
+    } catch {
+      return;
+    }
+    const refresh = () => {
+      try {
+        st?.kill();
+        gsap.set(track, { x: 0, skewX: 0 });
+        st = setup();
+      } catch {
+        gsap.set(track, { x: 0, skewX: 0 });
+      }
     };
     window.addEventListener("resize", refresh);
 
     return () => {
       window.removeEventListener("resize", refresh);
-      st.kill();
+      st?.kill();
       gsap.set(track, { x: 0, skewX: 0 });
     };
   }, [kind, list.length, prefersReducedMotion]);
