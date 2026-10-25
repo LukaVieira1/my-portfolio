@@ -6,13 +6,13 @@
   --color-primary-light: var(--primary-light);
   --color-primary: var(--primary-default);
   --color-primary-dark: var(--primary-dark);
-
   --color-background: var(--background-default);
   --color-background-light: var(--background-light);
   --color-background-lighter: var(--background-lighter);
-
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 
 @layer base {
@@ -30,26 +30,22 @@
     --primary-light: var(--color-sky-400);
     --primary-default: var(--color-sky-600);
     --primary-dark: theme("colors.sky.600/0.2");
-
     --background-default: var(--color-slate-50);
     --background-light: var(--color-slate-200);
     --background-lighter: var(--color-slate-300);
-
     --text-primary: var(--color-slate-800);
     --text-secondary: var(--color-slate-600);
   }
 
   .dark {
-    --primary-light: #64ffda;
+    --primary-light: #7dffe4;
     --primary-default: #64ffda;
     --primary-dark: #64ffda20;
-
-    --background-default: #0a192f;
-    --background-light: #112240;
-    --background-lighter: #233554;
-
-    --text-primary: #ccd6f6;
-    --text-secondary: #8892b0;
+    --background-default: #07111f;
+    --background-light: #0d1b2e;
+    --background-lighter: #16324d;
+    --text-primary: #e6f1ff;
+    --text-secondary: #8ba0b8;
   }
 
   html,
@@ -59,7 +55,14 @@
     overflow-x: clip;
   }
 
+  html {
+    scroll-behavior: auto;
+  }
+
   body {
+    font-family: var(--font-sans);
+    background: var(--background-default);
+    color: var(--text-secondary);
     scrollbar-width: thin;
     scrollbar-color: var(--color-primary-dark) transparent;
   }
@@ -68,40 +71,28 @@
     width: 4px;
   }
 
-  body::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
   body::-webkit-scrollbar-thumb {
     background-color: var(--color-primary-dark);
     border-radius: 20px;
   }
-
-  body::-webkit-scrollbar-thumb:hover {
-    background-color: var(--color-primary);
-  }
 }
 
-.custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-primary-dark) transparent;
+.site-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--primary-default) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--primary-default) 8%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
 }
 
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: var(--color-primary-dark);
-  border-radius: 20px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color-primary);
+.site-scan {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
 }
 
 .noise-overlay::after {
@@ -109,33 +100,30 @@
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 1;
-  opacity: 0.025;
+  z-index: 2;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 128px 128px;
 }
 
-@keyframes aurora-shift {
-  0%,
-  100% {
-    background-position: 0% 50%;
+.term-window {
+  border: 1px solid color-mix(in oklab, var(--primary-default) 28%, transparent);
+  background: color-mix(in oklab, var(--background-light) 88%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary-default) 8%, transparent),
+    0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.glow-line {
+  box-shadow: 0 0 12px color-mix(in oklab, var(--primary-default) 70%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-.aurora-bg {
-  background-size: 400% 400%;
-  animation: aurora-shift 15s ease infinite;
-}
-
-.section-reveal {
-  clip-path: inset(0 0 100% 0);
-}
-
-.section-reveal.revealed {
-  clip-path: inset(0 0 0% 0);
-  transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }

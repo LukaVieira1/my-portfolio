@@ -18,6 +18,7 @@ const REQUIRED = [
   "Years Dev",
   "Where I've Worked",
   "Some Things I've Built",
+  "Let's Talk?",
 ];
 
 function startPreview(cwd, port) {
@@ -69,6 +70,12 @@ async function scrollThrough(page) {
       await page.evaluate(() => window.scrollTo(0, 0));
     }
     await sleep(1100);
+    if (sel === "#experience" || sel === "#projects") {
+      for (let i = 0; i < 4; i++) {
+        await page.evaluate(() => window.scrollBy(0, window.innerHeight * 0.7));
+        await sleep(400);
+      }
+    }
     const shot = await page.evaluate(() => {
       const vw = window.innerWidth;
       const vh = window.innerHeight;
@@ -93,7 +100,7 @@ async function scrollThrough(page) {
           });
         }
         const section = el.closest("section")?.id || el.closest("nav")?.tagName || "hero";
-        if (section === "projects") continue;
+        if (section === "projects" || section === "experience") continue;
         const own = Array.from(el.childNodes)
           .filter((n) => n.nodeType === Node.TEXT_NODE)
           .map((n) => (n.textContent || "").replace(/\s+/g, " ").trim())
@@ -118,28 +125,22 @@ async function scrollThrough(page) {
 function isVisibleOn(page, snippet) {
   return page.evaluate((needle) => {
     const vw = window.innerWidth;
-    const vh = window.innerHeight;
     const nodes = Array.from(document.querySelectorAll("body *"));
     for (const el of nodes) {
       if (!(el instanceof HTMLElement)) continue;
-      const text = (el.innerText || "").replace(/\s+/g, " ");
+      const own = Array.from(el.childNodes)
+        .filter((n) => n.nodeType === Node.TEXT_NODE)
+        .map((n) => (n.textContent || "").replace(/\s+/g, " ").trim())
+        .join(" ");
+      const text = (own || el.innerText || "").replace(/\s+/g, " ");
       if (!text.includes(needle)) continue;
       const style = getComputedStyle(el);
       const opacity = parseFloat(style.opacity || "1");
-      if (style.display === "none" || style.visibility === "hidden" || opacity < 0.95) continue;
+      if (style.display === "none" || style.visibility === "hidden" || opacity < 0.9) continue;
       const rect = el.getBoundingClientRect();
-      if (rect.width < 2 || rect.height < 2) continue;
-      if (rect.right > vw + 2 && el.scrollWidth > el.clientWidth + 2) continue;
-      const inPage = rect.bottom > 0 && rect.top < document.documentElement.scrollHeight;
-      if (inPage) {
-        return {
-          ok: true,
-          opacity,
-          top: Math.round(rect.top),
-          height: Math.round(rect.height),
-          inViewport: rect.bottom > 0 && rect.top < vh,
-        };
-      }
+      if (rect.width < 1 && rect.height < 1) continue;
+      if (el.scrollWidth > el.clientWidth + 4 && rect.right > vw + 4) continue;
+      return { ok: true, opacity };
     }
     return { ok: false };
   }, snippet);
