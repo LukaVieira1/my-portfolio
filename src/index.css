@@ -37,6 +37,9 @@
     --scene-experience: #e7e2d6;
     --scene-projects: #ddd4c4;
     --scene-contact: #f4f1ea;
+    --word-base: #5c564c;
+    --word-on: #161410;
+    --word-accent: var(--primary-default);
   }
 
   .dark {
@@ -54,6 +57,9 @@
     --scene-experience: #050d12;
     --scene-projects: #07161a;
     --scene-contact: #04070c;
+    --word-base: #9eb3c4;
+    --word-on: #f3fff9;
+    --word-accent: #64ffda;
   }
 
   html,
@@ -97,11 +103,15 @@
 }
 
 .word-dim {
-  color: color-mix(in oklab, var(--text-secondary) 55%, transparent);
+  color: var(--word-base, #9aafc0);
 }
 
 .word-on {
-  color: var(--text-primary);
+  color: var(--word-on, var(--text-primary));
+}
+
+.word-accent {
+  color: var(--word-accent, var(--primary-default));
 }
 
 @keyframes marquee {

@@ -3,6 +3,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useGSAP } from "../hooks/useGSAP";
 import { HeroBackdrop } from "./HeroBackdrop";
+import { Shell } from "./Shell";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -88,31 +89,33 @@ export function ImmersiveHero({ name, description, mark }: ImmersiveHeroProps) {
   return (
     <section
       ref={rootRef}
-      className="relative flex min-h-[100dvh] min-w-0 items-end overflow-hidden px-5 pb-16 pt-24 md:px-12"
+      className="relative flex min-h-[100dvh] min-w-0 items-end overflow-hidden pb-16 pt-24"
     >
       <HeroBackdrop reduced={prefersReducedMotion} />
-      <div className="relative z-10 min-w-0 w-full">
-        <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.3em] text-primary">
-          {mark}
-        </p>
-        <h1
-          ref={nameRef}
-          className="max-w-full origin-bottom-left text-[18vw] font-extrabold leading-[0.82] tracking-[-0.05em] text-text-primary md:text-[13vw]"
-        >
-          {display.split("").map((ch, i) =>
-            ch === " " ? (
-              <br key={`br-${i}`} />
-            ) : (
-              <span key={`${ch}-${i}`} data-letter={ch} className="inline-block">
-                {ch}
-              </span>
-            ),
-          )}
-        </h1>
-        <p className="mt-8 max-w-md text-sm leading-relaxed text-text-secondary md:text-base">
+      <Shell className="relative z-10 flex w-full flex-col justify-end xl:flex-row xl:items-end xl:justify-between xl:gap-20">
+        <div className="min-w-0 flex-1">
+          <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.3em] text-primary">
+            {mark}
+          </p>
+          <h1
+            ref={nameRef}
+            className="max-w-full origin-bottom-left text-[18vw] font-extrabold leading-[0.82] tracking-[-0.05em] text-text-primary md:text-[11vw] lg:text-[9vw] min-[1920px]:text-[8.4vw]"
+          >
+            {display.split("").map((ch, i) =>
+              ch === " " ? (
+                <br key={`br-${i}`} />
+              ) : (
+                <span key={`${ch}-${i}`} data-letter={ch} className="inline-block">
+                  {ch}
+                </span>
+              ),
+            )}
+          </h1>
+        </div>
+        <p className="mt-8 max-w-md text-sm leading-relaxed text-text-secondary md:text-base xl:mb-3 xl:mt-0 xl:max-w-sm 2xl:max-w-md">
           {description}
         </p>
-      </div>
+      </Shell>
     </section>
   );
 }

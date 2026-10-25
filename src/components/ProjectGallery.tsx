@@ -103,7 +103,7 @@ export function ProjectGallery({
   return (
     <section id="projects" ref={pinRef} className="relative min-w-0 overflow-hidden">
       <div className="flex min-h-[100dvh] flex-col justify-center">
-        <div className="flex gap-3 px-5 pt-20 md:px-12">
+        <div className="mx-auto flex w-full max-w-[2200px] gap-3 px-5 pt-20 md:px-10 xl:px-16 2xl:px-24">
           <button
             type="button"
             onClick={() => setKind("pro")}
@@ -121,16 +121,16 @@ export function ProjectGallery({
         </div>
         <div
           ref={trackRef}
-          className={`flex gap-[4vw] px-5 py-8 md:px-12 ${prefersReducedMotion ? "flex-col" : "w-max flex-nowrap"}`}
+          className={`flex gap-[4vw] px-5 py-8 md:px-10 xl:px-16 2xl:px-24 ${prefersReducedMotion ? "flex-col" : "w-max flex-nowrap"}`}
         >
           {list.map((project) => (
             <button
               key={project.title}
               type="button"
               onClick={() => setOpen(project)}
-              className="w-[82vw] shrink-0 text-left md:w-[58vw]"
+              className="w-[82vw] shrink-0 text-left md:w-[min(68vw,1040px)] xl:w-[min(56vw,1280px)] min-[1920px]:w-[min(48vw,1400px)]"
             >
-              <div className="relative h-[46vw] max-h-72 min-h-40 overflow-hidden bg-background-light md:h-[32vw]">
+              <div className="relative h-[46vw] max-h-72 min-h-40 overflow-hidden bg-background-light md:h-[min(36vw,420px)] md:max-h-none xl:h-[min(34vw,560px)]">
                 {project.image && (
                   <img
                     data-shot
