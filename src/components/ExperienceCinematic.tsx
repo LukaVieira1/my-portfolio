@@ -170,7 +170,7 @@ export function ExperienceCinematic({ experiences }: ExperienceCinematicProps) {
                 data-year={year}
                 className="relative grid min-h-[88dvh] min-w-0 items-center gap-6 overflow-hidden pl-8 lg:min-h-[80dvh] lg:grid-cols-[minmax(260px,0.4fr)_1fr] lg:gap-16 lg:overflow-visible lg:pl-0 xl:gap-20 min-[1400px]:min-h-[70dvh]"
               >
-                <span className="absolute left-0 top-7 h-3 w-3 -translate-x-1/2 rounded-full bg-primary shadow-[0_0_18px_#64ffda] lg:hidden" />
+                <span className="absolute left-0 top-7 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-primary lg:hidden" />
                 <div
                   data-year
                   className="pointer-events-none absolute -top-6 right-0 font-mono text-[20vw] font-extrabold leading-none text-primary/25 lg:hidden"
@@ -191,7 +191,7 @@ export function ExperienceCinematic({ experiences }: ExperienceCinematicProps) {
                 </div>
 
                 <div className="relative min-w-0 lg:border-l-2 lg:border-primary/70 lg:pl-12 xl:pl-16">
-                  <span className="absolute left-0 top-3 hidden h-3.5 w-3.5 -translate-x-1/2 rounded-full bg-primary shadow-[0_0_22px_#64ffda] lg:block" />
+                  <span className="absolute left-0 top-3 hidden h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-primary lg:block" />
                   <p data-assemble className="font-mono text-xs text-primary">
                     <span data-year-tick>{year || ""}</span>
                     <span> · {job.period}</span>

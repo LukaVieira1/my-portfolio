@@ -1,4 +1,4 @@
-import { useRef, type PointerEvent } from "react";
+import { useRef, useState, type PointerEvent } from "react";
 import { FiGithub, FiLinkedin } from "react-icons/fi";
 import { Shell } from "./Shell";
 
@@ -7,8 +7,11 @@ interface ContactCloseProps {
   description: string;
 }
 
+const EMAIL = "lukavieira14@gmail.com";
+
 export function ContactClose({ title, description }: ContactCloseProps) {
   const btn = useRef<HTMLAnchorElement>(null);
+  const [copied, setCopied] = useState(false);
 
   const magnet = (e: PointerEvent<HTMLAnchorElement>) => {
     const el = btn.current;
@@ -16,7 +19,17 @@ export function ContactClose({ title, description }: ContactCloseProps) {
     const r = el.getBoundingClientRect();
     const x = e.clientX - (r.left + r.width / 2);
     const y = e.clientY - (r.top + r.height / 2);
-    el.style.transform = `translate3d(${x * 0.25}px,${y * 0.25}px,0)`;
+    el.style.transform = `translate3d(${x * 0.18}px,${y * 0.18}px,0)`;
+  };
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1600);
+    } catch {
+      setCopied(false);
+    }
   };
 
   return (
@@ -31,15 +44,22 @@ export function ContactClose({ title, description }: ContactCloseProps) {
         <div className="min-w-0">
           <a
             ref={btn}
-            href="mailto:lukavieira14@gmail.com"
+            href={`mailto:${EMAIL}`}
             onPointerMove={magnet}
             onPointerLeave={() => {
               if (btn.current) btn.current.style.transform = "none";
             }}
-            className="inline-flex w-fit border border-primary px-6 py-4 font-mono text-sm text-primary md:text-lg"
+            className="inline-flex w-fit border border-current px-6 py-4 font-mono text-sm text-primary md:text-lg"
           >
-            lukavieira14@gmail.com
+            {EMAIL}
           </a>
+          <button
+            type="button"
+            onClick={copy}
+            className="mt-4 block font-mono text-xs uppercase tracking-[0.16em] text-text-secondary"
+          >
+            {copied ? "copied" : "copy email"}
+          </button>
           <div className="mt-8 flex gap-5 text-text-secondary">
             <a
               href="https://www.linkedin.com/in/lukaviera/"

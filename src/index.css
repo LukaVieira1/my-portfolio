@@ -51,12 +51,12 @@
     --background-lighter: #132333;
     --text-primary: #f3fff9;
     --text-secondary: #8ea3b5;
-    --scene: #04070c;
-    --scene-hero: #04070c;
-    --scene-about: #071018;
-    --scene-experience: #050d12;
-    --scene-projects: #07161a;
-    --scene-contact: #04070c;
+    --scene: #0a0a0a;
+    --scene-hero: #0a0a0a;
+    --scene-about: #0d0d0d;
+    --scene-experience: #111111;
+    --scene-projects: #0c0c0c;
+    --scene-contact: #080808;
     --word-base: #9eb3c4;
     --word-on: #f3fff9;
     --word-accent: #64ffda;

@@ -11,7 +11,7 @@ export function useLenis() {
     try {
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       lenis = new Lenis({
-        duration: reduced ? 0 : 1.1,
+        duration: reduced ? 0 : 0.95,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         orientation: "vertical",
         smoothWheel: !reduced,

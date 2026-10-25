@@ -1,31 +1,25 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useLenis } from "./hooks/useLenis";
 import { SettingsMenu } from "./components/SettingsMenu";
-import { BootIntro } from "./components/BootIntro";
 import { ImmersiveHero } from "./components/ImmersiveHero";
 import { AboutReveal } from "./components/AboutReveal";
 import { ExperienceCinematic } from "./components/ExperienceCinematic";
 import { ProjectGallery } from "./components/ProjectGallery";
 import { ContactClose } from "./components/ContactClose";
 import { CursorTrail } from "./components/CursorTrail";
+import { SiteNav } from "./components/SiteNav";
+import { Grain } from "./components/Grain";
 import { getExperiences, getProjects } from "./data";
 
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const { t } = useTranslation();
-  const [booting, setBooting] = useState(true);
-  const dismissBoot = useCallback(() => setBooting(false), []);
 
   useLenis();
-
-  useEffect(() => {
-    const id = window.setTimeout(() => setBooting(false), 2200);
-    return () => window.clearTimeout(id);
-  }, []);
 
   useEffect(() => {
     document.documentElement.style.setProperty("--scene", "var(--scene-hero)");
@@ -37,7 +31,7 @@ function App() {
       }
     }, 240);
     return () => window.clearTimeout(id);
-  }, [booting]);
+  }, []);
 
   useEffect(() => {
     try {
@@ -62,7 +56,9 @@ function App() {
 
   return (
     <div className="relative min-h-screen max-w-[100vw] overflow-x-clip text-text-secondary">
+      <Grain />
       <Progress />
+      <SiteNav />
       <CursorTrail />
       <main className="min-w-0">
         <ImmersiveHero
@@ -84,7 +80,6 @@ function App() {
         />
         <ContactClose title={t("contact.title")} description={t("contact.description")} />
       </main>
-      {booting && <BootIntro onDone={dismissBoot} />}
       <SettingsMenu />
     </div>
   );
@@ -110,7 +105,7 @@ function Progress() {
   return (
     <div
       ref={ref}
-      className="pointer-events-none fixed left-0 top-0 z-[60] h-[2px] w-full origin-left scale-x-0 bg-primary"
+      className="pointer-events-none fixed left-0 top-0 z-[60] h-px w-full origin-left scale-x-0 bg-primary"
     />
   );
 }

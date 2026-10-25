@@ -2,8 +2,8 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useGSAP } from "../hooks/useGSAP";
-import { HeroBackdrop } from "./HeroBackdrop";
 import { Shell } from "./Shell";
+import { motion } from "../motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,90 +13,82 @@ interface ImmersiveHeroProps {
   mark: string;
 }
 
-const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
 export function ImmersiveHero({ name, description, mark }: ImmersiveHeroProps) {
   const rootRef = useRef<HTMLElement>(null);
   const nameRef = useRef<HTMLHeadingElement>(null);
+  const shiftRef = useRef<HTMLDivElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
   const { prefersReducedMotion } = useGSAP();
   const display = name.replace(/\.$/, "");
 
   useEffect(() => {
     const root = rootRef.current;
     const heading = nameRef.current;
-    if (!root || !heading || prefersReducedMotion) return;
+    const shift = shiftRef.current;
+    const line = lineRef.current;
+    if (!root || !heading) return;
 
-    const letters = heading.querySelectorAll("[data-letter]");
-    letters.forEach((node, i) => {
-      const el = node as HTMLElement;
-      const final = el.dataset.letter || el.textContent || "";
-      let frame = 0;
-      const run = () => {
-        frame += 1;
-        if (frame < 10 + i * 2) {
-          el.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)] || final;
-          requestAnimationFrame(run);
-        } else {
-          el.textContent = final;
-        }
-      };
-      requestAnimationFrame(run);
-    });
+    const letters = heading.querySelectorAll<HTMLElement>("[data-letter]");
+    if (!prefersReducedMotion) {
+      gsap.fromTo(
+        letters,
+        { y: 18 },
+        { y: 0, duration: motion.hero, ease: motion.easeOut, stagger: 0.028, overwrite: true },
+      );
+    }
 
-    const ios = /iP(hone|ad|od)/.test(navigator.userAgent);
+    const onPointer = (e: PointerEvent) => {
+      if (window.matchMedia("(pointer: coarse)").matches) return;
+      const x = (e.clientX / window.innerWidth - 0.5) * 16;
+      const y = (e.clientY / window.innerHeight - 0.5) * 10;
+      if (shift) shift.style.transform = `translate3d(${x * 0.35}px, ${y * 0.25}px, 0)`;
+      if (line) line.style.transform = `translate3d(${x * -0.5}px, ${y * 0.4}px, 0)`;
+    };
+    window.addEventListener("pointermove", onPointer, { passive: true });
+
     let st: ScrollTrigger | undefined;
-    let frames = 0;
     const start = () => {
-      frames += 1;
-      if (root.offsetHeight < 160 && frames < 20) {
-        requestAnimationFrame(start);
-        return;
-      }
       if (root.offsetHeight < 160) return;
       st = ScrollTrigger.create({
         trigger: root,
         start: "top top",
         end: "bottom top",
-        scrub: 0.6,
+        scrub: 0.55,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
-          if (root.offsetHeight < 160) {
-            heading.style.transform = "";
-            heading.style.filter = "";
-            return;
-          }
           const p = self.progress;
-          heading.style.transform = `translate3d(0, ${-72 * p}px, 0) scale(${1 + p * 2.2})`;
-          heading.style.filter = !ios && p > 0.1 ? `blur(${7 * p}px)` : "none";
+          heading.style.transform = `translate3d(0, ${-48 * p}px, 0) scale(${1 + p * 0.18})`;
         },
       });
-      ScrollTrigger.refresh();
     };
     const raf = requestAnimationFrame(start);
 
     return () => {
       cancelAnimationFrame(raf);
+      window.removeEventListener("pointermove", onPointer);
       st?.kill();
       heading.style.transform = "";
-      heading.style.filter = "";
-      letters.forEach((node) => {
-        const el = node as HTMLElement;
-        el.textContent = el.dataset.letter || el.textContent;
-      });
+      if (shift) shift.style.transform = "";
     };
   }, [name, prefersReducedMotion]);
 
   return (
     <section
+      id="top"
       ref={rootRef}
-      className="relative flex min-h-[100dvh] min-w-0 items-end overflow-hidden pb-16 pt-24"
+      className="relative flex min-h-[100dvh] min-w-0 items-end overflow-hidden pb-16 pt-28"
     >
-      <HeroBackdrop reduced={prefersReducedMotion} />
+      <div
+        ref={lineRef}
+        className="pointer-events-none absolute right-[8%] top-[22%] hidden h-[46vh] w-px bg-text-primary/20 md:block"
+        aria-hidden
+      />
       <Shell className="relative z-10 flex w-full flex-col justify-end xl:flex-row xl:items-end xl:justify-between xl:gap-20">
         <div className="min-w-0 flex-1">
           <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.3em] text-primary">
             {mark}
           </p>
+          <div ref={shiftRef}>
           <h1
             ref={nameRef}
             className="max-w-full origin-bottom-left text-[18vw] font-extrabold leading-[0.82] tracking-[-0.05em] text-text-primary md:text-[11vw] lg:text-[9.4vw] min-[1920px]:text-[9vw]"
@@ -111,6 +103,7 @@ export function ImmersiveHero({ name, description, mark }: ImmersiveHeroProps) {
               ),
             )}
           </h1>
+          </div>
         </div>
         <p className="mt-8 max-w-md text-sm leading-relaxed text-text-secondary md:text-base xl:mb-4 xl:mt-0 xl:max-w-md xl:text-xl xl:leading-snug min-[1920px]:max-w-lg min-[1920px]:text-3xl min-[3000px]:max-w-xl min-[3000px]:text-4xl">
           {description}

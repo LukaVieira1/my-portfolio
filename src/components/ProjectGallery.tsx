@@ -43,10 +43,8 @@ export function ProjectGallery({
         anticipatePin: 1,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
-          const skew = gsap.utils.clamp(-8, 8, self.getVelocity() / 400);
           gsap.set(track, {
             x: -distance * self.progress,
-            skewX: skew,
           });
           track.querySelectorAll<HTMLElement>("[data-shot]").forEach((shot) => {
             const rect = shot.getBoundingClientRect();
@@ -71,10 +69,10 @@ export function ProjectGallery({
     const refresh = () => {
       try {
         st?.kill();
-        gsap.set(track, { x: 0, skewX: 0 });
+        gsap.set(track, { x: 0 });
         st = setup();
       } catch {
-        gsap.set(track, { x: 0, skewX: 0 });
+        gsap.set(track, { x: 0 });
       }
     };
     window.addEventListener("resize", refresh);
@@ -82,7 +80,7 @@ export function ProjectGallery({
     return () => {
       window.removeEventListener("resize", refresh);
       st?.kill();
-      gsap.set(track, { x: 0, skewX: 0 });
+      gsap.set(track, { x: 0 });
     };
   }, [kind, list.length, prefersReducedMotion]);
 
@@ -128,6 +126,7 @@ export function ProjectGallery({
               key={project.title}
               type="button"
               onClick={() => setOpen(project)}
+              data-cursor="view"
               className="w-[82vw] shrink-0 text-left md:w-[min(68vw,1040px)] xl:w-[min(56vw,1280px)] min-[1920px]:w-[min(48vw,1400px)]"
             >
               <div className="relative h-[46vw] max-h-72 min-h-40 overflow-hidden bg-background-light md:h-[min(36vw,420px)] md:max-h-none xl:h-[min(34vw,560px)]">
