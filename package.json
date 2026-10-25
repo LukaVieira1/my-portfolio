@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "TAILWIND_DISABLE_OXIDE=1 vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "assert:mobile": "node scripts/assert-mobile-visibility.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

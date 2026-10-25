@@ -59,7 +59,7 @@ function App() {
   }, []);
 
   return (
-    <div className="noise-overlay min-h-screen bg-background text-text-secondary relative">
+    <div className="noise-overlay relative min-h-screen max-w-[100vw] overflow-x-clip bg-background text-text-secondary">
       <ScrollSpotlight />
       <motion.div
         className="fixed top-0 left-0 right-0 h-[2px] bg-primary z-[9997] origin-left shadow-[0_0_8px_rgba(100,255,218,0.5)]"
@@ -133,7 +133,7 @@ function App() {
               </div>
             </motion.nav>
 
-            <div className="max-w-3xl mx-auto px-8 pt-24">
+            <div className="mx-auto min-w-0 max-w-3xl px-8 pt-24">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`sections-${i18n.language}`}
@@ -152,8 +152,8 @@ function App() {
 
                   <section id="about" className="py-20">
                     <SectionTitleReveal number="01" title={t("about.title")} />
-                      <div className="grid md:grid-cols-3 gap-8">
-                        <div className="md:col-span-2 space-y-4">
+                      <div className="grid min-w-0 md:grid-cols-3 gap-8">
+                        <div className="min-w-0 space-y-4 md:col-span-2">
                           <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -211,7 +211,7 @@ function App() {
                           <ScrollReactiveMarquee items={mainTechs} />
                         </div>
                         <motion.div
-                          className="w-[250px] h-[250px]"
+                          className="h-[250px] w-full max-w-[250px]"
                           initial={{ opacity: 0, scale: 0.9 }}
                           whileInView={{ opacity: 1, scale: 1 }}
                           viewport={{ once: true }}

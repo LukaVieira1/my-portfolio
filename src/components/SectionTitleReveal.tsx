@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useGSAP } from "../hooks/useGSAP";
@@ -14,117 +14,69 @@ export function SectionTitleReveal({ number, title }: SectionTitleRevealProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const numberRef = useRef<HTMLSpanElement>(null);
   const titleRef = useRef<HTMLSpanElement>(null);
-  const [count, setCount] = useState(0);
   const { prefersReducedMotion } = useGSAP();
 
   useEffect(() => {
-    if (!containerRef.current || prefersReducedMotion) {
-      setCount(parseInt(number));
-      return;
-    }
-
     const container = containerRef.current;
     const numberEl = numberRef.current;
     const titleEl = titleRef.current;
+    if (!container || !numberEl || !titleEl) return;
 
-    const counter = { value: 0 };
-    const targetNumber = parseInt(number);
+    const show = () => {
+      gsap.set(numberEl, { opacity: 1, y: 0, scale: 1, clearProps: "transform" });
+      gsap.set(titleEl, { opacity: 1, x: 0, clipPath: "none" });
+    };
+
+    if (prefersReducedMotion) {
+      show();
+      return;
+    }
+
+    show();
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: container,
-        start: "top 80%",
+        start: "top 90%",
         once: true,
       },
     });
 
     tl.fromTo(
       numberEl,
-      {
-        scale: 0.4,
-        opacity: 0,
-        y: 24,
-      },
-      {
-        scale: 1,
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        ease: "back.out(1.6)",
-      }
-    );
-
-    // Count up animation
-    tl.to(
-      counter,
-      {
-        value: targetNumber,
-        duration: 0.8,
-        ease: "power2.out",
-        onUpdate: () => {
-          setCount(Math.floor(counter.value));
-        },
-      },
-      "-=0.5"
-    );
-
-    // Glowing effect
-    tl.to(
-      numberEl,
-      {
-        textShadow: "0 0 30px rgba(100,255,218,0.8), 0 0 60px rgba(100,255,218,0.4)",
-        duration: 0.3,
-        yoyo: true,
-        repeat: 1,
-      },
-      "-=0.3"
-    );
-
-    // Title reveal with clip-path
-    tl.fromTo(
+      { opacity: 0, y: 18, scale: 0.85 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(1.5)" },
+    ).fromTo(
       titleEl,
-      {
-        clipPath: "inset(0 100% 0 0)",
-        x: -50,
-      },
-      {
-        clipPath: "inset(0 0% 0 0)",
-        x: 0,
-        duration: 1.2,
-        ease: "power4.out",
-      },
-      "-=0.5"
+      { opacity: 0, x: 16 },
+      { opacity: 1, x: 0, duration: 0.55, ease: "power3.out" },
+      "-=0.25",
     );
+
+    const fallback = window.setTimeout(show, 1600);
 
     return () => {
+      window.clearTimeout(fallback);
+      tl.kill();
       ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.vars.trigger === container) {
-          trigger.kill();
-        }
+        if (trigger.vars.trigger === container) trigger.kill();
       });
+      show();
     };
   }, [number, title, prefersReducedMotion]);
 
   return (
-    <div
+    <h2
       ref={containerRef}
-      className="flex items-center gap-4 mb-12 relative overflow-hidden"
+      className="mb-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-2xl font-bold text-text-primary"
     >
       <span
         ref={numberRef}
-        className="text-4xl md:text-6xl font-bold text-primary font-mono tabular-nums leading-none"
-        style={{
-          textShadow: "0 0 20px rgba(100,255,218,0.3)",
-        }}
+        className="font-mono text-primary"
       >
-        {count.toString().padStart(2, "0")}.
+        {number.padStart(2, "0")}.
       </span>
-      <span
-        ref={titleRef}
-        className="text-3xl md:text-4xl font-bold text-text-primary"
-      >
-        {title}
-      </span>
-    </div>
+      <span ref={titleRef}>{title}</span>
+    </h2>
   );
 }

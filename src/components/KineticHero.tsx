@@ -27,129 +27,97 @@ export function KineticHero({
     offset: ["start start", "end start"],
   });
 
-  // Kinetic transformations driven by scroll
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.5]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0]);
-  const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const nameY = useTransform(scrollYProgress, [0, 1], [0, -40]);
+  const nameOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.35]);
 
   useEffect(() => {
-    if (!nameRef.current || prefersReducedMotion) return;
+    if (!nameRef.current) return;
 
     const chars = nameRef.current.querySelectorAll(".kinetic-char");
 
+    if (prefersReducedMotion) {
+      gsap.set(chars, { opacity: 1, y: 0, scale: 1, filter: "none" });
+      return;
+    }
+
     gsap.fromTo(
       chars,
-      {
-        opacity: 0,
-        y: 80,
-        scale: 0.4,
-        filter: "blur(12px)",
-      },
+      { opacity: 0, y: 36, scale: 0.7 },
       {
         opacity: 1,
         y: 0,
         scale: 1,
-        filter: "blur(0px)",
-        duration: 0.9,
-        stagger: 0.04,
-        ease: "back.out(1.5)",
-        delay: 0.3,
-      }
+        duration: 0.7,
+        stagger: 0.035,
+        ease: "back.out(1.4)",
+        delay: 0.15,
+      },
     );
   }, [prefersReducedMotion, name]);
 
-  const splitText = (text: string) => {
-    return text.split(" ").map((word, wordIndex, words) => (
-      <span key={wordIndex} className="inline-block whitespace-nowrap">
+  const splitText = (text: string) =>
+    text.split(" ").map((word, wordIndex, words) => (
+      <span key={wordIndex} className="inline-block">
         {word.split("").map((char, charIndex) => (
-          <span
-            key={`${wordIndex}-${charIndex}`}
-            className="kinetic-char inline-block"
-            style={{ transformOrigin: "center center" }}
-          >
+          <span key={`${wordIndex}-${charIndex}`} className="kinetic-char inline-block">
             {char}
           </span>
         ))}
         {wordIndex < words.length - 1 ? "\u00A0" : null}
       </span>
     ));
-  };
 
   return (
     <section
       ref={heroRef}
-      className="relative min-h-[90vh] flex flex-col justify-center py-20"
+      className="relative flex min-h-[75vh] flex-col justify-center overflow-hidden py-20"
     >
-      <motion.div
-        style={{
-          scale: prefersReducedMotion ? 1 : scale,
-          opacity: prefersReducedMotion ? 1 : opacity,
-          y: prefersReducedMotion ? 0 : y,
-        }}
-        className="relative z-10"
-      >
+      <div className="relative z-10">
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-primary font-mono mb-5 text-lg"
+          transition={{ duration: 0.45, delay: 0.05 }}
+          className="mb-5 font-mono text-primary"
         >
           {greeting}
         </motion.p>
 
-        <h1
+        <motion.h1
           ref={nameRef}
-          className="text-5xl md:text-6xl font-bold text-text-primary mb-6 leading-tight"
+          style={
+            prefersReducedMotion
+              ? undefined
+              : { y: nameY, opacity: nameOpacity }
+          }
+          className="mb-4 text-5xl font-bold leading-tight text-text-primary md:text-6xl"
         >
           {splitText(name)}
-        </h1>
+        </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.5 }}
-          className="text-xl md:text-2xl mb-12 max-w-2xl text-text-secondary"
+          transition={{ duration: 0.45, delay: 0.35 }}
+          className="mb-8 max-w-xl text-lg text-text-secondary"
         >
           {description}
         </motion.p>
 
         <motion.button
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 1.8 }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: 0.45 }}
           onClick={onCtaClick}
           whileHover={{
             scale: 1.05,
-            boxShadow: "0 0 30px rgba(100,255,218,0.3)",
+            boxShadow: "0 0 20px rgba(100,255,218,0.2)",
           }}
-          whileTap={{ scale: 0.95 }}
-          className="px-8 py-4 border-2 border-primary text-primary rounded-lg font-mono text-lg hover:bg-primary/10 transition-colors"
+          whileTap={{ scale: 0.97 }}
+          className="rounded border border-primary px-6 py-3 font-mono text-sm text-primary transition-colors hover:bg-primary/10"
         >
           {ctaText} →
         </motion.button>
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-12 left-1/2 -translate-x-1/2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.5 }}
-        style={{ opacity: useTransform(scrollYProgress, [0, 0.2], [1, 0]) }}
-      >
-        <motion.div
-          className="w-px h-16 bg-gradient-to-b from-transparent via-primary to-transparent"
-          animate={{
-            scaleY: [0.5, 1, 0.5],
-            opacity: [0.3, 1, 0.3],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      </motion.div>
+      </div>
     </section>
   );
 }

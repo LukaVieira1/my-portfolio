@@ -14,54 +14,51 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function AnimatedCounter({
   end,
-  duration = 1.5,
+  duration = 1.2,
   suffix = "",
   className = "",
 }: AnimatedCounterProps) {
   const counterRef = useRef<HTMLSpanElement>(null);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(end);
   const { prefersReducedMotion } = useGSAP();
 
   useEffect(() => {
-    if (!counterRef.current) return;
-
     const element = counterRef.current;
+    if (!element) return;
 
-    if (prefersReducedMotion) {
-      setCount(end);
-      gsap.set(element, { opacity: 1, scale: 1 });
-      return;
-    }
+    setCount(end);
+
+    if (prefersReducedMotion) return;
 
     const counter = { value: 0 };
+    setCount(0);
 
-    gsap.set(element, { opacity: 0, scale: 0.5 });
+    const play = () => {
+      gsap.to(counter, {
+        value: end,
+        duration,
+        ease: "power2.out",
+        onUpdate: () => setCount(Math.round(counter.value)),
+        onComplete: () => setCount(end),
+      });
+    };
 
-    const scrollTrigger = ScrollTrigger.create({
+    const trigger = ScrollTrigger.create({
       trigger: element,
-      start: "top 85%",
+      start: "top 95%",
       once: true,
-      onEnter: () => {
-        gsap.to(element, {
-          opacity: 1,
-          scale: 1,
-          duration: 0.6,
-          ease: "back.out(1.7)",
-        });
-        
-        gsap.to(counter, {
-          value: end,
-          duration: duration,
-          ease: "power2.out",
-          onUpdate: () => {
-            setCount(Math.floor(counter.value));
-          },
-        });
-      },
+      onEnter: play,
     });
 
+    if (element.getBoundingClientRect().top < window.innerHeight) {
+      play();
+    }
+
+    const fallback = window.setTimeout(() => setCount(end), (duration + 0.4) * 1000);
+
     return () => {
-      scrollTrigger.kill();
+      window.clearTimeout(fallback);
+      trigger.kill();
     };
   }, [end, duration, prefersReducedMotion]);
 

@@ -52,6 +52,13 @@
     --text-secondary: #8892b0;
   }
 
+  html,
+  body,
+  #root {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
   body {
     scrollbar-width: thin;
     scrollbar-color: var(--color-primary-dark) transparent;

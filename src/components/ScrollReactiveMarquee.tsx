@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react";
-import { useScroll, useVelocity, useSpring, motion } from "framer-motion";
+import { useScroll, useVelocity, useSpring } from "framer-motion";
 import { useGSAP } from "../hooks/useGSAP";
 
 interface ScrollReactiveMarqueeProps {
@@ -9,9 +9,11 @@ interface ScrollReactiveMarqueeProps {
 
 export function ScrollReactiveMarquee({
   items,
-  baseVelocity = -2,
+  baseVelocity = -40,
 }: ScrollReactiveMarqueeProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const offset = useRef(0);
   const { prefersReducedMotion } = useGSAP();
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);
@@ -20,65 +22,42 @@ export function ScrollReactiveMarquee({
     stiffness: 400,
   });
 
-  const x = useRef(0);
-
   useEffect(() => {
-    if (prefersReducedMotion) return;
+    const track = trackRef.current;
+    if (!track || prefersReducedMotion) return;
 
-    let animationFrame: number;
+    let frame = 0;
 
-    const updatePosition = () => {
-      const velocity = smoothVelocity.get();
-      const factor = velocity / 500; // Scale velocity effect
-
-      x.current += (baseVelocity + factor) * 0.5;
-
-      if (x.current < -50) {
-        x.current = 0;
-      } else if (x.current > 0) {
-        x.current = -50;
-      }
-
-      if (containerRef.current) {
-        containerRef.current.style.transform = `translateX(${x.current}%)`;
-      }
-
-      animationFrame = requestAnimationFrame(updatePosition);
+    const tick = () => {
+      const half = track.scrollWidth / 2 || 1;
+      const boost = smoothVelocity.get() / 40;
+      offset.current += (baseVelocity + boost) * 0.016;
+      if (offset.current <= -half) offset.current += half;
+      if (offset.current > 0) offset.current -= half;
+      track.style.transform = `translate3d(${offset.current}px,0,0)`;
+      frame = requestAnimationFrame(tick);
     };
 
-    animationFrame = requestAnimationFrame(updatePosition);
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [baseVelocity, prefersReducedMotion, smoothVelocity]);
 
-    return () => {
-      if (animationFrame) {
-        cancelAnimationFrame(animationFrame);
-      }
-    };
-  }, [smoothVelocity, baseVelocity, prefersReducedMotion]);
-
-  const doubledItems = [...items, ...items];
+  const loop = [...items, ...items];
 
   return (
-    <div className="overflow-hidden py-8 -mx-8">
-      <div
-        ref={containerRef}
-        className="flex gap-8 whitespace-nowrap"
-        style={{
-          width: "200%",
-        }}
-      >
-        {doubledItems.map((item, index) => (
-          <motion.div
-            key={index}
-            className="flex items-center gap-2 px-6 py-3 bg-primary/5 border border-primary/20 rounded-full"
-            whileHover={{
-              scale: 1.1,
-              borderColor: "rgba(100,255,218,0.6)",
-              boxShadow: "0 0 20px rgba(100,255,218,0.3)",
-            }}
+    <div
+      ref={viewportRef}
+      className="relative w-full min-w-0 max-w-full overflow-hidden py-6"
+    >
+      <div ref={trackRef} className="flex w-max gap-3 will-change-transform">
+        {loop.map((item, index) => (
+          <div
+            key={`${item}-${index}`}
+            className="flex shrink-0 items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 font-mono text-sm text-text-primary"
           >
-            <span className="text-primary text-xl">▹</span>
-            <span className="font-mono text-text-primary">{item}</span>
-          </motion.div>
+            <span className="text-primary">▹</span>
+            {item}
+          </div>
         ))}
       </div>
     </div>
