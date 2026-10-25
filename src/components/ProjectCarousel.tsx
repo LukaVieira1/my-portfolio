@@ -1,8 +1,13 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 import { ProjectCard } from "./ProjectCard";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { useGSAP } from "../hooks/useGSAP";
 import type { IProject } from "../types";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface IProjectCarouselProps {
   projects: IProject[];
@@ -14,6 +19,8 @@ export function ProjectCarousel({ projects, resetKey }: IProjectCarouselProps) {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const autoPlayDelay = 3000;
   const autoPlayResumeDelay = 5000;
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { prefersReducedMotion } = useGSAP();
 
   const handleNext = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % projects.length);
@@ -58,8 +65,39 @@ export function ProjectCarousel({ projects, resetKey }: IProjectCarouselProps) {
     setCurrentIndex(0);
   }, [resetKey]);
 
+  useEffect(() => {
+    if (!containerRef.current || prefersReducedMotion) return;
+
+    const container = containerRef.current;
+
+    gsap.fromTo(
+      container,
+      { scale: 0.9, opacity: 0 },
+      {
+        scale: 1,
+        opacity: 1,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: container,
+          start: "top 80%",
+          once: true,
+        },
+      }
+    );
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => {
+        if (trigger.vars.trigger === container) {
+          trigger.kill();
+        }
+      });
+    };
+  }, [prefersReducedMotion]);
+
   return (
     <div
+      ref={containerRef}
       className="relative w-full min-h-[600px] flex items-start justify-center px-4 md:px-16"
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}

@@ -15,6 +15,10 @@ import { ExperienceTimeline } from "./components/ExperienceTimeline";
 import { ProjectCarousel } from "./components/ProjectCarousel";
 import { SplashScreen } from "./components/SplashScreen";
 import { SettingsMenu } from "./components/SettingsMenu";
+import { HeroTitle } from "./components/HeroTitle";
+import { SectionReveal } from "./components/SectionReveal";
+import { ParallaxImage } from "./components/ParallaxImage";
+import { AnimatedCounter } from "./components/AnimatedCounter";
 
 import { FiMail, FiLinkedin, FiGithub } from "react-icons/fi";
 
@@ -186,12 +190,10 @@ function App() {
                         >
                           {t("hero.greeting")}
                         </motion.p>
-                        <motion.h1
-                          variants={fadeUpVariant}
+                        <HeroTitle
+                          text={t("hero.name")}
                           className="text-5xl md:text-6xl font-bold text-text-primary mb-4 leading-tight"
-                        >
-                          {t("hero.name")}
-                        </motion.h1>
+                        />
                         <motion.p
                           variants={fadeUpVariant}
                           className="text-lg mb-8 max-w-xl"
@@ -238,216 +240,249 @@ function App() {
                     </motion.div>
                   </section>
 
-                  <section id="about" className="py-20">
-                    <motion.h2
-                      variants={sectionTitleVariants}
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true }}
-                      className="flex items-center text-2xl font-bold text-text-primary mb-8"
-                    >
-                      <span className="text-primary font-mono mr-2">01.</span>
-                      {t("about.title")}
-                    </motion.h2>
-                    <div className="grid md:grid-cols-3 gap-8">
-                      <div className="md:col-span-2 space-y-4">
-                        {aboutMeParagraphs.map((paragraph, index) => (
-                          <motion.p
-                            key={index}
-                            initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
-                            whileInView={{
-                              opacity: 1,
-                              y: 0,
-                              filter: "blur(0px)",
-                            }}
-                            viewport={{ once: true }}
-                            transition={{
-                              delay: index * 0.15,
-                              duration: 0.6,
-                              ease: [0.16, 1, 0.3, 1],
-                            }}
-                            className="text-text-secondary leading-relaxed"
-                          >
-                            {paragraph}
-                          </motion.p>
-                        ))}
-
-                        <motion.p
-                          initial={{ opacity: 0 }}
-                          whileInView={{ opacity: 1 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: 0.3 }}
-                          className="mt-8"
-                        >
-                          {t("about.mainTechs")}
-                        </motion.p>
-                        <ul className="grid grid-cols-2 gap-2 font-mono text-sm">
-                          {mainTechs.map((tech, i) => (
-                            <motion.li
-                              key={tech}
-                              initial={{ opacity: 0, x: -20 }}
-                              whileInView={{ opacity: 1, x: 0 }}
-                              viewport={{ once: true }}
-                              transition={{ delay: i * 0.06, duration: 0.4 }}
-                              className="flex items-center before:content-['▹'] before:text-primary before:mr-2"
-                            >
-                              {tech}
-                            </motion.li>
-                          ))}
-                        </ul>
-                      </div>
-                      <motion.div
-                        className="relative group w-[250px] h-[250px]"
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                        whileHover={{ scale: 1.05 }}
-                      >
-                        <div className="relative z-10 rounded-lg overflow-hidden w-full h-full">
-                          <img
-                            src="/profile-pic.jpeg"
-                            alt="Luka Vieira"
-                            className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
-                          />
-                        </div>
-                        <div className="absolute inset-0 border-2 border-primary rounded-lg translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-300" />
-                      </motion.div>
-                    </div>
-                  </section>
-
-                  <section id="experience" className="py-20">
-                    <motion.h2
-                      variants={sectionTitleVariants}
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true }}
-                      className="flex items-center text-2xl font-bold text-text-primary mb-8"
-                    >
-                      <span className="text-primary font-mono mr-2">02.</span>
-                      {t("experience.title")}
-                    </motion.h2>
-                    <ExperienceTimeline experiences={experiences} />
-                  </section>
-
-                  <section id="projects" className="py-20">
-                    <motion.h2
-                      variants={sectionTitleVariants}
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true }}
-                      className="flex items-center text-2xl font-bold text-text-primary mb-8"
-                    >
-                      <span className="text-primary font-mono mr-2">03.</span>
-                      {t("projects.title")}
-                    </motion.h2>
-
-                    <div className="flex justify-center mb-12">
-                      <div className="relative flex items-center bg-background-light/50 rounded-full p-1 backdrop-blur-xs">
-                        <motion.div
-                          className="absolute h-full bg-primary/10 rounded-full"
-                          initial={false}
-                          animate={{
-                            width: "50%",
-                            x: projectType === "professional" ? "0%" : "100%",
-                          }}
-                          transition={{ duration: 0.2 }}
-                        />
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={() => setProjectType("professional")}
-                          className={`relative px-6 py-2 text-sm font-medium rounded-full z-10 cursor-pointer ${
-                            projectType === "professional"
-                              ? "text-primary"
-                              : "text-text-secondary hover:text-text-primary"
-                          }`}
-                        >
-                          {t("projects.filters.professional")}
-                        </motion.button>
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={() => setProjectType("personal")}
-                          className={`relative px-6 py-2 text-sm font-medium rounded-full z-10 cursor-pointer ${
-                            projectType === "personal"
-                              ? "text-primary"
-                              : "text-text-secondary hover:text-text-primary"
-                          }`}
-                        >
-                          {t("projects.filters.personal")}
-                        </motion.button>
-                      </div>
-                    </div>
-
-                    <ProjectCarousel
-                      projects={filteredProjects}
-                      key={projectType}
-                      resetKey={projectType}
-                    />
-                  </section>
-
-                  <section id="contact" className="py-32">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      className="text-center max-w-2xl mx-auto px-8"
-                    >
+                  <SectionReveal>
+                    <section id="about" className="py-20">
                       <motion.h2
                         variants={sectionTitleVariants}
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true }}
-                        className="flex items-center justify-center text-2xl font-bold text-text-primary mb-8"
+                        className="flex items-center text-2xl font-bold text-text-primary mb-8"
                       >
-                        <span className="text-primary font-mono mr-2">04.</span>
-                        {t("contact.title")}
+                        <span className="text-primary font-mono mr-2">01.</span>
+                        {t("about.title")}
+                      </motion.h2>
+                      <div className="grid md:grid-cols-3 gap-8">
+                        <div className="md:col-span-2 space-y-4">
+                          <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="flex gap-8 mb-6"
+                          >
+                            <div className="text-center">
+                              <div className="text-4xl font-bold text-primary">
+                                <AnimatedCounter end={8} suffix="+" />
+                              </div>
+                              <div className="text-sm text-text-secondary mt-1">
+                                {i18n.language === "pt-BR" ? "Anos em TI" : "Years in IT"}
+                              </div>
+                            </div>
+                            <div className="text-center">
+                              <div className="text-4xl font-bold text-primary">
+                                <AnimatedCounter end={5} suffix="+" />
+                              </div>
+                              <div className="text-sm text-text-secondary mt-1">
+                                {i18n.language === "pt-BR" ? "Anos Dev" : "Years Dev"}
+                              </div>
+                            </div>
+                          </motion.div>
+
+                          {aboutMeParagraphs.map((paragraph, index) => (
+                            <motion.p
+                              key={index}
+                              initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+                              whileInView={{
+                                opacity: 1,
+                                y: 0,
+                                filter: "blur(0px)",
+                              }}
+                              viewport={{ once: true }}
+                              transition={{
+                                delay: index * 0.15,
+                                duration: 0.6,
+                                ease: [0.16, 1, 0.3, 1],
+                              }}
+                              className="text-text-secondary leading-relaxed"
+                            >
+                              {paragraph}
+                            </motion.p>
+                          ))}
+
+                          <motion.p
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.3 }}
+                            className="mt-8"
+                          >
+                            {t("about.mainTechs")}
+                          </motion.p>
+                          <ul className="grid grid-cols-2 gap-2 font-mono text-sm">
+                            {mainTechs.map((tech, i) => (
+                              <motion.li
+                                key={tech}
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.06, duration: 0.4 }}
+                                className="flex items-center before:content-['▹'] before:text-primary before:mr-2"
+                              >
+                                {tech}
+                              </motion.li>
+                            ))}
+                          </ul>
+                        </div>
+                        <motion.div
+                          className="relative group w-[250px] h-[250px]"
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                          whileHover={{ scale: 1.05 }}
+                        >
+                          <div className="relative z-10 rounded-lg overflow-hidden w-full h-full">
+                            <ParallaxImage
+                              src="/profile-pic.jpeg"
+                              alt="Luka Vieira"
+                              className="w-full h-full grayscale hover:grayscale-0 transition-all duration-300"
+                              speed={0.3}
+                            />
+                          </div>
+                          <div className="absolute inset-0 border-2 border-primary rounded-lg translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-300" />
+                        </motion.div>
+                      </div>
+                    </section>
+                  </SectionReveal>
+
+                  <SectionReveal>
+                    <section id="experience" className="py-20">
+                      <motion.h2
+                        variants={sectionTitleVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        className="flex items-center text-2xl font-bold text-text-primary mb-8"
+                      >
+                        <span className="text-primary font-mono mr-2">02.</span>
+                        {t("experience.title")}
+                      </motion.h2>
+                      <ExperienceTimeline experiences={experiences} />
+                    </section>
+                  </SectionReveal>
+
+                  <SectionReveal>
+                    <section id="projects" className="py-20">
+                      <motion.h2
+                        variants={sectionTitleVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        className="flex items-center text-2xl font-bold text-text-primary mb-8"
+                      >
+                        <span className="text-primary font-mono mr-2">03.</span>
+                        {t("projects.title")}
                       </motion.h2>
 
-                      <p className="text-lg mb-12 text-text-secondary">
-                        {t("contact.description")}
-                      </p>
-
-                      <div className="flex flex-col items-center gap-8">
-                        <motion.a
-                          href="mailto:lukavieira14@gmail.com"
-                          whileHover={{
-                            scale: 1.05,
-                            boxShadow: "0 0 25px rgba(100,255,218,0.2)",
-                          }}
-                          whileTap={{ scale: 0.95 }}
-                          className="px-8 py-4 border-2 border-primary text-primary rounded-lg font-mono hover:bg-primary/10 transition-colors flex items-center gap-3"
-                        >
-                          <FiMail size={20} />
-                          lukavieira14@gmail.com
-                        </motion.a>
-
-                        <div className="flex gap-6">
-                          <motion.a
-                            href="https://www.linkedin.com/in/lukaviera/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={{ scale: 1.2, y: -3 }}
-                            whileTap={{ scale: 0.9 }}
-                            className="text-text-secondary hover:text-primary transition-colors"
+                      <div className="flex justify-center mb-12">
+                        <div className="relative flex items-center bg-background-light/50 rounded-full p-1 backdrop-blur-xs">
+                          <motion.div
+                            className="absolute h-full bg-primary/10 rounded-full"
+                            initial={false}
+                            animate={{
+                              width: "50%",
+                              x: projectType === "professional" ? "0%" : "100%",
+                            }}
+                            transition={{ duration: 0.2 }}
+                          />
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => setProjectType("professional")}
+                            className={`relative px-6 py-2 text-sm font-medium rounded-full z-10 cursor-pointer ${
+                              projectType === "professional"
+                                ? "text-primary"
+                                : "text-text-secondary hover:text-text-primary"
+                            }`}
                           >
-                            <FiLinkedin size={24} />
-                          </motion.a>
-                          <motion.a
-                            href="https://github.com/LukaVieira1"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={{ scale: 1.2, y: -3 }}
-                            whileTap={{ scale: 0.9 }}
-                            className="text-text-secondary hover:text-primary transition-colors"
+                            {t("projects.filters.professional")}
+                          </motion.button>
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => setProjectType("personal")}
+                            className={`relative px-6 py-2 text-sm font-medium rounded-full z-10 cursor-pointer ${
+                              projectType === "personal"
+                                ? "text-primary"
+                                : "text-text-secondary hover:text-text-primary"
+                            }`}
                           >
-                            <FiGithub size={24} />
-                          </motion.a>
+                            {t("projects.filters.personal")}
+                          </motion.button>
                         </div>
                       </div>
-                    </motion.div>
-                  </section>
+
+                      <ProjectCarousel
+                        projects={filteredProjects}
+                        key={projectType}
+                        resetKey={projectType}
+                      />
+                    </section>
+                  </SectionReveal>
+
+                  <SectionReveal>
+                    <section id="contact" className="py-32">
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center max-w-2xl mx-auto px-8"
+                      >
+                        <motion.h2
+                          variants={sectionTitleVariants}
+                          initial="hidden"
+                          whileInView="visible"
+                          viewport={{ once: true }}
+                          className="flex items-center justify-center text-2xl font-bold text-text-primary mb-8"
+                        >
+                          <span className="text-primary font-mono mr-2">04.</span>
+                          {t("contact.title")}
+                        </motion.h2>
+
+                        <p className="text-lg mb-12 text-text-secondary">
+                          {t("contact.description")}
+                        </p>
+
+                        <div className="flex flex-col items-center gap-8">
+                          <motion.a
+                            href="mailto:lukavieira14@gmail.com"
+                            whileHover={{
+                              scale: 1.05,
+                              boxShadow: "0 0 25px rgba(100,255,218,0.2)",
+                            }}
+                            whileTap={{ scale: 0.95 }}
+                            className="px-8 py-4 border-2 border-primary text-primary rounded-lg font-mono hover:bg-primary/10 transition-colors flex items-center gap-3"
+                          >
+                            <FiMail size={20} />
+                            lukavieira14@gmail.com
+                          </motion.a>
+
+                          <div className="flex gap-6">
+                            <motion.a
+                              href="https://www.linkedin.com/in/lukaviera/"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              whileHover={{ scale: 1.2, y: -3 }}
+                              whileTap={{ scale: 0.9 }}
+                              className="text-text-secondary hover:text-primary transition-colors"
+                            >
+                              <FiLinkedin size={24} />
+                            </motion.a>
+                            <motion.a
+                              href="https://github.com/LukaVieira1"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              whileHover={{ scale: 1.2, y: -3 }}
+                              whileTap={{ scale: 0.9 }}
+                              className="text-text-secondary hover:text-primary transition-colors"
+                            >
+                              <FiGithub size={24} />
+                            </motion.a>
+                          </div>
+                        </div>
+                      </motion.div>
+                    </section>
+                  </SectionReveal>
                 </motion.div>
               </AnimatePresence>
             </div>
