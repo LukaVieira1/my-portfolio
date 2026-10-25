@@ -9,14 +9,29 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+function readTheme(): Theme {
+  try {
+    const saved = window.localStorage.getItem("theme");
+    if (saved === "light" || saved === "dark") return saved;
+  } catch {
+    /* private mode / blocked storage */
+  }
+  return "dark";
+}
+
+function writeTheme(theme: Theme) {
+  try {
+    window.localStorage.setItem("theme", theme);
+  } catch {
+    /* ignore */
+  }
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    const savedTheme = localStorage.getItem("theme");
-    return (savedTheme as Theme) || "dark";
-  });
+  const [theme, setTheme] = useState<Theme>(readTheme);
 
   useEffect(() => {
-    localStorage.setItem("theme", theme);
+    writeTheme(theme);
     document.documentElement.classList.remove("light", "dark");
     document.documentElement.classList.add(theme);
   }, [theme]);
