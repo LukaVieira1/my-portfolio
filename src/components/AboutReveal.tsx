@@ -66,9 +66,9 @@ export function AboutReveal({
           <div className="text-[11px] text-text-secondary">{yearsDev}</div>
         </div>
       </div>
-      <p className="max-w-5xl break-words text-[7.4vw] font-extrabold leading-[1.15] tracking-[-0.04em] md:text-5xl">
+      <p className="max-w-5xl break-words text-[7.4vw] font-extrabold leading-[1.2] tracking-[-0.03em] [word-spacing:0.12em] md:text-5xl">
         {words.map((word, i) => (
-          <span key={`${word}-${i}`} data-word className="word-dim inline">
+          <span key={`${word}-${i}`} data-word className="word-dim inline pr-[0.12em]">
             {word}{" "}
           </span>
         ))}

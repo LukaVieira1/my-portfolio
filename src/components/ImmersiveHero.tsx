@@ -81,6 +81,7 @@ export function ImmersiveHero({ name, description, mark }: ImmersiveHeroProps) {
       ref={rootRef}
       className="relative flex min-h-[100dvh] min-w-0 items-end overflow-hidden px-5 pb-16 pt-24 md:px-12"
     >
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_28%_42%,rgba(100,255,218,0.16),transparent_52%)]" />
       <Suspense fallback={null}>
         <ParticleField reduced={prefersReducedMotion} />
       </Suspense>

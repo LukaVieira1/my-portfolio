@@ -42,13 +42,14 @@ export function BootIntro({ onDone }: BootIntroProps) {
       onClick={onDone}
       className="fixed inset-0 z-[80] flex items-center justify-center bg-[#04070c] px-6 text-left"
     >
-      <div className="w-full max-w-md font-mono text-sm text-primary">
+      <div className="w-full max-w-md font-mono text-[13px] leading-7 text-primary md:text-base">
         {LINES.slice(0, shown).map((line) => (
-          <p key={line} className="mb-2">
+          <p key={line} className="mb-1">
             {line}
           </p>
         ))}
-        <p className="mt-8 text-[11px] text-text-secondary">tap to skip</p>
+        <p className="animate-pulse">█</p>
+        <p className="mt-10 text-[11px] text-text-secondary">tap to skip</p>
       </div>
     </button>
   );
