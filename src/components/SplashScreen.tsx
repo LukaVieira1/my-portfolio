@@ -1,86 +1,29 @@
 import { motion } from "framer-motion";
-import { ParticlesBackground } from "./ParticlesBackground";
+
 export function SplashScreen() {
   return (
     <motion.div
-      className="fixed inset-0 bg-background z-50 flex items-center justify-center overflow-hidden"
+      className="fixed inset-0 z-[9999] flex items-center justify-center atmosphere"
       initial={{ opacity: 1 }}
-      exit={{
-        opacity: [1, 1, 0],
-        clipPath: [
-          "inset(0%)",
-          "inset(45% 20% 45% 20%)",
-          "inset(50% 50% 50% 50%)",
-        ],
-        transition: {
-          duration: 1,
-          times: [0, 0.5, 1],
-          ease: "easeInOut",
-        },
-      }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
     >
-      <ParticlesBackground />
-      <div className="relative">
+      <motion.div
+        className="text-center"
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <p className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-text-primary">
+          Luka Vieira
+        </p>
         <motion.div
-          initial={{ width: 0 }}
-          animate={{
-            width: "100%",
-            transition: {
-              duration: 1,
-              ease: "easeInOut",
-            },
-          }}
-          className="h-[2px] bg-primary absolute -bottom-2 left-0"
+          className="mx-auto mt-6 h-px w-24 origin-left bg-primary"
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ delay: 0.25, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         />
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.5,
-            delay: 0.5,
-          }}
-          className="flex items-center gap-3"
-        >
-          <motion.span
-            initial={{ opacity: 0, scale: 0, rotate: -180 }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              rotate: 0,
-              transition: {
-                type: "spring",
-                stiffness: 100,
-                delay: 0.8,
-              },
-            }}
-            className="text-primary font-mono"
-          >
-            {"<"}
-          </motion.span>
-          <motion.h1 className="text-4xl md:text-6xl font-mono font-bold text-primary">
-            {"lukavieira.com"}
-          </motion.h1>
-          <motion.span
-            initial={{ opacity: 0, scale: 0, rotate: 180 }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              rotate: 0,
-              transition: {
-                type: "spring",
-                stiffness: 100,
-                delay: 0.8,
-              },
-            }}
-            className="text-primary font-mono"
-          >
-            {"/>"}
-          </motion.span>
-        </motion.div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 }

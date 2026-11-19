@@ -15,10 +15,12 @@ import { ExperienceTimeline } from "./components/ExperienceTimeline";
 import { ProjectCarousel } from "./components/ProjectCarousel";
 import { SplashScreen } from "./components/SplashScreen";
 import { SettingsMenu } from "./components/SettingsMenu";
+import { ScrollScene } from "./components/scrollytelling/ScrollScene";
 
 import { FiMail, FiLinkedin, FiGithub } from "react-icons/fi";
 
 import { navItems, mainTechs, getExperiences, getProjects } from "./data";
+import { assert } from "./lib/assert";
 
 const SECTION_IDS = ["about", "experience", "projects", "contact"];
 
@@ -37,7 +39,7 @@ const staggerContainer = {
 };
 
 const fadeUpVariant = {
-  hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
+  hidden: { opacity: 0, y: 28, filter: "blur(8px)" },
   visible: {
     opacity: 1,
     y: 0,
@@ -66,28 +68,40 @@ function App() {
     target: heroRef,
     offset: ["start start", "end start"],
   });
-  const heroY = useTransform(heroScroll, [0, 1], ["0%", "25%"]);
-  const heroOpacity = useTransform(heroScroll, [0, 0.75], [1, 0]);
+  const heroY = useTransform(heroScroll, [0, 1], ["0%", "18%"]);
+  const heroOpacity = useTransform(heroScroll, [0, 0.8], [1, 0]);
 
   const aboutMeParagraphs = [t("about.paragraphs.0"), t("about.paragraphs.1")];
   const experiences = getExperiences(t);
   const projects = getProjects(t);
   const navigation = navItems(t);
 
+  assert(experiences.length > 0, "no experiences loaded");
+  assert(projects.length > 0, "no projects loaded");
+  assert(navigation.length === SECTION_IDS.length, "nav/section mismatch");
+
   const filteredProjects = projects.filter(
     (project) => project.isPersonal === (projectType === "personal"),
   );
 
+  assert(
+    filteredProjects.length > 0,
+    `no projects for filter "${projectType}"`,
+  );
+
   useEffect(() => {
-    setTimeout(() => {
+    const timer = window.setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 1600);
+    return () => window.clearTimeout(timer);
   }, []);
 
   return (
-    <div className="noise-overlay min-h-screen bg-background text-text-secondary relative">
+    <div className="noise-overlay atmosphere relative min-h-screen text-text-secondary">
+      <ScrollScene />
+
       <motion.div
-        className="fixed top-0 left-0 right-0 h-[2px] bg-primary z-[9997] origin-left shadow-[0_0_8px_rgba(100,255,218,0.5)]"
+        className="fixed top-0 left-0 right-0 z-[9997] h-[2px] origin-left bg-primary"
         style={{ scaleX: progressScaleX }}
       />
 
@@ -100,37 +114,42 @@ function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.35, ease: "easeInOut" }}
             className="relative z-10"
           >
+            <div className="mesh-pattern pointer-events-none fixed inset-0 z-[1]" />
+
             <motion.nav
-              className="fixed w-full px-8 py-4 bg-background/90 backdrop-blur-sm z-50"
+              className="fixed z-50 w-full px-6 py-4 md:px-10"
               initial={{ y: -80 }}
               animate={{ y: 0 }}
               transition={{
                 duration: 0.6,
-                delay: 0.2,
+                delay: 0.15,
                 ease: [0.16, 1, 0.3, 1],
               }}
             >
-              <div className="max-w-3xl mx-auto flex items-center justify-between">
-                <motion.div
+              <div className="mx-auto flex max-w-6xl items-center justify-between">
+                <motion.button
+                  type="button"
+                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="text-primary font-mono"
+                  transition={{ delay: 0.4 }}
+                  className="font-display text-sm font-bold tracking-tight text-text-primary md:text-base"
                 >
                   {t("header.logo")}
-                </motion.div>
+                </motion.button>
 
-                <div className="hidden md:flex items-center space-x-8 font-mono text-sm">
+                <div className="hidden items-center gap-8 font-mono text-sm md:flex">
                   {navigation.map((item, i) => (
                     <motion.button
                       key={item.name}
+                      type="button"
                       onClick={() => scrollToSection(item.id)}
-                      initial={{ opacity: 0, y: -20 }}
+                      initial={{ opacity: 0, y: -16 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 + i * 0.1 }}
+                      transition={{ delay: 0.25 + i * 0.08 }}
                       whileHover={{ y: -2 }}
                       whileTap={{ scale: 0.97 }}
                       className={`relative transition-colors ${
@@ -139,8 +158,7 @@ function App() {
                           : "text-text-primary hover:text-primary"
                       }`}
                     >
-                      <span className="text-primary">0{i + 1}.</span>{" "}
-                      {item.name}
+                      <span className="text-primary">0{i + 1}.</span> {item.name}
                       {activeSection === item.id && (
                         <motion.div
                           layoutId="nav-indicator"
@@ -158,99 +176,103 @@ function App() {
               </div>
             </motion.nav>
 
-            <div className="max-w-3xl mx-auto px-8 pt-24">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`sections-${i18n.language}`}
-                  initial={{ opacity: 0.8 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0.8 }}
-                  transition={{ duration: 0.2, ease: "linear" }}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`sections-${i18n.language}`}
+                initial={{ opacity: 0.85 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0.85 }}
+                transition={{ duration: 0.2, ease: "linear" }}
+              >
+                {/* HERO — full-bleed composition, brand first */}
+                <section
+                  ref={heroRef}
+                  className="relative flex min-h-screen flex-col justify-center px-6 md:px-10"
                 >
-                  <section
-                    ref={heroRef}
-                    className="py-20 relative min-h-[75vh] flex flex-col justify-center"
+                  <motion.div
+                    style={{ y: heroY, opacity: heroOpacity }}
+                    className="relative z-10 mx-auto w-full max-w-6xl"
                   >
                     <motion.div
-                      style={{ y: heroY, opacity: heroOpacity }}
-                      className="relative z-10"
+                      variants={staggerContainer}
+                      initial="hidden"
+                      animate="visible"
+                      className="max-w-4xl"
                     >
-                      <motion.div
-                        variants={staggerContainer}
-                        initial="hidden"
-                        animate="visible"
+                      <motion.p
+                        variants={fadeUpVariant}
+                        className="mb-4 font-mono text-sm text-primary md:text-base"
                       >
-                        <motion.p
-                          variants={fadeUpVariant}
-                          className="text-primary font-mono mb-5"
+                        {t("hero.greeting")}
+                      </motion.p>
+                      <motion.h1
+                        variants={fadeUpVariant}
+                        className="font-display text-6xl font-extrabold leading-[0.95] tracking-tight text-text-primary sm:text-7xl md:text-8xl lg:text-9xl"
+                      >
+                        {t("hero.name")}
+                      </motion.h1>
+                      <motion.p
+                        variants={fadeUpVariant}
+                        className="mt-6 max-w-xl text-lg text-text-secondary md:text-xl"
+                      >
+                        {t("hero.description")}
+                      </motion.p>
+                      <motion.div variants={fadeUpVariant} className="mt-10">
+                        <motion.button
+                          type="button"
+                          onClick={() => scrollToSection("about")}
+                          whileHover={{ x: 4 }}
+                          whileTap={{ scale: 0.97 }}
+                          className="border border-primary px-7 py-3 font-mono text-sm text-primary transition-colors hover:bg-primary/10"
                         >
-                          {t("hero.greeting")}
-                        </motion.p>
-                        <motion.h1
-                          variants={fadeUpVariant}
-                          className="text-5xl md:text-6xl font-bold text-text-primary mb-4 leading-tight"
-                        >
-                          {t("hero.name")}
-                        </motion.h1>
-                        <motion.p
-                          variants={fadeUpVariant}
-                          className="text-lg mb-8 max-w-xl"
-                        >
-                          {t("hero.description")}
-                        </motion.p>
-                        <motion.div
-                          variants={fadeUpVariant}
-                          className="flex items-center gap-4 mt-8"
-                        >
-                          <motion.button
-                            onClick={() => scrollToSection("about")}
-                            whileHover={{
-                              scale: 1.05,
-                              boxShadow: "0 0 20px rgba(100,255,218,0.2)",
-                            }}
-                            whileTap={{ scale: 0.97 }}
-                            className="px-6 py-3 border border-primary text-primary rounded font-mono text-sm hover:bg-primary/10 transition-colors"
-                          >
-                            {t("header.nav.about")} →
-                          </motion.button>
-                        </motion.div>
+                          {t("header.nav.about")} →
+                        </motion.button>
                       </motion.div>
                     </motion.div>
+                  </motion.div>
 
+                  <motion.div
+                    className="absolute bottom-10 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.4 }}
+                  >
                     <motion.div
-                      className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 1.8 }}
-                    >
-                      <motion.div
-                        className="w-px h-12 bg-gradient-to-b from-transparent to-primary"
-                        animate={{
-                          scaleY: [0.5, 1, 0.5],
-                          opacity: [0.3, 1, 0.3],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
-                      />
-                    </motion.div>
-                  </section>
+                      className="h-14 w-px origin-top bg-gradient-to-b from-transparent to-primary"
+                      animate={{
+                        scaleY: [0.45, 1, 0.45],
+                        opacity: [0.35, 1, 0.35],
+                      }}
+                      transition={{
+                        duration: 2.2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    />
+                  </motion.div>
+                </section>
 
-                  <section id="about" className="py-20">
+                <div className="mx-auto max-w-6xl px-6 md:px-10">
+                  {/* ABOUT */}
+                  <section
+                    id="about"
+                    className="content-panel my-8 rounded-none py-28 md:my-12 md:py-36 px-6 md:px-10"
+                  >
                     <motion.h2
                       variants={sectionTitleVariants}
                       initial="hidden"
                       whileInView="visible"
                       viewport={{ once: true }}
-                      className="flex items-center text-2xl font-bold text-text-primary mb-8"
+                      className="mb-10 flex items-center font-display text-3xl font-bold text-text-primary md:text-4xl"
                     >
-                      <span className="text-primary font-mono mr-2">01.</span>
+                      <span className="mr-3 font-mono text-lg text-primary">
+                        01.
+                      </span>
                       {t("about.title")}
                     </motion.h2>
-                    <div className="grid md:grid-cols-3 gap-8">
-                      <div className="md:col-span-2 space-y-4">
+
+                    <div className="grid gap-12 md:grid-cols-5 md:gap-16">
+                      <div className="space-y-5 md:col-span-3">
                         {aboutMeParagraphs.map((paragraph, index) => (
                           <motion.p
                             key={index}
@@ -262,11 +284,11 @@ function App() {
                             }}
                             viewport={{ once: true }}
                             transition={{
-                              delay: index * 0.15,
-                              duration: 0.6,
+                              delay: index * 0.12,
+                              duration: 0.55,
                               ease: [0.16, 1, 0.3, 1],
                             }}
-                            className="text-text-secondary leading-relaxed"
+                            className="text-base leading-relaxed text-text-secondary md:text-lg"
                           >
                             {paragraph}
                           </motion.p>
@@ -276,8 +298,8 @@ function App() {
                           initial={{ opacity: 0 }}
                           whileInView={{ opacity: 1 }}
                           viewport={{ once: true }}
-                          transition={{ delay: 0.3 }}
-                          className="mt-8"
+                          transition={{ delay: 0.25 }}
+                          className="pt-4 font-medium text-text-primary"
                         >
                           {t("about.mainTechs")}
                         </motion.p>
@@ -285,99 +307,101 @@ function App() {
                           {mainTechs.map((tech, i) => (
                             <motion.li
                               key={tech}
-                              initial={{ opacity: 0, x: -20 }}
+                              initial={{ opacity: 0, x: -16 }}
                               whileInView={{ opacity: 1, x: 0 }}
                               viewport={{ once: true }}
-                              transition={{ delay: i * 0.06, duration: 0.4 }}
-                              className="flex items-center before:content-['▹'] before:text-primary before:mr-2"
+                              transition={{ delay: i * 0.04, duration: 0.35 }}
+                              className="flex items-center before:mr-2 before:text-primary before:content-['▹']"
                             >
                               {tech}
                             </motion.li>
                           ))}
                         </ul>
                       </div>
+
                       <motion.div
-                        className="relative group w-[250px] h-[250px]"
-                        initial={{ opacity: 0, scale: 0.9 }}
+                        className="relative mx-auto w-full max-w-[280px] md:col-span-2"
+                        initial={{ opacity: 0, scale: 0.94 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                       >
-                        <div className="relative z-10 rounded-lg overflow-hidden w-full h-full">
+                        <div className="relative z-10 aspect-square overflow-hidden">
                           <img
                             src="/profile-pic.jpeg"
                             alt="Luka Vieira"
-                            className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                            className="h-full w-full object-cover grayscale transition-all duration-500 hover:grayscale-0"
                           />
                         </div>
-                        <div className="absolute inset-0 border-2 border-primary rounded-lg translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-300" />
+                        <div className="absolute inset-0 translate-x-3 translate-y-3 border border-primary transition-transform duration-300 hover:translate-x-2 hover:translate-y-2" />
                       </motion.div>
                     </div>
                   </section>
 
-                  <section id="experience" className="py-20">
+                  {/* EXPERIENCE */}
+                  <section
+                    id="experience"
+                    className="content-panel my-8 rounded-none py-28 md:my-12 md:py-36 px-6 md:px-10"
+                  >
                     <motion.h2
                       variants={sectionTitleVariants}
                       initial="hidden"
                       whileInView="visible"
                       viewport={{ once: true }}
-                      className="flex items-center text-2xl font-bold text-text-primary mb-8"
+                      className="mb-10 flex items-center font-display text-3xl font-bold text-text-primary md:text-4xl"
                     >
-                      <span className="text-primary font-mono mr-2">02.</span>
+                      <span className="mr-3 font-mono text-lg text-primary">
+                        02.
+                      </span>
                       {t("experience.title")}
                     </motion.h2>
                     <ExperienceTimeline experiences={experiences} />
                   </section>
 
-                  <section id="projects" className="py-20">
+                  {/* PROJECTS */}
+                  <section
+                    id="projects"
+                    className="content-panel my-8 rounded-none py-28 md:my-12 md:py-36 px-6 md:px-10"
+                  >
                     <motion.h2
                       variants={sectionTitleVariants}
                       initial="hidden"
                       whileInView="visible"
                       viewport={{ once: true }}
-                      className="flex items-center text-2xl font-bold text-text-primary mb-8"
+                      className="mb-10 flex items-center font-display text-3xl font-bold text-text-primary md:text-4xl"
                     >
-                      <span className="text-primary font-mono mr-2">03.</span>
+                      <span className="mr-3 font-mono text-lg text-primary">
+                        03.
+                      </span>
                       {t("projects.title")}
                     </motion.h2>
 
-                    <div className="flex justify-center mb-12">
-                      <div className="relative flex items-center bg-background-light/50 rounded-full p-1 backdrop-blur-xs">
-                        <motion.div
-                          className="absolute h-full bg-primary/10 rounded-full"
-                          initial={false}
-                          animate={{
-                            width: "50%",
-                            x: projectType === "professional" ? "0%" : "100%",
-                          }}
-                          transition={{ duration: 0.2 }}
-                        />
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={() => setProjectType("professional")}
-                          className={`relative px-6 py-2 text-sm font-medium rounded-full z-10 cursor-pointer ${
-                            projectType === "professional"
+                    <div className="mb-12 flex justify-center gap-8 font-mono text-sm">
+                      {(
+                        [
+                          ["professional", t("projects.filters.professional")],
+                          ["personal", t("projects.filters.personal")],
+                        ] as const
+                      ).map(([type, label]) => (
+                        <button
+                          key={type}
+                          type="button"
+                          onClick={() => setProjectType(type)}
+                          className={`relative pb-2 transition-colors ${
+                            projectType === type
                               ? "text-primary"
                               : "text-text-secondary hover:text-text-primary"
                           }`}
                         >
-                          {t("projects.filters.professional")}
-                        </motion.button>
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={() => setProjectType("personal")}
-                          className={`relative px-6 py-2 text-sm font-medium rounded-full z-10 cursor-pointer ${
-                            projectType === "personal"
-                              ? "text-primary"
-                              : "text-text-secondary hover:text-text-primary"
-                          }`}
-                        >
-                          {t("projects.filters.personal")}
-                        </motion.button>
-                      </div>
+                          {label}
+                          {projectType === type && (
+                            <motion.span
+                              layoutId="project-filter"
+                              className="absolute bottom-0 left-0 right-0 h-px bg-primary"
+                            />
+                          )}
+                        </button>
+                      ))}
                     </div>
 
                     <ProjectCarousel
@@ -387,37 +411,37 @@ function App() {
                     />
                   </section>
 
-                  <section id="contact" className="py-32">
+                  {/* CONTACT */}
+                  <section id="contact" className="py-32 md:py-40">
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      className="text-center max-w-2xl mx-auto px-8"
+                      className="mx-auto max-w-2xl px-2 text-center"
                     >
                       <motion.h2
                         variants={sectionTitleVariants}
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true }}
-                        className="flex items-center justify-center text-2xl font-bold text-text-primary mb-8"
+                        className="mb-8 flex items-center justify-center font-display text-3xl font-bold text-text-primary md:text-4xl"
                       >
-                        <span className="text-primary font-mono mr-2">04.</span>
+                        <span className="mr-3 font-mono text-lg text-primary">
+                          04.
+                        </span>
                         {t("contact.title")}
                       </motion.h2>
 
-                      <p className="text-lg mb-12 text-text-secondary">
+                      <p className="mb-12 text-lg text-text-secondary">
                         {t("contact.description")}
                       </p>
 
                       <div className="flex flex-col items-center gap-8">
                         <motion.a
                           href="mailto:lukavieira14@gmail.com"
-                          whileHover={{
-                            scale: 1.05,
-                            boxShadow: "0 0 25px rgba(100,255,218,0.2)",
-                          }}
-                          whileTap={{ scale: 0.95 }}
-                          className="px-8 py-4 border-2 border-primary text-primary rounded-lg font-mono hover:bg-primary/10 transition-colors flex items-center gap-3"
+                          whileHover={{ y: -2 }}
+                          whileTap={{ scale: 0.97 }}
+                          className="flex items-center gap-3 border-2 border-primary px-8 py-4 font-mono text-primary transition-colors hover:bg-primary/10"
                         >
                           <FiMail size={20} />
                           lukavieira14@gmail.com
@@ -428,9 +452,9 @@ function App() {
                             href="https://www.linkedin.com/in/lukaviera/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            whileHover={{ scale: 1.2, y: -3 }}
-                            whileTap={{ scale: 0.9 }}
-                            className="text-text-secondary hover:text-primary transition-colors"
+                            whileHover={{ y: -3 }}
+                            whileTap={{ scale: 0.92 }}
+                            className="text-text-secondary transition-colors hover:text-primary"
                           >
                             <FiLinkedin size={24} />
                           </motion.a>
@@ -438,9 +462,9 @@ function App() {
                             href="https://github.com/LukaVieira1"
                             target="_blank"
                             rel="noopener noreferrer"
-                            whileHover={{ scale: 1.2, y: -3 }}
-                            whileTap={{ scale: 0.9 }}
-                            className="text-text-secondary hover:text-primary transition-colors"
+                            whileHover={{ y: -3 }}
+                            whileTap={{ scale: 0.92 }}
+                            className="text-text-secondary transition-colors hover:text-primary"
                           >
                             <FiGithub size={24} />
                           </motion.a>
@@ -448,9 +472,10 @@ function App() {
                       </div>
                     </motion.div>
                   </section>
-                </motion.div>
-              </AnimatePresence>
-            </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
             <SettingsMenu />
           </motion.div>
         )}

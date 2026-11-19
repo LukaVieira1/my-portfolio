@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import type { IExperience } from "../types";
+import { assert } from "../lib/assert";
 
 export function ExperienceCard({
   company,
@@ -11,21 +12,26 @@ export function ExperienceCard({
   link,
 }: IExperience) {
   const { t } = useTranslation();
+
+  assert(company.length > 0, "experience company is required");
+  assert(role.length > 0, "experience role is required");
+  assert(description.length > 0, `experience "${company}" needs description`);
+
   return (
-    <div className="mb-8 group">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
+    <div className="group mb-8">
+      <div className="mb-2 flex flex-col md:flex-row md:items-center md:justify-between">
         <div>
-          <h3 className="text-xl font-bold text-text-primary max-w-[400px]">
+          <h3 className="max-w-[420px] font-display text-xl font-bold text-text-primary">
             {role}{" "}
             <motion.span
-              className="text-primary inline-block"
+              className="inline-block text-primary"
               whileHover={{ x: 3 }}
               transition={{ type: "spring", stiffness: 400 }}
             >
               @ {company}
             </motion.span>
           </h3>
-          <p className="font-mono text-sm mt-1 opacity-70">{period}</p>
+          <p className="mt-1 font-mono text-sm opacity-70">{period}</p>
         </div>
         {link && (
           <motion.a
@@ -34,13 +40,13 @@ export function ExperienceCard({
             rel="noopener noreferrer"
             whileHover={{ x: 4 }}
             whileTap={{ scale: 0.95 }}
-            className="text-primary hover:opacity-80 transition-opacity font-mono text-sm flex items-center gap-1 mt-2 md:mt-0"
+            className="mt-2 flex items-center gap-1 font-mono text-sm text-primary transition-opacity hover:opacity-80 md:mt-0"
           >
             {t("experience.seeMore")} →
           </motion.a>
         )}
       </div>
-      <div className="text-text-secondary mb-4 max-w-2xl space-y-3 border-l-2 border-primary/10 pl-4 group-hover:border-primary/30 transition-colors duration-300">
+      <div className="mb-4 max-w-2xl space-y-3 border-l-2 border-primary/15 pl-4 text-text-secondary transition-colors duration-300 group-hover:border-primary/40">
         {description.map((paragraph, index) => (
           <p key={index} className="leading-relaxed">
             {paragraph}
@@ -49,14 +55,12 @@ export function ExperienceCard({
       </div>
       <div className="flex flex-wrap gap-2 font-mono text-xs text-text-secondary">
         {technologies.map((tech) => (
-          <motion.span
+          <span
             key={tech}
-            whileHover={{ scale: 1.08, color: "var(--color-primary)" }}
-            whileTap={{ scale: 0.95 }}
-            className="before:content-['▹'] before:text-primary before:mr-1 cursor-default hover:text-primary transition-colors px-2 py-0.5 rounded bg-background-light/50"
+            className="bg-background-light/70 px-2 py-0.5 before:mr-1 before:text-primary before:content-['▹']"
           >
             {tech}
-          </motion.span>
+          </span>
         ))}
       </div>
     </div>

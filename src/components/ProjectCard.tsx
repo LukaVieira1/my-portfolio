@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { FiGithub, FiExternalLink } from "react-icons/fi";
 import type { IProject } from "../types";
+import { assert } from "../lib/assert";
 
 export function ProjectCard({
   title,
@@ -11,57 +12,61 @@ export function ProjectCard({
   githubLink,
   image,
 }: IProject) {
+  assert(title.length > 0, "project title is required");
+  assert(description.length > 0, `project "${title}" needs description`);
+  assert(technologies.length > 0, `project "${title}" needs technologies`);
+  assert(
+    typeof image === "string" && image.length > 0,
+    `project "${title}" needs an image path`,
+  );
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
+    <motion.article
+      initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.3 }}
-      className="flex flex-col max-w-lg mx-auto bg-background-light rounded-xl overflow-hidden shadow-xl min-h-[600px] border border-transparent hover:border-primary/20 hover:shadow-[0_0_30px_rgba(100,255,218,0.07)] transition-all duration-300 group"
+      whileHover={{ y: -3 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+      className="content-panel group flex min-h-[560px] max-w-lg mx-auto flex-col overflow-hidden"
     >
-      <div className="relative h-[225px] overflow-hidden">
+      <div className="relative h-[220px] overflow-hidden">
         {link ? (
           <a
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="block w-full h-full"
+            className="block h-full w-full"
           >
             <img
-              src={image || "/project-placeholder.jpg"}
+              src={image}
               alt={title}
-              className="w-full h-full object-cover brightness-75 group-hover:brightness-90 group-hover:scale-105 transition-all duration-500"
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
             />
-            <div className="absolute inset-0 bg-background/40 group-hover:bg-background/10 transition-all duration-500" />
           </a>
         ) : (
-          <>
-            <img
-              src={image || "/project-placeholder.jpg"}
-              alt={title}
-              className="w-full h-full object-cover brightness-75 group-hover:scale-105 transition-all duration-500"
-            />
-            <div className="absolute inset-0 bg-background/40 group-hover:bg-background/20 transition-all duration-500" />
-          </>
+          <img
+            src={image}
+            alt={title}
+            className="h-full w-full object-cover"
+          />
         )}
       </div>
 
-      <div className="p-6 flex flex-col flex-1">
+      <div className="flex flex-1 flex-col p-6">
         <div className="grow">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-text-primary text-xl font-bold group-hover:text-primary transition-colors duration-300">
+          <div className="mb-4 flex items-center justify-between gap-3">
+            <h3 className="font-display text-xl font-bold text-text-primary transition-colors duration-300 group-hover:text-primary">
               {title}
             </h3>
-            <div className="flex gap-4 relative z-10">
+            <div className="relative z-10 flex gap-3">
               {githubLink && isPersonal && (
                 <motion.a
                   href={githubLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.15, rotate: -5 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="text-text-primary hover:text-primary transition-colors"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.92 }}
+                  className="text-text-primary transition-colors hover:text-primary"
                 >
                   <FiGithub size={20} />
                 </motion.a>
@@ -71,9 +76,9 @@ export function ProjectCard({
                   href={link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.15, rotate: 5 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="text-text-primary hover:text-primary transition-colors"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.92 }}
+                  className="text-text-primary transition-colors hover:text-primary"
                 >
                   <FiExternalLink size={20} />
                 </motion.a>
@@ -81,25 +86,24 @@ export function ProjectCard({
             </div>
           </div>
 
-          <div className="text-text-secondary space-y-2 text-sm mb-6 leading-relaxed">
+          <div className="mb-6 space-y-2 text-sm leading-relaxed text-text-secondary">
             {description.map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2 font-mono text-xs pt-4 border-t border-background-lighter/50">
+        <div className="flex flex-wrap gap-2 border-t border-background-lighter/70 pt-4 font-mono text-xs">
           {technologies.map((tech) => (
-            <motion.span
+            <span
               key={tech}
-              whileHover={{ scale: 1.08 }}
-              className="text-primary px-2 py-0.5 rounded bg-primary/5 hover:bg-primary/10 transition-colors cursor-default"
+              className="bg-primary/8 px-2 py-0.5 text-primary"
             >
               {tech}
-            </motion.span>
+            </span>
           ))}
         </div>
       </div>
-    </motion.div>
+    </motion.article>
   );
 }
