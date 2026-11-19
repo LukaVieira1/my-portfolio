@@ -82,6 +82,7 @@
   },
   "projects": {
     "title": "Some Things I've Built",
+    "hint": "Scroll to move through the work — one project per frame.",
     "filters": {
       "professional": "Professional",
       "personal": "Personal"

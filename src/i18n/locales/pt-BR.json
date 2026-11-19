@@ -82,6 +82,7 @@
   },
   "projects": {
     "title": "Alguns Projetos",
+    "hint": "Role para atravessar o trabalho — um projeto por quadro.",
     "filters": {
       "professional": "Profissionais",
       "personal": "Pessoais"
