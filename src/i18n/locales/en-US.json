@@ -11,7 +11,12 @@
   "hero": {
     "greeting": "Hi, my name is",
     "name": "Luka Vieira.",
-    "description": "I'm passionate about solving problems and creating exceptional digital experiences."
+    "description": "I turn complexity into digital clarity."
+  },
+  "stack": {
+    "eyebrow": "Craft",
+    "title": "Core technologies",
+    "craft": "The tools I use to build real products."
   },
   "about": {
     "title": "About Me",
@@ -83,6 +88,7 @@
   "projects": {
     "title": "Some Things I've Built",
     "hint": "Deep work with React, Next.js, TypeScript, and Node.js.",
+    "craft": "Selected work — typographic presence, product first.",
     "kind": {
       "professional": "Professional",
       "personal": "Personal"

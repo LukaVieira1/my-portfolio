@@ -35,9 +35,9 @@ export function ScrollScene() {
     return Math.min(window.devicePixelRatio, narrow ? 1.25 : 1.6);
   }, [narrow]);
 
-  // mobile: atmosfera mais contida (design intencional, não fallback de erro)
-  const intensity = narrow ? 0.45 : 1;
-  const fade = scrollFade * (narrow ? 0.7 : 1);
+  // atmosfera editorial contida — não compete com tipografia
+  const intensity = narrow ? 0.28 : 0.45;
+  const fade = scrollFade * (narrow ? 0.55 : 0.7);
 
   useEffect(() => {
     return subscribeScrollProgress((progress) => {

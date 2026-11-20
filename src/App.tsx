@@ -14,7 +14,9 @@ import { useActiveSection } from "./hooks/useActiveSection";
 import { SplashScreen } from "./components/SplashScreen";
 import { SettingsMenu } from "./components/SettingsMenu";
 import { ScrollScene } from "./components/scrollytelling/ScrollScene";
+import { GhostType } from "./components/GhostType";
 import { ChapterAbout } from "./components/chapters/ChapterAbout";
+import { ChapterStack } from "./components/chapters/ChapterStack";
 import { ChapterExperience } from "./components/chapters/ChapterExperience";
 import { ChapterProjects } from "./components/chapters/ChapterProjects";
 import { ChapterContact } from "./components/chapters/ChapterContact";
@@ -29,7 +31,6 @@ function App() {
   const { t, i18n } = useTranslation();
   const scrollToSection = useScrollToSection();
   const [loading, setLoading] = useState(true);
-  const [projectsImmersive, setProjectsImmersive] = useState(false);
 
   useLenis();
   const activeSection = useActiveSection(SECTION_IDS);
@@ -42,27 +43,27 @@ function App() {
     target: heroRef,
     offset: ["start start", "end start"],
   });
-  const heroY = useTransform(heroScroll, [0, 1], ["0%", "28%"]);
+  const heroY = useTransform(heroScroll, [0, 1], ["0%", "22%"]);
   const heroOpacity = useTransform(heroScroll, [0, 0.85], [1, 0]);
-  const heroScale = useTransform(heroScroll, [0, 1], [1, 1.08]);
-  const subtitleY = useTransform(heroScroll, [0, 1], ["0%", "60%"]);
+  const subtitleY = useTransform(heroScroll, [0, 1], ["0%", "40%"]);
 
   const experiences = getExperiences(t);
   const projects = getProjects(t);
   const navigation = navItems(t);
+  const heroName = t("hero.name");
 
   assert(experiences.length > 0, "no experiences");
   assert(projects.length > 0, "no projects");
+  assert(heroName.length > 0, "hero name missing");
   assert(navigation.length === SECTION_IDS.length, "nav mismatch");
 
-  // narrativa: só React / Next.js / Node.js (TS aparece como tag quando houver)
   const storyProjects = filterCoreStackProjects([
     ...projects.filter((p) => !p.isPersonal),
     ...projects.filter((p) => p.isPersonal),
   ]);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setLoading(false), 1400);
+    const timer = window.setTimeout(() => setLoading(false), 1200);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -87,19 +88,8 @@ function App() {
             transition={{ duration: 0.35 }}
             className="relative z-10"
           >
-            <nav
-              className={`pointer-events-none fixed inset-x-0 top-0 z-50 px-5 py-4 transition-opacity duration-300 md:px-10 md:py-5 ${
-                projectsImmersive ? "opacity-0" : "opacity-100"
-              }`}
-              aria-hidden={projectsImmersive}
-            >
-              <div
-                className={`mx-auto flex max-w-6xl items-center justify-between gap-3 ${
-                  projectsImmersive
-                    ? "pointer-events-none"
-                    : "pointer-events-auto"
-                }`}
-              >
+            <nav className="pointer-events-none fixed inset-x-0 top-0 z-50 border-b border-text-primary/5 bg-background/80 px-5 py-4 backdrop-blur-md md:px-10 md:py-5">
+              <div className="pointer-events-auto mx-auto flex max-w-6xl items-center justify-between gap-3">
                 <button
                   type="button"
                   onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -129,60 +119,52 @@ function App() {
               </div>
             </nav>
 
-            {/* HERO — uma composição, brand dominante, parallax tipográfico */}
+            {/* HERO — ghost lettering editorial */}
             <section
               ref={heroRef}
-              className="relative flex min-h-[100svh] items-end overflow-hidden px-5 pb-16 pt-24 md:px-10 md:pb-24 md:pt-28"
+              className="relative flex min-h-[100svh] items-end overflow-hidden px-5 pb-16 pt-28 md:px-10 md:pb-28 md:pt-32"
             >
               <motion.div
-                style={{ y: heroY, opacity: heroOpacity, scale: heroScale }}
-                className="relative z-10 mx-auto w-full max-w-6xl origin-bottom-left"
+                style={{ y: heroY, opacity: heroOpacity }}
+                className="relative z-10 mx-auto w-full max-w-6xl"
               >
                 <motion.p
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.15, duration: 0.6 }}
+                  transition={{ delay: 0.1, duration: 0.55 }}
                   className="font-mono text-sm text-primary md:text-base"
                 >
                   {t("hero.greeting")}
                 </motion.p>
 
                 <motion.h1
-                  initial={{ clipPath: "inset(0 0 100% 0)", opacity: 0 }}
-                  animate={{ clipPath: "inset(0 0 0% 0)", opacity: 1 }}
-                  transition={{ delay: 0.2, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                  className="mt-3 font-display text-[clamp(2.6rem,12vw,9.5rem)] font-extrabold leading-[0.9] tracking-tight text-text-primary"
+                  initial={{ opacity: 0, y: 28 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                  className="mt-4 font-display text-[clamp(2.75rem,11vw,8.75rem)] font-extrabold leading-[0.92] tracking-tight text-text-primary"
                 >
-                  {t("hero.name")}
+                  <GhostType text={heroName} className="block max-w-full" />
                 </motion.h1>
 
-                <motion.div style={{ y: subtitleY }} className="mt-6 max-w-xl md:mt-8">
-                  <p className="text-base text-text-secondary md:text-xl">
+                <motion.div style={{ y: subtitleY }} className="mt-8 max-w-lg md:mt-10">
+                  <p className="text-lg text-text-secondary md:text-2xl">
                     {t("hero.description")}
                   </p>
                   <button
                     type="button"
                     onClick={() => scrollToSection("about")}
-                    className="mt-6 border border-primary px-6 py-3 font-mono text-sm text-primary transition-colors hover:bg-primary/10 md:mt-8 md:px-7"
+                    className="mt-8 font-mono text-sm text-primary transition-opacity hover:opacity-70"
                   >
                     {t("header.nav.about")} →
                   </button>
                 </motion.div>
               </motion.div>
-
-              <motion.div
-                className="absolute bottom-6 left-1/2 h-12 w-px -translate-x-1/2 bg-gradient-to-b from-transparent to-primary md:bottom-8 md:h-14"
-                animate={{ scaleY: [0.45, 1, 0.45], opacity: [0.3, 1, 0.3] }}
-                transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-              />
             </section>
 
             <ChapterAbout />
+            <ChapterStack />
             <ChapterExperience experiences={experiences} />
-            <ChapterProjects
-              projects={storyProjects}
-              onImmersiveChange={setProjectsImmersive}
-            />
+            <ChapterProjects projects={storyProjects} />
             <ChapterContact />
 
             <SettingsMenu />

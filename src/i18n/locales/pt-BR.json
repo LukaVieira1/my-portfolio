@@ -11,7 +11,12 @@
   "hero": {
     "greeting": "Olá, me chamo",
     "name": "Luka Vieira.",
-    "description": "Apaixonado por resolver problemas e criar experiências digitais excepcionais."
+    "description": "Transformo complexidade em clareza digital."
+  },
+  "stack": {
+    "eyebrow": "Craft",
+    "title": "Principais tecnologias",
+    "craft": "As ferramentas com as quais construo produtos de verdade."
   },
   "about": {
     "title": "Sobre Mim",
@@ -83,6 +88,7 @@
   "projects": {
     "title": "Alguns Projetos",
     "hint": "Trabalho em profundidade com React, Next.js, TypeScript e Node.js.",
+    "craft": "Selected work — presença tipográfica, produto em primeiro plano.",
     "kind": {
       "professional": "Profissional",
       "personal": "Pessoal"
