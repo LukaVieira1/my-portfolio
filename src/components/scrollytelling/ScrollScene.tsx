@@ -4,14 +4,16 @@ import { ParallaxField } from "./ParallaxField";
 import { useTheme } from "../../contexts/ThemeContext";
 import { assert } from "../../lib/assert";
 import { subscribeScrollProgress } from "../../lib/scrollStore";
+import { useIsNarrow } from "../../hooks/useIsNarrow";
 
-function SceneContent() {
+function SceneContent({ intensity }: { intensity: number }) {
   const { theme } = useTheme();
   const accent = theme === "dark" ? "#E86A33" : "#C73E1D";
   const ink = theme === "dark" ? "#9AA8B5" : "#1A2332";
   const fogColor = theme === "dark" ? "#0F1419" : "#E9EEF2";
 
   assert(accent.length > 0, "accent color missing");
+  assert(intensity > 0 && intensity <= 1, `invalid intensity ${intensity}`);
 
   return (
     <>
@@ -20,23 +22,28 @@ function SceneContent() {
       <ambientLight intensity={0.9} />
       <directionalLight position={[5, 7, 4]} intensity={0.85} />
       <directionalLight position={[-6, -1, 2]} intensity={0.3} />
-      <ParallaxField accent={accent} ink={ink} />
+      <ParallaxField accent={accent} ink={ink} intensity={intensity} />
     </>
   );
 }
 
 export function ScrollScene() {
-  const [fade, setFade] = useState(1);
+  const narrow = useIsNarrow();
+  const [scrollFade, setScrollFade] = useState(1);
   const dpr = useMemo(() => {
-    if (typeof window === "undefined") return 1;
-    return Math.min(window.devicePixelRatio, 1.6);
-  }, []);
+    assert(typeof window !== "undefined", "window required for dpr");
+    return Math.min(window.devicePixelRatio, narrow ? 1.25 : 1.6);
+  }, [narrow]);
+
+  // mobile: atmosfera mais contida (design intencional, não fallback de erro)
+  const intensity = narrow ? 0.45 : 1;
+  const fade = scrollFade * (narrow ? 0.7 : 1);
 
   useEffect(() => {
     return subscribeScrollProgress((progress) => {
-      if (progress < 0.72) setFade(1);
-      else if (progress > 0.9) setFade(0);
-      else setFade(1 - (progress - 0.72) / 0.18);
+      if (progress < 0.72) setScrollFade(1);
+      else if (progress > 0.9) setScrollFade(0);
+      else setScrollFade(1 - (progress - 0.72) / 0.18);
     });
   }, []);
 
@@ -48,7 +55,7 @@ export function ScrollScene() {
     >
       <Canvas
         dpr={dpr}
-        camera={{ position: [0, 0, 6.4], fov: 42, near: 0.1, far: 40 }}
+        camera={{ position: [0, 0, narrow ? 7.2 : 6.4], fov: narrow ? 48 : 42, near: 0.1, far: 40 }}
         gl={{
           antialias: true,
           alpha: false,
@@ -59,7 +66,7 @@ export function ScrollScene() {
         }}
       >
         <Suspense fallback={null}>
-          <SceneContent />
+          <SceneContent intensity={intensity} />
         </Suspense>
       </Canvas>
     </div>

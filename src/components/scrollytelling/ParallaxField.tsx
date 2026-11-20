@@ -20,10 +20,13 @@ type Layer = {
 export function ParallaxField({
   accent,
   ink,
+  intensity = 1,
 }: {
   accent: string;
   ink: string;
+  intensity?: number;
 }) {
+  assert(intensity > 0 && intensity <= 1, `invalid intensity ${intensity}`);
   const groupRef = useRef<THREE.Group>(null);
   const layerRefs = useRef<(THREE.Mesh | null)[]>([]);
 
@@ -118,7 +121,7 @@ export function ParallaxField({
 
       const mat = mesh.material as THREE.MeshStandardMaterial;
       const depthBoost = THREE.MathUtils.mapLinear(layer.z, -9.5, -2.8, 0.5, 1);
-      mat.opacity = 0.1 * depthBoost * endFade + 0.04 * endFade;
+      mat.opacity = (0.1 * depthBoost * endFade + 0.04 * endFade) * intensity;
     });
   });
 

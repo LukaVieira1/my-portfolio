@@ -40,14 +40,14 @@ export function ChapterExperience({ experiences }: Props) {
       className="relative"
       style={{ height: `${heightVh}vh` }}
     >
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-8 px-6 md:grid-cols-12 md:px-10">
+      <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
+        <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-4 px-5 md:grid-cols-12 md:gap-8 md:px-10">
           <div className="md:col-span-4">
             <p className="font-mono text-sm text-primary">02.</p>
-            <h2 className="mt-2 font-display text-4xl font-extrabold tracking-tight text-text-primary md:text-5xl">
+            <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight text-text-primary md:text-5xl">
               {t("experience.title")}
             </h2>
-            <div className="mt-10 space-y-3">
+            <div className="mt-6 hidden space-y-3 md:mt-10 md:block">
               {experiences.map((exp, i) => (
                 <ExperienceTick
                   key={`${exp.company}-${exp.period}`}
@@ -61,7 +61,7 @@ export function ChapterExperience({ experiences }: Props) {
             </div>
           </div>
 
-          <div className="relative md:col-span-8">
+          <div className="relative min-h-[58vh] md:col-span-8 md:min-h-0 md:h-[70vh]">
             {experiences.map((exp, i) => (
               <ExperiencePanel
                 key={`${exp.company}-panel`}
@@ -136,23 +136,23 @@ function ExperiencePanel({
   return (
     <motion.article
       style={{ opacity, y }}
-      className="absolute inset-0 flex flex-col justify-center"
+      className="absolute inset-0 flex flex-col justify-center overflow-y-auto overscroll-contain pr-1"
     >
       <motion.span
         style={{ x: watermarkX }}
-        className="pointer-events-none absolute -top-6 right-0 font-display text-[7rem] font-extrabold leading-none text-text-primary/8 md:text-[10rem]"
+        className="pointer-events-none absolute -top-2 right-0 hidden font-display text-[7rem] font-extrabold leading-none text-text-primary/8 md:block md:-top-6 md:text-[10rem]"
         aria-hidden
       >
         {year}
       </motion.span>
 
-      <p className="font-mono text-sm text-primary">{experience.period}</p>
-      <h3 className="mt-2 max-w-2xl font-display text-3xl font-bold text-text-primary md:text-4xl">
+      <p className="font-mono text-xs text-primary md:text-sm">{experience.period}</p>
+      <h3 className="mt-2 max-w-2xl font-display text-xl font-bold text-text-primary md:text-4xl">
         {experience.role}
         <span className="text-primary"> @ {experience.company}</span>
       </h3>
 
-      <div className="mt-6 max-w-xl space-y-3 text-text-secondary">
+      <div className="mt-4 max-w-xl space-y-2 text-sm text-text-secondary md:mt-6 md:space-y-3 md:text-base">
         {experience.description.slice(0, 2).map((p, i) => (
           <p key={i} className="leading-relaxed">
             {p}
@@ -160,7 +160,7 @@ function ExperiencePanel({
         ))}
       </div>
 
-      <div className="mt-6 flex flex-wrap gap-x-4 gap-y-2 font-mono text-xs text-text-secondary">
+      <div className="mt-4 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[11px] text-text-secondary md:mt-6 md:gap-x-4 md:gap-y-2 md:text-xs">
         {experience.technologies.map((tech) => (
           <span key={tech} className="before:mr-1 before:text-primary before:content-['▹']">
             {tech}
@@ -173,7 +173,7 @@ function ExperiencePanel({
           href={experience.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-8 inline-flex w-fit font-mono text-sm text-primary transition-opacity hover:opacity-70"
+          className="mt-5 inline-flex w-fit font-mono text-sm text-primary transition-opacity hover:opacity-70 md:mt-8"
         >
           {seeMore} →
         </a>

@@ -19,20 +19,20 @@ export function ChapterContact() {
     <section
       id="contact"
       ref={ref}
-      className="relative flex min-h-[90vh] items-center justify-center px-6 py-32 md:px-10"
+      className="relative flex min-h-[90svh] items-center justify-center px-5 py-24 md:px-10 md:py-32"
     >
       <motion.div style={{ y: rise, opacity: fade }} className="mx-auto max-w-3xl text-center">
         <p className="font-mono text-sm text-primary">04.</p>
-        <h2 className="mt-3 font-display text-5xl font-extrabold tracking-tight text-text-primary md:text-7xl">
+        <h2 className="mt-3 font-display text-4xl font-extrabold tracking-tight text-text-primary md:text-7xl">
           {t("contact.title")}
         </h2>
-        <p className="mx-auto mt-6 max-w-xl text-lg text-text-secondary">
+        <p className="mx-auto mt-6 max-w-xl text-base text-text-secondary md:text-lg">
           {t("contact.description")}
         </p>
 
         <a
           href="mailto:lukavieira14@gmail.com"
-          className="mt-12 inline-flex items-center gap-3 border border-primary px-8 py-4 font-mono text-primary transition-colors hover:bg-primary/10"
+          className="mt-10 inline-flex max-w-full items-center gap-3 break-all border border-primary px-5 py-4 font-mono text-sm text-primary transition-colors hover:bg-primary/10 md:mt-12 md:px-8 md:text-base"
         >
           <FiMail size={18} />
           lukavieira14@gmail.com
