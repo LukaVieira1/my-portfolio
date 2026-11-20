@@ -21,6 +21,7 @@ import { ChapterContact } from "./components/chapters/ChapterContact";
 
 import { navItems, getExperiences, getProjects } from "./data";
 import { assert } from "./lib/assert";
+import { filterCoreStackProjects } from "./lib/coreStack";
 
 const SECTION_IDS = ["about", "experience", "projects", "contact"];
 
@@ -53,12 +54,11 @@ function App() {
   assert(projects.length > 0, "no projects");
   assert(navigation.length === SECTION_IDS.length, "nav mismatch");
 
-  // narrativa visual: todos os projetos num filmstrip (profissionais primeiro)
-  const storyProjects = [
+  // narrativa: só React / Next.js / Node.js (TS aparece como tag quando houver)
+  const storyProjects = filterCoreStackProjects([
     ...projects.filter((p) => !p.isPersonal),
     ...projects.filter((p) => p.isPersonal),
-  ];
-  assert(storyProjects.length === projects.length, "project partition failed");
+  ]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => setLoading(false), 1400);

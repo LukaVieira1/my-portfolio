@@ -82,7 +82,7 @@
   },
   "projects": {
     "title": "Alguns Projetos",
-    "hint": "Um projeto por tela — continue rolando.",
+    "hint": "Trabalho em profundidade com React, Next.js, TypeScript e Node.js.",
     "filters": {
       "professional": "Profissionais",
       "personal": "Pessoais"

@@ -82,7 +82,7 @@
   },
   "projects": {
     "title": "Some Things I've Built",
-    "hint": "One project per screen — keep scrolling.",
+    "hint": "Deep work with React, Next.js, TypeScript, and Node.js.",
     "filters": {
       "professional": "Professional",
       "personal": "Personal"

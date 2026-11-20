@@ -1,14 +1,25 @@
-import { useRef, useState } from "react";
-import { motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { useRef } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { FiExternalLink, FiGithub } from "react-icons/fi";
 import type { IProject } from "../../types";
 import { assert } from "../../lib/assert";
+import { coreStacksOf } from "../../lib/coreStack";
 
 interface Props {
   projects: IProject[];
 }
 
+/**
+ * Projetos = reels cinematográficos empilhados.
+ * Mecânica: scroll natural + parallax na mídia (não sticky dossier).
+ * Cada reel = stage de mídia + barra sólida de legenda (sem texto sobre a arte).
+ */
 export function ChapterProjects({ projects }: Props) {
   assert(projects.length > 0, "projects required");
   projects.forEach((p) => {
@@ -19,165 +30,151 @@ export function ChapterProjects({ projects }: Props) {
   });
 
   const { t } = useTranslation();
-  const ref = useRef<HTMLElement>(null);
-  const count = projects.length;
-  const [active, setActive] = useState(0);
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"],
-  });
-
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    const idx = Math.min(count - 1, Math.max(0, Math.floor(v * count)));
-    setActive(idx);
-  });
 
   return (
-    <section
-      id="projects"
-      ref={ref}
-      className="relative"
-      style={{ height: `${count * 100}vh` }}
-    >
-      <div className="sticky top-0 flex h-[100svh] items-stretch overflow-hidden md:items-center">
-        <div className="mx-auto grid w-full max-w-6xl grid-cols-1 content-start gap-3 px-5 pt-20 pb-8 md:grid-cols-12 md:content-center md:gap-10 md:px-10 md:py-0">
-          <div className="relative z-20 md:col-span-4">
-            <p className="font-mono text-sm text-primary">03.</p>
-            <h2 className="mt-1 font-display text-3xl font-extrabold tracking-tight text-text-primary md:mt-2 md:text-5xl">
-              {t("projects.title")}
-            </h2>
-            <p className="mt-2 hidden max-w-sm text-sm text-text-secondary md:mt-3 md:block">
-              {t("projects.hint")}
-            </p>
+    <section id="projects" className="relative">
+      <header className="mx-auto max-w-6xl px-5 pb-8 pt-24 md:px-10 md:pb-12 md:pt-32">
+        <p className="font-mono text-sm text-primary">03.</p>
+        <h2 className="mt-2 max-w-3xl font-display text-3xl font-extrabold tracking-tight text-text-primary md:text-6xl">
+          {t("projects.title")}
+        </h2>
+        <p className="mt-4 max-w-lg text-sm text-text-secondary md:text-base">
+          {t("projects.hint")}
+        </p>
+      </header>
 
-            <div className="mt-6 hidden space-y-2 md:block">
-              {projects.map((project, i) => (
-                <div
-                  key={project.title}
-                  className={`flex items-baseline gap-3 transition-opacity ${
-                    i === active ? "opacity-100" : "opacity-35"
-                  }`}
-                >
-                  <span className="font-mono text-xs text-primary">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="truncate text-sm text-text-primary">
-                    {project.title}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            <p className="mt-2 font-mono text-xs text-primary md:hidden">
-              {String(active + 1).padStart(2, "0")} /{" "}
-              {String(count).padStart(2, "0")}
-            </p>
-          </div>
-
-          <div className="relative min-h-0 md:col-span-8 md:h-[78vh]">
-            {projects.map((project, i) => (
-              <ProjectPanel
-                key={project.title}
-                project={project}
-                index={i}
-                active={active === i}
-                personalLabel={t("projects.filters.personal")}
-                professionalLabel={t("projects.filters.professional")}
-              />
-            ))}
-          </div>
-        </div>
-
-        <motion.div
-          className="pointer-events-none absolute bottom-4 left-5 right-5 h-px origin-left bg-primary md:bottom-8 md:left-10 md:right-10"
-          style={{ scaleX: scrollYProgress }}
-        />
+      <div className="flex flex-col gap-6 md:gap-10">
+        {projects.map((project, index) => (
+          <ProjectReel
+            key={project.title}
+            project={project}
+            index={index}
+            personalLabel={t("projects.filters.personal")}
+            professionalLabel={t("projects.filters.professional")}
+          />
+        ))}
       </div>
     </section>
   );
 }
 
-function ProjectPanel({
+function ProjectReel({
   project,
   index,
-  active,
   personalLabel,
   professionalLabel,
 }: {
   project: IProject;
   index: number;
-  active: boolean;
   personalLabel: string;
   professionalLabel: string;
 }) {
+  const ref = useRef<HTMLElement>(null);
+  const stacks = coreStacksOf(project);
+  assert(
+    stacks.length > 0,
+    `project "${project.title}" entered core narrative without core tags`,
+  );
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+
+  const mediaY = useTransform(scrollYProgress, [0, 1], ["-16%", "16%"]);
+  const mediaScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.2, 1.06, 1.16]);
+  const captionY = useTransform(scrollYProgress, [0.2, 0.45], [28, 0]);
+  const captionOpacity = useTransform(scrollYProgress, [0.15, 0.4], [0.35, 1]);
+  const indexX = useTransform(scrollYProgress, [0, 1], ["-4%", "8%"]);
+
   return (
-    <motion.article
-      initial={false}
-      animate={
-        active
-          ? { opacity: 1, y: 0, visibility: "visible" as const }
-          : { opacity: 0, y: 24, visibility: "hidden" as const }
-      }
-      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-      className={`absolute inset-0 flex flex-col justify-start gap-3 md:justify-center md:gap-5 ${
-        active ? "pointer-events-auto z-10" : "pointer-events-none z-0"
-      }`}
+    <article
+      ref={ref}
+      className="relative mx-auto flex h-[100svh] w-full max-w-[100vw] flex-col overflow-hidden"
     >
-      <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-background-lighter md:aspect-[16/9]">
-        <img
+      {/* Stage de mídia — só esta área, não vaza pro próximo reel */}
+      <div className="relative min-h-0 flex-1 overflow-hidden bg-background-lighter">
+        <motion.img
           src={project.image}
           alt={project.title}
-          className="h-full w-full object-cover object-top"
+          style={{ y: mediaY, scale: mediaScale }}
+          className="absolute inset-0 h-[125%] w-full object-cover object-top will-change-transform"
         />
+        <motion.span
+          style={{ x: indexX }}
+          className="pointer-events-none absolute bottom-4 left-5 font-display text-7xl font-extrabold text-background/70 md:bottom-6 md:left-10 md:text-8xl"
+          aria-hidden
+        >
+          {String(index + 1).padStart(2, "0")}
+        </motion.span>
       </div>
 
-      <div className="min-w-0 shrink bg-background/90 backdrop-blur-[2px]">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-          <span className="font-mono text-xs text-primary">
-            {String(index + 1).padStart(2, "0")}
-          </span>
-          <h3 className="font-display text-xl font-bold text-text-primary md:text-4xl">
-            {project.title}
-          </h3>
-          <div className="flex gap-3">
-            {project.githubLink && project.isPersonal && (
-              <a
-                href={project.githubLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-text-primary transition-colors hover:text-primary"
+      {/* Legenda sólida — composição tipo reel, não dossier */}
+      <motion.div
+        style={{ y: captionY, opacity: captionOpacity }}
+        className="relative z-10 shrink-0 border-t border-primary/25 bg-background px-5 py-5 md:px-10 md:py-7"
+      >
+        <div className="mx-auto flex max-w-6xl flex-col gap-3 md:flex-row md:items-end md:justify-between md:gap-10">
+          <div className="min-w-0 max-w-2xl">
+            <p className="font-mono text-xs text-primary">
+              {String(index + 1).padStart(2, "0")} ·{" "}
+              {project.isPersonal ? personalLabel : professionalLabel}
+            </p>
+            <div className="mt-1 flex flex-wrap items-center gap-3">
+              <h3 className="font-display text-2xl font-bold text-text-primary md:text-4xl">
+                {project.title}
+              </h3>
+              <div className="flex gap-3">
+                {project.githubLink && project.isPersonal && (
+                  <a
+                    href={project.githubLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-text-primary transition-colors hover:text-primary"
+                  >
+                    <FiGithub size={18} />
+                  </a>
+                )}
+                {project.link && (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-text-primary transition-colors hover:text-primary"
+                  >
+                    <FiExternalLink size={18} />
+                  </a>
+                )}
+              </div>
+            </div>
+            <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-text-secondary md:line-clamp-2 md:text-base">
+              {project.description[0]}
+            </p>
+          </div>
+
+          <div className="flex shrink-0 flex-wrap gap-2 font-mono text-xs md:pb-1 md:justify-end">
+            {stacks.map((stack) => (
+              <span
+                key={stack}
+                className="border border-primary px-2.5 py-1 text-primary"
               >
-                <FiGithub size={18} />
-              </a>
-            )}
-            {project.link && (
-              <a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-text-primary transition-colors hover:text-primary"
-              >
-                <FiExternalLink size={18} />
-              </a>
-            )}
+                {stack}
+              </span>
+            ))}
           </div>
         </div>
+        <BandScrub progress={scrollYProgress} />
+      </motion.div>
+    </article>
+  );
+}
 
-        <p className="mt-1 font-mono text-xs text-primary">
-          {project.isPersonal ? personalLabel : professionalLabel}
-        </p>
-
-        <p className="mt-2 text-sm leading-relaxed text-text-secondary md:mt-3 md:text-base">
-          {project.description[0]}
-        </p>
-
-        <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[11px] text-text-secondary md:mt-4 md:text-xs">
-          {project.technologies.slice(0, 6).map((tech) => (
-            <span key={tech}>{tech}</span>
-          ))}
-        </div>
-      </div>
-    </motion.article>
+function BandScrub({ progress }: { progress: MotionValue<number> }) {
+  const scaleX = useTransform(progress, [0.2, 0.8], [0, 1]);
+  return (
+    <motion.div
+      className="mx-auto mt-4 h-px max-w-6xl origin-left bg-primary"
+      style={{ scaleX }}
+    />
   );
 }
