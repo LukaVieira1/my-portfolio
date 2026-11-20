@@ -83,6 +83,10 @@
   "projects": {
     "title": "Some Things I've Built",
     "hint": "Deep work with React, Next.js, TypeScript, and Node.js.",
+    "kind": {
+      "professional": "Professional",
+      "personal": "Personal"
+    },
     "filters": {
       "professional": "Professional",
       "personal": "Personal"

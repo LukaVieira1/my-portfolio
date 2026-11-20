@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   motion,
   useScroll,
@@ -13,14 +13,14 @@ import { coreStacksOf } from "../../lib/coreStack";
 
 interface Props {
   projects: IProject[];
+  onImmersiveChange?: (immersive: boolean) => void;
 }
 
 /**
- * Projetos = reels cinematográficos empilhados.
- * Mecânica: scroll natural + parallax na mídia (não sticky dossier).
- * Cada reel = stage de mídia + barra sólida de legenda (sem texto sobre a arte).
+ * Reels cinematográficos — mídia com inset (fora da nav do site)
+ * + legenda sólida. Kind vem do próprio projeto (não do filtro plural).
  */
-export function ChapterProjects({ projects }: Props) {
+export function ChapterProjects({ projects, onImmersiveChange }: Props) {
   assert(projects.length > 0, "projects required");
   projects.forEach((p) => {
     assert(
@@ -30,6 +30,34 @@ export function ChapterProjects({ projects }: Props) {
   });
 
   const { t } = useTranslation();
+  const reelsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!onImmersiveChange) return;
+    const root = reelsRef.current;
+    assert(root != null, "reels root missing");
+
+    const articles = [...root.querySelectorAll("article")];
+    assert(articles.length === projects.length, "reel count mismatch");
+
+    const visible = new Set<Element>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) visible.add(entry.target);
+          else visible.delete(entry.target);
+        });
+        onImmersiveChange(visible.size > 0);
+      },
+      { threshold: 0.35 },
+    );
+
+    articles.forEach((el) => observer.observe(el));
+    return () => {
+      observer.disconnect();
+      onImmersiveChange(false);
+    };
+  }, [onImmersiveChange, projects.length]);
 
   return (
     <section id="projects" className="relative">
@@ -43,16 +71,30 @@ export function ChapterProjects({ projects }: Props) {
         </p>
       </header>
 
-      <div className="flex flex-col gap-6 md:gap-10">
-        {projects.map((project, index) => (
-          <ProjectReel
-            key={project.title}
-            project={project}
-            index={index}
-            personalLabel={t("projects.filters.personal")}
-            professionalLabel={t("projects.filters.professional")}
-          />
-        ))}
+      <div ref={reelsRef} className="flex flex-col gap-8 md:gap-12">
+        {projects.map((project, index) => {
+          const kindKey = project.isPersonal
+            ? "projects.kind.personal"
+            : "projects.kind.professional";
+          const kindLabel = t(kindKey);
+          assert(
+            kindLabel.length > 0 && !kindLabel.startsWith("projects."),
+            `missing i18n kind for ${project.title}`,
+          );
+          assert(
+            project.isPersonal === (kindKey === "projects.kind.personal"),
+            `kind/isPersonal mismatch for ${project.title}`,
+          );
+
+          return (
+            <ProjectReel
+              key={project.title}
+              project={project}
+              index={index}
+              kindLabel={kindLabel}
+            />
+          );
+        })}
       </div>
     </section>
   );
@@ -61,13 +103,11 @@ export function ChapterProjects({ projects }: Props) {
 function ProjectReel({
   project,
   index,
-  personalLabel,
-  professionalLabel,
+  kindLabel,
 }: {
   project: IProject;
   index: number;
-  personalLabel: string;
-  professionalLabel: string;
+  kindLabel: string;
 }) {
   const ref = useRef<HTMLElement>(null);
   const stacks = coreStacksOf(project);
@@ -81,44 +121,42 @@ function ProjectReel({
     offset: ["start end", "end start"],
   });
 
-  const mediaY = useTransform(scrollYProgress, [0, 1], ["-16%", "16%"]);
-  const mediaScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.2, 1.06, 1.16]);
-  const captionY = useTransform(scrollYProgress, [0.2, 0.45], [28, 0]);
-  const captionOpacity = useTransform(scrollYProgress, [0.15, 0.4], [0.35, 1]);
-  const indexX = useTransform(scrollYProgress, [0, 1], ["-4%", "8%"]);
+  const mediaY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  const mediaScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.12, 1.03, 1.1]);
+  const captionOpacity = useTransform(scrollYProgress, [0.12, 0.35], [0.4, 1]);
 
   return (
     <article
       ref={ref}
       className="relative mx-auto flex h-[100svh] w-full max-w-[100vw] flex-col overflow-hidden"
     >
-      {/* Stage de mídia — só esta área, não vaza pro próximo reel */}
-      <div className="relative min-h-0 flex-1 overflow-hidden bg-background-lighter">
-        <motion.img
-          src={project.image}
-          alt={project.title}
-          style={{ y: mediaY, scale: mediaScale }}
-          className="absolute inset-0 h-[125%] w-full object-cover object-top will-change-transform"
-        />
-        <motion.span
-          style={{ x: indexX }}
-          className="pointer-events-none absolute bottom-4 left-5 font-display text-7xl font-extrabold text-background/70 md:bottom-6 md:left-10 md:text-8xl"
-          aria-hidden
-        >
-          {String(index + 1).padStart(2, "0")}
-        </motion.span>
+      {/*
+        Inset do stage: respira sob a nav e nas laterais —
+        o chrome do portfolio não senta no UI do produto.
+      */}
+      <div className="relative min-h-0 flex-1 px-4 pt-4 md:px-10 md:pt-6">
+        <div className="relative flex h-full items-center justify-center overflow-hidden bg-[#d7dee6] shadow-[0_0_0_1px_rgba(26,35,50,0.08)] dark:bg-background-lighter">
+          <motion.img
+            src={project.image}
+            alt={project.title}
+            style={{ y: mediaY, scale: mediaScale }}
+            className="max-h-full max-w-full object-contain will-change-transform"
+          />
+          <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-black/5" />
+          <span className="pointer-events-none absolute bottom-3 left-3 font-display text-5xl font-extrabold text-text-primary/15 md:bottom-4 md:left-5 md:text-7xl">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+        </div>
       </div>
 
-      {/* Legenda sólida — composição tipo reel, não dossier */}
       <motion.div
-        style={{ y: captionY, opacity: captionOpacity }}
-        className="relative z-10 shrink-0 border-t border-primary/25 bg-background px-5 py-5 md:px-10 md:py-7"
+        style={{ opacity: captionOpacity }}
+        className="relative z-10 shrink-0 bg-background px-5 py-4 md:px-10 md:py-6"
       >
-        <div className="mx-auto flex max-w-6xl flex-col gap-3 md:flex-row md:items-end md:justify-between md:gap-10">
+        <div className="mx-auto flex max-w-6xl flex-col gap-2.5 md:flex-row md:items-end md:justify-between md:gap-10">
           <div className="min-w-0 max-w-2xl">
             <p className="font-mono text-xs text-primary">
-              {String(index + 1).padStart(2, "0")} ·{" "}
-              {project.isPersonal ? personalLabel : professionalLabel}
+              {String(index + 1).padStart(2, "0")} · {kindLabel}
             </p>
             <div className="mt-1 flex flex-wrap items-center gap-3">
               <h3 className="font-display text-2xl font-bold text-text-primary md:text-4xl">
@@ -147,12 +185,12 @@ function ProjectReel({
                 )}
               </div>
             </div>
-            <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-text-secondary md:line-clamp-2 md:text-base">
+            <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-text-secondary md:text-base">
               {project.description[0]}
             </p>
           </div>
 
-          <div className="flex shrink-0 flex-wrap gap-2 font-mono text-xs md:pb-1 md:justify-end">
+          <div className="flex shrink-0 flex-wrap gap-2 font-mono text-xs md:justify-end md:pb-1">
             {stacks.map((stack) => (
               <span
                 key={stack}
@@ -173,7 +211,7 @@ function BandScrub({ progress }: { progress: MotionValue<number> }) {
   const scaleX = useTransform(progress, [0.2, 0.8], [0, 1]);
   return (
     <motion.div
-      className="mx-auto mt-4 h-px max-w-6xl origin-left bg-primary"
+      className="mx-auto mt-3 h-px max-w-6xl origin-left bg-primary md:mt-4"
       style={{ scaleX }}
     />
   );

@@ -83,6 +83,10 @@
   "projects": {
     "title": "Alguns Projetos",
     "hint": "Trabalho em profundidade com React, Next.js, TypeScript e Node.js.",
+    "kind": {
+      "professional": "Profissional",
+      "personal": "Pessoal"
+    },
     "filters": {
       "professional": "Profissionais",
       "personal": "Pessoais"

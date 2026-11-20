@@ -29,6 +29,7 @@ function App() {
   const { t, i18n } = useTranslation();
   const scrollToSection = useScrollToSection();
   const [loading, setLoading] = useState(true);
+  const [projectsImmersive, setProjectsImmersive] = useState(false);
 
   useLenis();
   const activeSection = useActiveSection(SECTION_IDS);
@@ -86,8 +87,19 @@ function App() {
             transition={{ duration: 0.35 }}
             className="relative z-10"
           >
-            <nav className="pointer-events-none fixed inset-x-0 top-0 z-50 px-5 py-4 md:px-10 md:py-5">
-              <div className="pointer-events-auto mx-auto flex max-w-6xl items-center justify-between gap-3">
+            <nav
+              className={`pointer-events-none fixed inset-x-0 top-0 z-50 px-5 py-4 transition-opacity duration-300 md:px-10 md:py-5 ${
+                projectsImmersive ? "opacity-0" : "opacity-100"
+              }`}
+              aria-hidden={projectsImmersive}
+            >
+              <div
+                className={`mx-auto flex max-w-6xl items-center justify-between gap-3 ${
+                  projectsImmersive
+                    ? "pointer-events-none"
+                    : "pointer-events-auto"
+                }`}
+              >
                 <button
                   type="button"
                   onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -167,7 +179,10 @@ function App() {
 
             <ChapterAbout />
             <ChapterExperience experiences={experiences} />
-            <ChapterProjects projects={storyProjects} />
+            <ChapterProjects
+              projects={storyProjects}
+              onImmersiveChange={setProjectsImmersive}
+            />
             <ChapterContact />
 
             <SettingsMenu />
